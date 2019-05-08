@@ -36,7 +36,7 @@ In short, Kafka is a distributed streaming platform.
 Imagine that you have a simple web application which consists of an
 interactive UI, a web server, and a database.
 
-![](media/image1.jpeg){width="6.6929757217847765in"
+![](https://github.com/samirsahoo007/bigdata/blob/master/kafka/images/streamingPlatform.jpg){width="6.6929757217847765in"
 height="1.7155610236220473in"}
 
 You need to record all the events such as clicks, requests, impressions
