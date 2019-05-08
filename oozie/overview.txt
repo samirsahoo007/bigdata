@@ -35,6 +35,73 @@ Action nodes are the mechanism by which a workflow triggers the execution of a c
 Oozie workflows can be parameterized (using variables like ${inputDir} within the workflow definition). When submitting a workflow job values for the parameters must be provided. If properly parameterized (i.e. using different output directories) several identical workflow jobs can concurrently.
 
 
+How to run a script in Oozie
+----------------------------
+Below are the steps to run a python script in a Oozie shell action  
+
+1.  Configure job.properties 
+
+Example:
+#*************************************************
+#  job.properties
+#*************************************************
+nameNode=hdfs://<namenode-fqdn>:8020
+jobTracker=<resourcemanager-host-fqdn>:8050
+queueName=default
+examplesRoot=examples
+oozie.use.system.libpath=true
+oozie.wf.application.path=${nameNode}/user/${user.name}/
+
+2.  Configure Workflow.xml 
+
+Example:
+<workflow-app xmlns="uri:oozie:workflow:0.4" name="python-test-wf">
+    <start to="python-node"/>
+    <action name="python-node">
+        <shell xmlns="uri:oozie:shell-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <exec>test_python.py</exec>
+        <file>/user/<username>/test_python.py</file>
+            <capture-output/>
+        </shell>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+    <kill name="fail">
+    <message>Python action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>
+
+3. Write a sample python script 
+
+Example: 
+#! /usr/bin/env python 
+import os, pwd, sys 
+
+print('who am i? '+ pwd.getpwuid(os.getuid())[0]) 
+print('this is a script') 
+print('version '+ sys.version) 
+
+file_name = os.path.join('/tmp/', ' output.txt') 
+out_file = open(file_name, 'w') 
+out_file.write('SUCCESS!!') 
+out_file.close()​ 
+
+4.  Upload workflow.xml and python script to "oozie.wf.application.path" defined in job.properties 
+
+5. Follow below command to run Oozie workflow 
+ 
+oozie job -oozie http://<oozie-server-hostname>:11000/oozie -config /$PATH/job.properties -run
+
+
 
 INSTALLATION AND SETUP:
 ----------------------
