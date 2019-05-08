@@ -1,0 +1,30 @@
+Output
+-------
+
+$ hadoop fs -ls -R oozieProject/workflowStreamingMRActionPy/output/part-* | awk '{print $8}' | xargs hadoop fs -cat
+
+May-gnome-session[2010]:  3
+May-ntpd_initres[1872]:	24
+May-ntpd_initres[1705]:	792
+May-spice-vdagent[2114]:	1
+May-pulseaudio[2135]:	1
+May-pulseaudio[2076]:	1
+May-spice-vdagent[1974]:	1
+May-ntpd_initres[1720]:	792
+May-ntpd_initres[1084]:	6
+May-spice-vdagent[2109]:	1
+May-pulseaudio[2257]:	1
+May-NetworkManager[1292]:	1
+May-pulseaudio[2032]:	1
+May-kernel:	810
+May-ntpd_initres[1592]:	798
+May-NetworkManager[1342]:	1
+May-polkit-agent-helper-1[2036]:	8
+May-spice-vdagent[1955]:	1
+May-console-kit-daemon[1779]:	4
+May-spice-vdagent[2016]:	1
+May-ntpd_initres[1026]:	9
+May-pulseaudio[2039]:	1
+May-gnome-session[2009]:
+...........
+

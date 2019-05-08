@@ -1,0 +1,31 @@
+08. Oozie commands
+-------------------
+Note: Replace oozie server and port, with your cluster-specific.
+ 
+1) Submit job:
+$ oozie job -oozie http://cdh-dev01:11000/oozie -config oozieProject/workflowStreamingMRActionPy/job.properties -submit
+job: 0000017-130712212133144-oozie-oozi-W
+ 
+2) Run job:
+$ oozie job -oozie http://cdh-dev01:11000/oozie -start 0000017-130712212133144-oozie-oozi-W
+ 
+3) Check the status:
+$ oozie job -oozie http://cdh-dev01:11000/oozie -info 0000017-130712212133144-oozie-oozi-W
+ 
+4) Suspend workflow:
+$ oozie job -oozie http://cdh-dev01:11000/oozie -suspend 0000017-130712212133144-oozie-oozi-W
+ 
+5) Resume workflow:
+$ oozie job -oozie http://cdh-dev01:11000/oozie -resume 0000017-130712212133144-oozie-oozi-W
+ 
+6) Re-run workflow:
+$ oozie job -oozie http://cdh-dev01:11000/oozie -config oozieProject/workflowSqoopAction/job.properties -rerun 0000017-130712212133144-oozie-oozi-W
+ 
+7) Should you need to kill the job:
+$ oozie job -oozie http://cdh-dev01:11000/oozie -kill 0000017-130712212133144-oozie-oozi-W
+ 
+8) View server logs:
+$ oozie job -oozie http://cdh-dev01:11000/oozie -logs 0000017-130712212133144-oozie-oozi-W
+ 
+Logs are available at:
+/var/log/oozie on the Oozie server.

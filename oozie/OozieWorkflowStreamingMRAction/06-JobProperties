@@ -1,0 +1,21 @@
+# -------------------------------------------------
+# This is the job properties file - job.properties
+# -------------------------------------------------
+
+# Replace name node and job tracker information with that specific to your cluster
+
+nameNode=hdfs://cdh-nn01.hadoop.com:8020
+jobTracker=cdh-jt01:8021
+queueName=default
+
+oozie.libpath=${nameNode}/user/oozie/share/lib
+oozie.use.system.libpath=true
+oozie.wf.rerun.failnodes=true
+
+oozieProjectRoot=${nameNode}/user/${user.name}/oozieProject
+appPath=${oozieProjectRoot}/workflowStreamingMRActionPy
+oozie.wf.application.path=${appPath}
+oozieLibPath=${oozie.libpath}
+
+inputDir=${oozieProjectRoot}/data/*/*/*/*/*
+outputDir=${appPath}/output

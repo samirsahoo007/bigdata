@@ -1,0 +1,18 @@
+Sample data
+------------
+May  3 11:52:54 cdh-dn03 init: tty (/dev/tty6) main process (1208) killed by TERM signal
+May  3 11:53:31 cdh-dn03 kernel: registered taskstats version 1
+May  3 11:53:31 cdh-dn03 kernel: sr0: scsi3-mmc drive: 32x/32x xa/form2 tray
+May  3 11:53:31 cdh-dn03 kernel: piix4_smbus 0000:00:07.0: SMBus base address uninitialized - upgrade BIOS or use force_addr=0xaddr
+May  3 11:53:31 cdh-dn03 kernel: nf_conntrack version 0.5.0 (7972 buckets, 31888 max)
+May  3 11:53:57 cdh-dn03 kernel: hrtimer: interrupt took 11250457 ns
+May  3 11:53:59 cdh-dn03 ntpd_initres[1705]: host name not found: 0.rhel.pool.ntp.org
+ 
+Structure
+----------
+Month   = May  
+Day     = 3 
+Time    = 11:52:54 
+Node    = cdh-dn03 
+Process = init: 
+Log msg = tty (/dev/tty6) main process (1208) killed by TERM signal

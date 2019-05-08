@@ -1,0 +1,28 @@
+#---------------------------------------------
+# Testing the python scripts outside of oozie
+#---------------------------------------------
+
+#Test the mapper from the directory where the data is located:
+cat oozieProject/data/*/*/*/*/* | python oozieProject/workflowStreamingMRActionPy/LogParserMapper.py
+
+#Test mapper and reducer
+cat oozieProject/data/*/*/*/*/* | python oozieProject/workflowStreamingMRActionPy/LogParserMapper.py | sort | python oozieProject/workflowStreamingMRActionPy/LogParserReducer.py | sort
+
+#Delete prior copy of scripts
+hadoop fs -rm -R oozieProject/workflowStreamingMRActionPy/
+
+
+#Load application, if not already done..
+hadoop fs -put ~/oozieProject/workflowStreamingMRActionPy/ oozieProject/
+
+#Run on cluster (update paths as needed)
+hadoop jar /opt/cloudera/parcels/CDH-4.2.0-1.cdh4.2.0.p0.10/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.0.0-mr1-cdh4.2.0.jar  -jobconf mapred.reduce.tasks=1  -file oozieProject/workflowStreamingMRActionPy/LogParserMapper.py  -mapper oozieProject/workflowStreamingMRActionPy/LogParserMapper.py  -file oozieProject/workflowStreamingMRActionPy/LogParserReducer.py  -reducer oozieProject/workflowStreamingMRActionPy/LogParserReducer.py    -input oozieProject/data/*/*/*/*/* -output oozieProject/workflowStreamingMRActionPy/output-streaming-manualRun
+
+#View output
+$ hadoop fs -ls -R oozieProject/workflowStreamingMRActionPy/output-streaming-manualRun/part* | awk '{print $8}' | xargs hadoop fs -cat
+May-spice-vdagent[2020]:  1
+May-ntpd_initres[997]:	3
+May-nm-dispatcher.action:	4
+May-NetworkManager[1232]:	1
+May-init:	166
+............

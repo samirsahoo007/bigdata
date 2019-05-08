@@ -1,0 +1,21 @@
+This gist includes oozie workflow components (streaming map reduce action) to execute 
+python mapper and reducer scripts to parse Syslog generated log files using regex; 
+Usecase:  Count the number of occurances of processes that got logged, by month, and process.
+
+Pictorial overview of workflow:
+--------------------------------
+http://hadooped.blogspot.com/2013/07/apache-oozie-part-5-oozie-workflow-with.html
+ 
+Includes:
+---------
+Sample data and structure:           01-SampleDataAndStructure 
+Data and script download:            02-DataAndScriptDownload
+Data load commands:                  03-HdfsLoadCommands
+Python mapper script:                04A-PythonMapperScript
+Python reducer script:               04B-PythonReducerScript
+Python script test commands:         05-PythonScriptTest
+Oozie job properties:                06-JobProperties
+Oozie workflow:                      07-OozieWorkflowXML
+Oozie job exection command:          08-OozieCommands
+Oozie job output                     09-Output
+Oozie web GUI:                       10-OozieWebGUIScreenshots

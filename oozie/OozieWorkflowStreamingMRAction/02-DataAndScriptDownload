@@ -1,0 +1,23 @@
+Data download
+-------------
+Github:
+https://github.com/airawat/OozieSamples
+
+Email me t airawat.blog@gmail.com if you have access issues.
+ 
+ 
+Directory structure applicable for this blog:
+---------------------------------------------
+oozieProject
+ 
+        data
+            airawat-syslog
+                <<node>>
+                  <<year>>
+                    <<month>>
+                        messages
+        workflowStreamingMRActionPy
+            workflow.xml
+            job.properties
+            LogParserMapper.py
+            LogParserReducer.py

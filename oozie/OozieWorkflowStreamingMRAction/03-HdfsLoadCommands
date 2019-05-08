@@ -1,0 +1,16 @@
+Load downloaded files to HDFS
+------------------------------
+--Create project directory
+$ hadoop fs -mkdir oozieProject
+
+--Deploy data and workflow
+$ hadoop fs -put oozieProject/* oozieProject/
+
+Directory structure on HDFS
+----------------------------
+
+$ hadoop fs -ls -R oozieProject/workflowStreamingMRActionPy | awk '{print $8}'
+
+
+
+
