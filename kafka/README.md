@@ -46,7 +46,7 @@ applications or services. A simple solution would be to store the data
 in your database and connect all other applications and services to your
 database.
 
-![](media/image2.jpeg){width="6.6929757217847765in"
+![](https://github.com/samirsahoo007/bigdata/blob/master/kafka/images/beforeKafka.jpg){width="6.6929757217847765in"
 height="7.446183289588801in"}
 
 This might look simple, but you\'re not finished. There are multiple
@@ -111,7 +111,7 @@ of why one should be using Kafka:
 Look at how a complex architecture can be simplified and streamlined
 with the help of Kafka
 
-![](media/image3.jpeg){width="6.6929757217847765in"
+![](https://github.com/samirsahoo007/bigdata/blob/master/kafka/images/backend.jpg){width="6.6929757217847765in"
 height="4.52173009623797in"}
 
 **2. Universal Pipeline Of Data**
@@ -219,7 +219,7 @@ data systems
 
 **Architecture**
 
-![](media/image4.jpeg){width="6.6929757217847765in"
+![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/kafkaPartitions.jpg){width="6.6929757217847765in"
 height="2.185660542432196in"}
 
 As you can see, Kafka topics are divided into partitions. These topics
