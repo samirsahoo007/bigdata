@@ -201,16 +201,24 @@ bin/kafka-server-start.sh config/server.properties
 Here is a quick introduction to some of the core concepts of Kafka
 architecture:
 
-1 Kafka is run as a cluster on one or more servers
+1 Simply put, Kafka is a distributed publish-subscribe messaging system that maintains feeds of messages in partitioned and replicated topics. 
+In the simplest way there are three players in the Kafka ecosystem: producers, topics (run by brokers) and consumers.
 
 2 Kafka stores a stream of records in categories called topics. Each
 record consists of a key, value and a timestamp
 
-3 Kafka works on the publish-subscribe pattern. It allows some of the
-applications to act as producers and publish the records to Kafka
-topics. Similarly, it allows some of the applications to act as
-consumers and subscribe to Kafka topics and process the records produced
-by it
+3 Kafka works on the publish-subscribe pattern. 
+  Producers produce messages to a topic of their choice. It is possible to attach a key to each message, in which case the producer guarantees that all messages with the same key will arrive to the same partition.
+  Topics are logs that receive data from the producers and store them across their partitions. Producers always write new messages at the end of the log. In our example we can make abstraction of the partitions, since we’re working locally.
+  Consumers read the messages of a set of partitions of a topic of their choice at their own pace. If the consumer is part of a consumer group, i.e. a group of consumers subscribed to the same topic, they can commit their offset. This can be important if you want to consume a topic in parallel with different consumers.
+
+![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/kafka1.png){width="6.6929757217847765in"
+height="2.185660542432196in"}
+
+The offset is the position in the log where the consumer last consumed or read a message. The consumer can then commit this offset to make the reading ‘official’. Offset committing can be done automatically in the background or explicitly. In our example we will commit automatically in the background.
+
+![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/kafka2.png){width="6.6929757217847765in"
+height="2.185660542432196in"}
 
 4 Alongside, Producer API and Consumer API, Kafka also offers Streams
 API for an application to work as a stream processor and Connector API
