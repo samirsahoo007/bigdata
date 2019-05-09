@@ -212,12 +212,12 @@ record consists of a key, value and a timestamp
   Topics are logs that receive data from the producers and store them across their partitions. Producers always write new messages at the end of the log. In our example we can make abstraction of the partitions, since we’re working locally.
   Consumers read the messages of a set of partitions of a topic of their choice at their own pace. If the consumer is part of a consumer group, i.e. a group of consumers subscribed to the same topic, they can commit their offset. This can be important if you want to consume a topic in parallel with different consumers.
 
-![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/kafka1.png){width="6.6929757217847765in"
+![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/images/kafka1.png){width="6.6929757217847765in"
 height="2.185660542432196in"}
 
 The offset is the position in the log where the consumer last consumed or read a message. The consumer can then commit this offset to make the reading ‘official’. Offset committing can be done automatically in the background or explicitly. In our example we will commit automatically in the background.
 
-![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/kafka2.png){width="6.6929757217847765in"
+![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/images/kafka2.png){width="6.6929757217847765in"
 height="2.185660542432196in"}
 
 4 Alongside, Producer API and Consumer API, Kafka also offers Streams
