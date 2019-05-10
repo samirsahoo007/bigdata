@@ -333,8 +333,8 @@ as we hit some of the limitations of Kinesis.
 ** Simple Example **
 
 **Let's code**
-
-In our example we'll create a **producer** that emits numbers from 1 to 
+  
+In our example we'll create a **producer** that emits numbers from 1 to
 1000 and send them to our Kafka **broker**. Then a **consumer** will
 read the data from the **broker** and store them in a MongoDb
 collection.
@@ -344,28 +344,32 @@ new or fixed consumer will pick up reading where the previous one
 stopped. This is a great way to make sure **all the data is fed into the
 database without duplicates or missing data**.
 
-Create a new Python script named *producer.py* ################
-
-from time import sleep
-from json import dumps
-from kafka import KafkaProducer
-
-*bootstrap\_servers=\['localhost:9092'\]*               : sets the host and port the    producer should contact to bootstrap initial cluster metadata. It is not necessary to set this here, since the default is *localhost:9092*.
-*value\_serializer=lambda x: dumps(x).encode('utf-8')*  : function of how the data should be serialized before sending to the broker. Here, we convert the data to a json file and encode it to utf-8.
-
-producer = KafkaProducer(bootstrap\_servers=\[\'localhost:9092\'\],
-value\_serializer=lambda x:
-dumps(x).encode(\'utf-8\'))
-
-Now, we want to generate numbers from one till 1000. 
-
-for e in range(1000):
-    data = {\'number\' : e}
-    producer.send(\'numtest\', value=data)
-
-sleep(5)
+**Create a new Python script named *producer.py**
+![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/simple_example/producer.py)
 
 If you want to test the code, it's advised to create a new topic and
 send the data to this new topic. This way, you'll avoid duplicates and
 possible confusion in the *numtest* topic when we're later testing the
 producer and consumer together.
+
+**Consuming the data consumer.py**
+![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/simple_example/consumer.py)
+
+**Testing**
+
+Let's test our two scripts. Open a command prompt and go to the
+directory where you saved *producer.py* and *consumer.py*. Execute
+*producer.py* and open a new command prompt. Launch *consumer.py* and
+look how it reads all the messages, including the new ones.
+
+Now interrupt the consumer, remember at which number it was (or check it
+in the database) and restart the consumer. Notice that the consumer
+picks up all the missed messages and then continues listening for new
+ones.
+
+Note that if you turn off the consumer within 1 second after reading the
+message, the message will be retrieved again upon restart. Why? Because
+our *auto\_commit\_interval* is set to 1 second, remember that if the
+offset is not committed, the consumer will read the message again (if
+*auto\_offset\_reset* is set to earliest).
+
