@@ -114,7 +114,8 @@ of why one should be using Kafka:
 Think of it is a big commit log where data is stored in sequence as it happens. The users of this log can just access and use it as per their requirement.
 
 
-*Kafka Use Cases*
+***Kafka Use Cases***
+
 Uses of Kafka are multiple. Here are a few use-cases that could help you to figure out its usage.
 
 **Activity Monitoring:-** Kafka can be used for activity monitoring. The activity could belong to a website or physical sensors and devices. Producers can publish raw data from data sources that later can be used to find trends and pattern.
