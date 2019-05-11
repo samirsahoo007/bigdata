@@ -106,6 +106,12 @@ It ensures that the data is always reliable. It also supports strong
 mechanisms for recovery from failures. Here are some of the key aspects
 of why one should be using Kafka:
 
+*Things to Note:*
+- Apache Kafka is an open-source streaming platform that was initially built by LinkedIn. It was later handed over to Apache foundation and open sourced it in 2011.
+
+- Apache Kafka is an open-source stream-processing software platform developed by the Apache Software Foundation, written in Scala and Java. The project aims to provide a unified, high-throughput, low-latency platform for handling real-time data feeds. Its storage layer is essentially a “massively scalable pub/sub message queue architected as a distributed transaction log,”[3] making it highly valuable for enterprise infrastructures to process streaming data. Additionally, Kafka connects to external systems (for data import/export) via Kafka Connect and provides Kafka Streams, a Java stream processing library.
+![alt text](https://kafka.apache.org/11/images/kafka-apis.png)
+
 **1. Simplify The Backend Architecture**
 
 Look at how a complex architecture can be simplified and streamlined
