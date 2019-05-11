@@ -227,8 +227,7 @@ data systems
 
 **Architecture**
 
-![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/images/kafkaPartitions.jpg){width="3.6929757217847765in"
-height="1.185660542432196in"}
+![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/images/kafkaPartitions.jpg)
 
 As you can see, Kafka topics are divided into partitions. These topics
 can be replicated across separate machines using brokers, which allows
