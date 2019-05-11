@@ -227,7 +227,7 @@ data systems
 
 **Architecture**
 
-![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/kafkaPartitions.jpg){width="6.6929757217847765in"
+![](https://github.com/samirsahoo007/bigdata/tree/master/kafka/images/kafkaPartitions.jpg){width="6.6929757217847765in"
 height="2.185660542432196in"}
 
 As you can see, Kafka topics are divided into partitions. These topics
