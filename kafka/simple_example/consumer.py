@@ -11,7 +11,7 @@ consumer = KafkaConsumer(
                                      # set to *latest*, the consumer starts reading at the end of the log. When set to *earliest*, the consumer starts reading at the latest committed offset.
      enable_auto_commit=True,        # makes sure the consumer commits its read offset every interval.
 
-     auto_commit_interval_ms=1000ms,  #sets the interval between two commits. Since messages are coming in every five second, committing every second seems fair.
+     #auto_commit_interval_ms="1000ms",  #sets the interval between two commits. Since messages are coming in every five second, committing every second seems fair.
 
      group_id='my-group',
      api_version=KAFKA_VERSION,
