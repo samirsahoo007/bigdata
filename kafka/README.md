@@ -194,7 +194,10 @@ databases or migrate from legacy systems with less effort.
 
 **Getting Started With Kafka**
 
-**Installation**
+**Setting up and Running**
+The easiest way to install Kafka is to download binaries and run it. Since it's based on JVM languages like Scala and Java, you must make sure that you are using Java 7 or greater.
+
+Kafka is available in two different flavors: One by Apache foundation and other by Confluent as a package. For this tutorial, I will go with the one provided by Apache foundation. By the way, Confluent was founded by the original developers of Kafka.
 
 Installing Kafka is a fairly simple process. Just follow the given steps
 below:
@@ -218,16 +221,6 @@ for large distributed systems. You can read more about it
 Thus, we need to first start the ZooKeeper server followed by the Kafka
 server. This can be achieved using the following commands:
 
-1
-
-2
-
-3
-
-4
-
-5
-
 *\# Start ZooKeeper Server*
 
 bin/zookeeper-server-start.sh config/zookeeper.properties
@@ -235,6 +228,24 @@ bin/zookeeper-server-start.sh config/zookeeper.properties
 *\# Start Kafka Server*
 
 bin/kafka-server-start.sh config/server.properties
+
+*\# Creating Kafka Topics*
+
+Messages are published in topics. Use this command to create a new topic.
+
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+
+Created topic "test".
+You can also list all available topics by running the following command.
+
+bin/kafka-topics.sh --list --zookeeper localhost:2181
+test
+
+As you see, it prints test.
+
+You can also make use of the describe topics command for more details on a particular Kafka topic:
+
+bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test
 
 **Understanding Kafka**
 
@@ -280,25 +291,6 @@ that all the other brokers are updated.
 If a broker fails, the system can automatically reconfigure itself so a
 replica can take over as the new leader for that topic.
 
-**Creating Kafka Topics**
-
-Let us start by creating a sample Kafka topic with a single partition
-and replica. This can be done using the following command:
-
-bin/kafka-topics.sh \--create \--zookeeper localhost:2181
-\--replication-factor 1 \--partitions 1 \--topic sample
-
-Now, let us list down all of our Kafka topics to check if we have
-successfully created our sample topic. We can make use of the list
-command here:
-
-bin/kafka-topics.sh \--list \--zookeeper localhost:2181
-
-You can also make use of the describe topics command for more details on
-a particular Kafka topic:
-
-bin/kafka-topics.sh \--describe \--zookeeper localhost:2181 \--topic
-sample
 
 **Creating Producer And Consumer**
 
