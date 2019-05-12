@@ -448,3 +448,5 @@ our *auto\_commit\_interval* is set to 1 second, remember that if the
 offset is not committed, the consumer will read the message again (if
 *auto\_offset\_reset* is set to earliest).
 
+Also refer https://github.com/samirsahoo007/bigdata/tree/master/kafka/Calories-Alert-Kafka
+
