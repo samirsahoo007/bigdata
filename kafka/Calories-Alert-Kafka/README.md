@@ -13,4 +13,4 @@ A typical workflow look like this:
 
 *Raw recipe producer*
 The first program we are going to write is the producer. It will access Allrecpies.com and fetch the raw HTML  and store in raw_recipes topic.
-![](https://github.com/samirsahoo007/bigdata/blob/master/kafka/Calories-Alert-Kafka/producer-raw-recipies.py)
+[](https://github.com/samirsahoo007/bigdata/blob/master/kafka/Calories-Alert-Kafka/producer-raw-recipies.py)
