@@ -197,10 +197,15 @@ databases or migrate from legacy systems with less effort.
 **Setting up and Running**
 The easiest way to install Kafka is to download binaries and run it. Since it's based on JVM languages like Scala and Java, you must make sure that you are using Java 7 or greater.
 
-Kafka is available in two different flavors: One by Apache foundation and other by Confluent as a package. For this tutorial, I will go with the one provided by Apache foundation. By the way, Confluent was founded by the original developers of Kafka.
+There are multiple Python libraries available for usage:
 
-Installing Kafka is a fairly simple process. Just follow the given steps
-below:
+Kafka-Python – An open-source community-based library by Apache foundation
+PyKafka – This library is maintained by Parsly and it’s claimed to be a Pythonic API. Unlike Kafka-Python you can’t create dynamic topics.
+Confluent Python Kafka:- It is offered by Confluent as a thin wrapper around librdkafka, hence it’s performance is better than the two.
+
+For this tutorial, I will go with the one provided by Apache foundation.
+
+Installing Kafka is a fairly simple process. Just follow the given steps below:
 
 1 Download the latest 1.1.0 release of
 [Kafka](https://www.apache.org/dyn/closer.cgi?path=/kafka/1.1.0/kafka_2.11-1.1.0.tgz)
@@ -246,6 +251,47 @@ As you see, it prints test.
 You can also make use of the describe topics command for more details on a particular Kafka topic:
 
 bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test
+
+*\# Sending Messages*
+
+Next, we have to send messages, producers are used for that purpose. Let’s initiate a producer.
+
+bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test
+>Hello
+>World
+
+You start the console based producer interface which runs on the port 9092 by default. --topic allows you to set the topic in which the messages will be published. In our case the topic is test
+
+It shows you a > prompt and you can input whatever you want.
+
+Messages are stored locally on your disk. You can learn about the path of it by checking the value of log.dirs in config/server.properties file. By default they are set to /tmp/kafka-logs/
+
+If you list this folder you will find a folder with name test-0. Upon listing it you will find 3 files: 00000000000000000000.index 00000000000000000000.log 00000000000000000000.timeindex
+
+If you open 00000000000000000000.log in an editor then it shows something like
+
+^@^@^@^@^@^@^@^@^@^@^@=^@^@^@^@^BÐØR^V^@^@^@^@^@^@^@^@^Acça<9a>o^@^@^Acça<9a>oÿÿÿÿÿÿÿÿÿÿÿÿÿÿ^@^@^@^A^V^@^@^@^A
+Hello^@^@^@^@^@^@^@^@^A^@^@^@=^@^@^@^@^BÉJ^B­^@^@^@^@^@^@^@^@^Acça<9f>^?^@^@^Acça<9f>^?ÿÿÿÿÿÿÿÿÿÿÿÿÿÿ^@^@^@^A^V^@^@^@^A
+World^@
+~
+Looks like the encoded data or delimiter separated, I am not sure. If someone knows this format then do let me know.
+Anyways, Kafka provides a utility that lets you examine each incoming message.
+
+bin/kafka-run-class.sh kafka.tools.DumpLogSegments --deep-iteration --print-data-log --files /tmp/kafka-logs/test-0/00000000000000000000.log
+Dumping /tmp/kafka-logs/test-0/00000000000000000000.log
+Starting offset: 0
+offset: 0 position: 0 CreateTime: 1528595323503 isvalid: true keysize: -1 valuesize: 5 magic: 2 compresscodec: NONE producerId: -1 producerEpoch: -1 sequence: -1 isTransactional: false headerKeys: [] payload: Hello
+offset: 1 position: 73 CreateTime: 1528595324799 isvalid: true keysize: -1 valuesize: 5 magic: 2 compresscodec: NONE producerId: -1 producerEpoch: -1 sequence: -1 isTransactional: false headerKeys: [] payload: World
+
+You can see the message with other details like offset, position and CreateTime etc.
+
+*\# Consuming Messages*
+Messages that are stored should be consumed too. Let’s started a console based consumer.
+
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning
+If you run, it will dump all the messages from the beginning till now. If you are just interested to consume the messages after running the consumer then you can just omit --from-beginning switch it and run. The reason it does not show the old messages because the offset is updated once the consumer sends an ACK to the Kafka broker about processing messages.  You can see the workflow below.
+
+![alt text](http://blog.adnansiddiqi.me/wp-content/uploads/2018/06/Kafka-msgpassing.png)
 
 **Understanding Kafka**
 
