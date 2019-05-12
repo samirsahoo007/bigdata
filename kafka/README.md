@@ -124,6 +124,28 @@ Uses of Kafka are multiple. Here are a few use-cases that could help you to figu
 **ETL:-** Kafka has a feature of almost real-time streaming thus you can come up with an ETL based on your need.
 **Database:-** Based on things I mentioned above, you may say that Kafka also acts as a database. Not a typical databases that have a feature of querying the data as per need, what I meant that you can keep data in Kafka as long as you want without consuming it.
 
+***Kafka Concepts***
+
+![alt text](http://blog.adnansiddiqi.me/wp-content/uploads/2018/06/Kafka.png)
+
+**Topics**
+
+Every message that is feed into the system must be part of some topic. The topic is nothing but a stream of records. The messages are stored in key-value format. Each message is assigned a sequence, called Offset. The output of one message could be an input of the other for further processing.
+
+**Producers**
+
+Producers are the apps responsible to publish data into Kafka system. They publish data on the topic of their choice.
+
+**Consumers**
+
+The messages published into topics are then utilized by Consumers apps. A consumer gets subscribed to the topic of its choice and consumes data.
+
+**Broker**
+
+Every instance of Kafka that is responsible for message exchange is called a Broker. Kafka can be used as a stand-alone machine or a part of a cluster.
+
+I try to explain the whole thing with a simple example, there is a warehouse or godown of a restaurant where all the raw material is dumped like rice, vegetables etc. The restaurant serves different kinds of dishes: Chinese, Desi, Italian etc. The chefs of each cuisine can refer to the warehouse, pick the desire things and make things. There is a possibility that the stuff made by the raw material can later be used by all departments’ chefs, for instance, some secret sauce that is used in ALL kind of dishes. Here, the warehouse is a broker, vendors of goods are the producers, the goods and the secret sauce made by chefs are topics while chefs are consumers. My analogy might sound funny and inaccurate but at least it’d have helped you to understand the entire thing. 🙂
+
 **1. Simplify The Backend Architecture**
 
 Look at how a complex architecture can be simplified and streamlined
