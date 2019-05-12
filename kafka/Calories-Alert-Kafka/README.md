@@ -47,3 +47,7 @@ KafkaConsumer accepts a few parameters beside the topic name and host address. B
 After this, I am using same routines to connect producers and publish parsed data in the new topic. KafaTool browser gives glad tidings about newly stored messages.
 
 ![alt text](http://blog.adnansiddiqi.me/wp-content/uploads/2018/06/Screen-Shot-2018-06-10-at-7.05.31-PM.png)
+
+So far so good. We stored recipes in both raw and JSON format for later use. Next, we have to write a consumer that will connect with parsed_recipes topic and generate alert if certain calories critera meets.
+consumer-notification.py: The JSON is decoded and then check the calories count, a notification is issued once the criteria meet.
+
