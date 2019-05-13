@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+message Bottle {
+  string note = 1;
+}
+# To compile it
+# protoc my_example.proto --python_out out/
