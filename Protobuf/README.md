@@ -1,11 +1,23 @@
 Protocol Buffers (a.k.a., protobuf) are Google\'s language-neutral,
 platform-neutral, extensible mechanism for serializing structured data.
 
+**What is Protobuf**
+
+Protocol buffers((a.k.a., protobuf), is a protocol developed by Google to allow serialization and deserialization of structured data. 
+
+Google developed it with the goal to provide a better way, compared to XML, to make systems communicate. So they focused on making it simpler, smaller, faster and more maintainable then XML. But, as you will see in this article, this protocol even surpassed JSON with better performance, better maintainability and smaller size.
+
+
 Installation:
 pip install protobuf
 
 Compilation:
 protoc example.proto --python_out out/
+
+**Is Protobuf Really Faster than JSON**
+Yes
+Ref: 	https://maxondev.com/serialization-performance-comparison-c-net-formats-frameworks-xmldatacontractserializer-xmlserializer-binaryformatter-json-newtonsoft-servicestack-text/
+	https://github.com/eishay/jvm-serializers/wiki
 
 **How Does it Differs from JSON?**
 
