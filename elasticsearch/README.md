@@ -3,17 +3,16 @@ Elasticsearch tutorial for beginners using Python
 **Installation/Setup:**
 
 Ref:
-[[https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html]](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
+[[https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html]{.underline}](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
 
 \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
-\$**docker pull**
-**[[docker.elastic.co/elasticsearch/elasticsearch:7.0.1]](http://docker.elastic.co/elasticsearch/elasticsearch:7.0.1)**
+\$docker pull
+[[docker.elastic.co/elasticsearch/elasticsearch:7.0.1]{.underline}](http://docker.elastic.co/elasticsearch/elasticsearch:7.0.1)
 (To verify \$docker images)
 
-\$**docker run -p 9200:9200 -p 9300:9300 -e
-\"discovery.type=single-node\"**
-[[docker.elastic.co/elasticsearch/elasticsearch:7.0.1]](http://docker.elastic.co/elasticsearch/elasticsearch:7.0.1)
+\$docker run -p 9200:9200 -p 9300:9300 -e \"discovery.type=single-node\"
+[[docker.elastic.co/elasticsearch/elasticsearch:7.0.1]{.underline}](http://docker.elastic.co/elasticsearch/elasticsearch:7.0.1)
 
 Verify it from the browser: localhosts:9200
 
@@ -21,10 +20,209 @@ Verify it from the browser: localhosts:9200
 
 If you want to join the container from another terminal.
 
-\$ **docker exec -it containerid /bin/bash**
+\$ docker exec -it beac0962fcdd /bin/bash
 
+Note the use of single-node discovery that allows bypassing the
+bootstrap checks in a single-node development cluster.
 
+The following example brings up a cluster comprising two Elasticsearch
+nodes. To bring up the cluster, use the
+[docker-compose.yml](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-prod-cluster-composefile)
+and just type:
 
+\$ docker-compose up
+
+The node es01 listens on localhost:9200 while es02 talks to es01 over a
+Docker network.
+
+This example also uses [Docker named
+volumes](https://docs.docker.com/engine/tutorials/dockervolumes), called
+esdata01 and esdata02 which will be created if not already present.
+
+\#\#\#\#\#\#\#\#docker-compose.yml\#\#\#\#\#\#\#\#\#\#\#
+
+version: \'2.2\'
+
+services:
+
+es01:
+
+image: docker.elastic.co/elasticsearch/elasticsearch:7.0.1
+
+container\_name: es01
+
+environment:
+
+\- node.name=es01
+
+\- discovery.seed\_hosts=es02
+
+\- cluster.initial\_master\_nodes=es01,es02
+
+\- cluster.name=docker-cluster
+
+\- bootstrap.memory\_lock=true
+
+\- \"ES\_JAVA\_OPTS=-Xms512m -Xmx512m\"
+
+ulimits:
+
+memlock:
+
+soft: -1
+
+hard: -1
+
+volumes:
+
+\- esdata01:/usr/share/elasticsearch/data
+
+ports:
+
+\- 9200:9200
+
+networks:
+
+\- esnet
+
+es02:
+
+image: docker.elastic.co/elasticsearch/elasticsearch:7.0.1
+
+container\_name: es02
+
+environment:
+
+\- node.name=es02
+
+\- discovery.seed\_hosts=es01
+
+\- cluster.initial\_master\_nodes=es01,es02
+
+\- cluster.name=docker-cluster
+
+\- bootstrap.memory\_lock=true
+
+\- \"ES\_JAVA\_OPTS=-Xms512m -Xmx512m\"
+
+ulimits:
+
+memlock:
+
+soft: -1
+
+hard: -1
+
+volumes:
+
+\- esdata02:/usr/share/elasticsearch/data
+
+networks:
+
+\- esnet
+
+volumes:
+
+esdata01:
+
+driver: local
+
+esdata02:
+
+driver: local
+
+networks:
+
+esnet:
+
+\$ docker-compose down \# To stop the cluster
+
+Data volumes will persist, so it's possible to start the cluster again
+with the same data using docker-compose up.
+
+To destroy the cluster and the data volumes, just type
+
+\$ docker-compose down -v.
+
+**Inspect status of cluster:**
+
+\$ curl http://127.0.0.1:9200/\_cat/health
+
+1472225929 15:38:49 docker-cluster green 2 2 4 2 0 0 0 0 - 100.0%
+
+Log messages go to the console and are handled by the configured Docker
+logging driver. By default you can access logs with
+
+\$ docker logs.
+
+Configuring Elasticsearch with Docker
+
+Elasticsearch loads its configuration from files under
+/usr/share/elasticsearch/config/. These configuration files are
+documented in [Configuring
+Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/settings.html)
+and [Setting JVM
+options](https://www.elastic.co/guide/en/elasticsearch/reference/current/jvm-options.html).
+
+The image offers several methods for configuring Elasticsearch settings
+with the conventional approach being to provide customized files, that
+is to say elasticsearch.yml, but it's also possible to use environment
+variables to set options:
+
+**A. Present the parameters via Docker environment variables**
+
+For example, to define the cluster name with docker run you can pass -e
+\"cluster.name=mynewclustername\". Double quotes are required.
+
+**B. Bind-mounted configuration**
+
+Create your custom config file and mount this over the image's
+corresponding file. For example, bind-mounting a
+custom\_elasticsearch.yml with docker run can be accomplished with the
+parameter:
+
+-v
+full\_path\_to/custom\_elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+
+The container **runs Elasticsearch as user elasticsearch using uid:gid
+1000:1000**. Bind mounted host directories and files, such as
+custom\_elasticsearch.yml above, **need to be accessible by this user**.
+For the [data and log
+dirs](https://www.elastic.co/guide/en/elasticsearch/reference/current/path-settings.html),
+such as /usr/share/elasticsearch/data, write access is required as well.
+Also see note 1 below.
+
+**C. Customized image**
+
+In some environments, it may make more sense to prepare a custom image
+containing your configuration. A Dockerfile to achieve this may be as
+simple as:
+
+FROM docker.elastic.co/elasticsearch/elasticsearch:7.0.1
+
+COPY \--chown=elasticsearch:elasticsearch elasticsearch.yml
+/usr/share/elasticsearch/config/
+
+You could then build and try the image with something like:
+
+\$ docker build \--tag=elasticsearch-custom .
+
+\$ docker run -ti -v /usr/share/elasticsearch/data elasticsearch-custom
+
+Some plugins require additional security permissions. You have to
+explicitly accept them either by attaching a tty when you run the Docker
+image and accepting yes at the prompts, or inspecting the security
+permissions separately and if you are comfortable with them adding the
+\--batch flag to the plugin install command.
+
+**D. Override the image's default**
+[CMD](https://docs.docker.com/engine/reference/run/#cmd-default-command-or-options)
+
+Options can be passed as command-line options to the Elasticsearch
+process by overriding the default command for the image. For example:
+
+docker run \<various parameters\> bin/elasticsearch
+-Ecluster.name=mynewclustername
 
 **Elasticsearch:-**
 
