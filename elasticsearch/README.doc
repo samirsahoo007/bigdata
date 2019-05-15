@@ -1,7 +1,243 @@
+Installing Elasticsearch
+Elasticsearch is built on top of lucene which uses a java platform. Therefore we will start by installing java on our machines.
+For mac os users this can be done using brew:
+$ brew update
+$ brew cask install java
+Then install elasticsearch:
+$ brew install elasticsearch
 In your bash_profile add the following:
-
 export ES_HOME=~/apps/elasticsearch/elasticsearch-2.3.1
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_77/Contents/Home
 export PATH=$ES_HOME/bin:$JAVA_HOME/bin:$PATH
-
 confirm elasticsearch is installed by running the following in the command line and look out for the following details indicating the node name and Node starting:
+Request:
+$ elasticsearch
+Response:
+[2017-10-20T13:56:16,090][INFO ][o.e.n.Node               ] [] initializing ...
+[2017-10-20T13:56:16,235][INFO ][o.e.n.Node               ] node name [jzftSxE] derived from node ID [jzftSxExRquCI6m75aKamA]; set [node.name] to override
+[2017-10-20T13:56:20,897][INFO ][o.e.n.Node               ] [jzftSxE] starting ...
+If you see the above on running the command, Voila! your elasticsearch server is up and running.
+Basics of Elasticsearch
+Having successfully installed elasticsearch on our machines, let’s dive a little into a few core concepts within it.
+Near Real Time - There is a very low latency(~ one second) between the time a document is indexed and when it becomes searchable.
+Node - single server that is part of a cluster and takes part in indexing and allows search for documents. Each node has a unique id and name provided at start up.
+Cluster - collection of nodes that operate together to hold data by providing indexing and searching capabilities. A cluster has a unique id and name of which the default name is elasticsearch.
+Document - basic unit of information that need to be indexed so they can be searched normally expressed in JSON format.
+Type - logical grouping or categories of documents according to one’s preference.
+Index - collection of types of documents with some similarities. An index is identified by name which must be in lowercase.
+Shards - Elastic Search provides the ability to divide indexes into multiple pieces across nodes called shards, which allows the content to scale horizontally. By default an index has 5 shards.
+Replicas - copies of shards.
+Elasticsearch with curl
+Make sure your elasticsearch server is up and running.
+Let’s start by checking the cluster health:
+Request:
+$ curl -XGET 'localhost:9200'
+Response:
+{
+  "name" : "jzftZxE",
+  "cluster_name" : "elasticsearch_valeria", 
+  "cluster_uuid" : "8OmNMgH8Q1myChVMwGchdw",
+  "version" : {
+    "number" : "5.5.2",
+    "build_hash" : "b2f0c09",
+    "build_date" : "2017-08-14T12:33:14.154Z",
+    "build_snapshot" : false,
+    "lucene_version" : "6.6.0"
+  }, 
+  "tagline" : "You Know, for Search"
+}
+You’ll get the above response with the node name as jzftZxE and other details as specified.
+Also run the following:
+Request:
+$ curl -XGET 'localhost:9200/_cat/health?v'
+You’ll get a response as shown in the gist below if you are running elasticsearch for the first time.
+
+When asking for cluster health, there are 3 possible status we can get:
+Green - cluster is fully functional and everything is good.
+Yellow - cluster is fully functional and all data is available but some replicas are not yet allocated or available.
+Red - cluster is partially functional and some data is not available.
+Creating an index
+Lets create an index called novels :
+Request:
+$  curl -XPUT 'localhost:9200/novels'
+Response:
+{"acknowledged":true,"shards_acknowledged":true}%
+We get a JSON response from the server acknowledging that the index has been created.
+Now, let’s see the number of indices we have by running:
+Request:
+$ curl -XGET 'localhost:9200/_cat/indices?v'
+We get the following:
+
+You’ll notice that our health response is now yellow instead of green, this is because we only have one operational node in the cluster i.e. jzftZxE .
+Let’s add a document to the index
+Request:
+$ curl -XPUT 'localhost:9200/novels/genre/1?pretty' -d'
+{"name": "Romance",
+"interesting": "yes"}'
+Response:
+{
+  "_index" : "novels",
+  "_type" : "genre",
+  "_id" : "1",
+  "_version" : 1,
+  "result" : "created",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
+  },
+  "created" : true
+}
+The pretty parameter in the curl url helps us get the response in an easy to read JSON format as shown above after the curl command. In addition to the index name, we have to provide the document type in our case, genre. We also have the option to specify the document id when using PUT alternatively elasticsearch will provide one for us when using POST for easy identification of the document. The request body is specified by the -d parameter specified in the command. In our body we only have one field specified but several fields can be added.
+We get a JSON response shown above after the curl command echoing the index name, document type, id, shard details and true status for created.
+Lets add another documents of the same type as one above using the POST request.
+Request:
+$ curl -XPOST 'localhost:9200/novels/genre/?pretty' -d '{"name": "Sci-fi", "interesting": "maybe"}'
+Response:
+{
+  "_index" : "novels",
+  "_type" : "genre",
+  "_id" : "AV87FQqg_GA3aBS6fEe3",
+  "_version" : 1,
+  "result" : "created",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
+  },
+  "created" : true
+}
+As we see from the response, the document is created with a unique id generated with UUid.
+Add two more documents to the index of the same type different from the ones we have already created.
+Request:
+$ curl -XPUT 'localhost:9200/novels/authors/1?pretty' -d '{"name": "Sidney Sheldon", "novels_count": 18}'
+Request:
+$ curl -XPUT 'localhost:9200/novels/authors/2?pretty' -d '{"name": "Charles Dickens", "novels_count": 16}'
+Now run the command to list indices, you’ll notice that under the docs.count column we have 4 instead of 0 as earlier.
+Retrieving documents
+Retrieving documents is specified by the GET request which has the index name, document type and document id.
+Request:
+$  curl -XGET 'localhost:9200/novels/genre/1?pretty'
+Response:
+{
+  "_index" : "novels",
+  "_type" : "genre",
+  "_id" : "1",
+  "_version" : 1,
+  "found" : true,
+  "_source" : {
+    "name" : "Romance",
+    "interesting" : "yes"
+  }
+}
+The response from the server gives us the contents of the document we added with the id specified. The field found indicates whether the document has been found or not. Let’s see the value of the field found when we search for a document that does not exist.
+Request:
+$ curl -XGET 'localhost:9200/novels/genre/5?pretty'
+Response:
+{
+  "_index" : "novels",
+  "_type" : "genre",
+  "_id" : "5",
+  "found" : false
+}
+We can also retrieve the document with the fields we are only interested in as opposed to getting all the details. To only retrieve the contents of field name add the paremeter _source=name to the GET command as below:
+Request:
+$ curl -XGET 'localhost:9200/novels/genre/1?pretty&_source=name'
+Response:
+{
+  "_index" : "novels",
+  "_type" : "genre",
+  "_id" : "1",
+  "_version" : 1,
+  "found" : true,
+  "_source" : {
+    "name" : "Romance"
+  }
+}
+If you are only interested to see if the document exists, you can opt out of retrieving the contents by adding the parameter _source=false as below:
+Request:
+$ curl -XGET 'localhost:9200/novels/genre/1?pretty&_source=false'
+Response:
+{
+  "_index" : "novels",
+  "_type" : "genre",
+  "_id" : "1",
+  "_version" : 1,
+  "found" : true
+}
+Updating the documents
+To change certain fields for the document, we usePUT as we did in creating the documents above only that we will change the values that need to be updated and use a pre-existing id.
+Note that in the response on updating the document, the version number will change to 2 or according to the number of times the document has been edited.
+We can also update the document by adding another field using POST and _update parameter in the command as below:
+Request:
+$ curl -XPOST 'localhost:9200/novels/authors/2/_update?pretty' -d'
+{"doc":{
+    "Years":"1812-1870"
+    }
+}'
+Response:
+{
+  "_index" : "novels",
+  "_type" : "authors",
+  "_id" : "2",
+  "_version" : 2,
+  "result" : "updated",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
+  }
+}
+If you perform a GET operation you we notice the new field was truly added:
+Request:
+$ curl -XGET 'localhost:9200/novels/authors/2?pretty'
+Response:
+{
+  "_index" : "novels",
+  "_type" : "authors",
+  "_id" : "2",
+  "_version" : 2,
+  "found" : true,
+  "_source" : {
+    "name" : "Charles Dickens",
+    "novels_count" : 16,
+    "Years" : "1812-1870"
+  }
+}
+Deleting documents and the entire index
+We can delete a document as per the example below:
+Request:
+$ curl -XDELETE 'localhost:9200/novels/authors/1?pretty'
+Response:
+{
+  "found" : true,
+  "_index" : "novels",
+  "_type" : "authors",
+  "_id" : "1",
+  "_version" : 4,
+  "result" : "deleted",
+  "_shards" : {
+    "total" : 2,
+    "successful" : 1,
+    "failed" : 0
+  }
+}
+If we make a GET request we will get a false status for the document with id 1.
+Request:
+$ curl -XGET 'localhost:9200/novels/authors/1?pretty'
+Response:
+{
+  "_index" : "novels",
+  "_type" : "authors",
+  "_id" : "1",
+  "found" : false
+}
+To delete an entire index with it’s documents;
+Request:
+$ curl -XDELETE 'localhost:9200/novels?pretty'
+Response:
+{
+  "acknowledged" : true
+}
+
+You’ll get a status of true for acknowledged in the response.
