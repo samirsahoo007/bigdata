@@ -3,17 +3,17 @@ Elasticsearch tutorial for beginners using Python
 **Installation/Setup:**
 
 Ref:
-[[https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html]{.underline}](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
+[[https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html]](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html)
 
 \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
 
 \$**docker pull**
-**[[docker.elastic.co/elasticsearch/elasticsearch:7.0.1]{.underline}](http://docker.elastic.co/elasticsearch/elasticsearch:7.0.1)**
+**[[docker.elastic.co/elasticsearch/elasticsearch:7.0.1]](http://docker.elastic.co/elasticsearch/elasticsearch:7.0.1)**
 (To verify \$docker images)
 
 \$**docker run -p 9200:9200 -p 9300:9300 -e
 \"discovery.type=single-node\"**
-[[docker.elastic.co/elasticsearch/elasticsearch:7.0.1]{.underline}](http://docker.elastic.co/elasticsearch/elasticsearch:7.0.1)
+[[docker.elastic.co/elasticsearch/elasticsearch:7.0.1]](http://docker.elastic.co/elasticsearch/elasticsearch:7.0.1)
 
 Verify it from the browser: localhosts:9200
 
@@ -21,7 +21,59 @@ Verify it from the browser: localhosts:9200
 
 If you want to join the container from another terminal.
 
-\$ **docker exec -it beac0962fcdd /bin/bash**
+\$ **docker exec -it containerid /bin/bash**
+
+docker-compose.yml:
+
+version: '2.2'
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.1
+    container_name: es01
+    environment:
+      - node.name=es01
+      - discovery.seed_hosts=es02
+      - cluster.initial_master_nodes=es01,es02
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - esnet
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.0.1
+    container_name: es02
+    environment:
+      - node.name=es02
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01,es02
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata02:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+
+volumes:
+  esdata01:
+    driver: local
+  esdata02:
+    driver: local
+
+networks:
+  esnet:
 
 **Elasticsearch:-**
 
