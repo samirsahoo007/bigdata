@@ -1,5 +1,17 @@
 Elasticsearch tutorial for beginners using Python
 
+**What is Elasticsearch:-**
+
+ElasticSearch (ES) is a distributed and highly available open-source search engine that is built on top of Apache Lucene. 
+It’s an open-source which is built in Java thus available for many platforms. You store unstructured data in JSON format which also makes it a 
+NoSQL database. So, unlike other NoSQL databases ES also provides search engine capabilities and other related features.
+
+**ElasticSearch Use Cases:-**
+You can use ES for multiple purposes, a couple of them given below:
+	- You are running a website that provides lots of dynamic content; be it an e-commerce website or a blog. By implementing ES you can not only provide a robust search engine for your web app but can also provide native auto-complete features in your app.
+	- You can ingest different kinds of log data and then can use to find trends and statistics.
+
+
 **Installation/Setup:**
 
 Ref:
@@ -224,14 +236,6 @@ process by overriding the default command for the image. For example:
 docker run \<various parameters\> bin/elasticsearch
 -Ecluster.name=mynewclustername
 
-**Elasticsearch:-**
-
-Elasticsearch is a real-time distributed search and analytics engine. It
-allows you to explore your data at a speed and at a scale never before
-possible. It is used for full text search, structured search, analytics
-and all three in combination. Elastic search is an open source search
-engine built on top of Apache Lucecne, a full text search engine
-library.
 
 **Installing and running Elasticsearch:**
 
