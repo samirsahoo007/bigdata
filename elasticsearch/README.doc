@@ -1,0 +1,7 @@
+In your bash_profile add the following:
+
+export ES_HOME=~/apps/elasticsearch/elasticsearch-2.3.1
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_77/Contents/Home
+export PATH=$ES_HOME/bin:$JAVA_HOME/bin:$PATH
+
+confirm elasticsearch is installed by running the following in the command line and look out for the following details indicating the node name and Node starting:
