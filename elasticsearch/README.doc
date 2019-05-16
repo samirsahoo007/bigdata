@@ -1,35 +1,41 @@
-Installing Elasticsearch
+Ref: https://medium.com/the-andela-way/getting-started-with-elasticsearch-with-python-be8a5727c05f
+Installing Elasticsearch on Mac
+===============================
 Elasticsearch is built on top of lucene which uses a java platform. Therefore we will start by installing java on our machines.
-For mac os users this can be done using brew:
+
 $ brew update
 $ brew cask install java
-Then install elasticsearch:
 $ brew install elasticsearch
+
 In your bash_profile add the following:
+
 export ES_HOME=~/apps/elasticsearch/elasticsearch-2.3.1
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_77/Contents/Home
 export PATH=$ES_HOME/bin:$JAVA_HOME/bin:$PATH
-confirm elasticsearch is installed by running the following in the command line and look out for the following details indicating the node name and Node starting:
-Request:
+
 $ elasticsearch
 Response:
 [2017-10-20T13:56:16,090][INFO ][o.e.n.Node               ] [] initializing ...
 [2017-10-20T13:56:16,235][INFO ][o.e.n.Node               ] node name [jzftSxE] derived from node ID [jzftSxExRquCI6m75aKamA]; set [node.name] to override
 [2017-10-20T13:56:20,897][INFO ][o.e.n.Node               ] [jzftSxE] starting ...
+
 If you see the above on running the command, Voila! your elasticsearch server is up and running.
+
 Basics of Elasticsearch
-Having successfully installed elasticsearch on our machines, let’s dive a little into a few core concepts within it.
-Near Real Time - There is a very low latency(~ one second) between the time a document is indexed and when it becomes searchable.
-Node - single server that is part of a cluster and takes part in indexing and allows search for documents. Each node has a unique id and name provided at start up.
-Cluster - collection of nodes that operate together to hold data by providing indexing and searching capabilities. A cluster has a unique id and name of which the default name is elasticsearch.
-Document - basic unit of information that need to be indexed so they can be searched normally expressed in JSON format.
-Type - logical grouping or categories of documents according to one’s preference.
-Index - collection of types of documents with some similarities. An index is identified by name which must be in lowercase.
-Shards - Elastic Search provides the ability to divide indexes into multiple pieces across nodes called shards, which allows the content to scale horizontally. By default an index has 5 shards.
-Replicas - copies of shards.
+=======================
+Near Real Time 	- There is a very low latency(~ one second) between the time a document is indexed and when it becomes searchable.
+Node 		- single server that is part of a cluster and takes part in indexing and allows search for documents. Each node has a unique id and name provided at start up.
+Cluster 	- collection of nodes that operate together to hold data by providing indexing and searching capabilities. A cluster has a unique id and name of which the default name is elasticsearch.
+Document 	- basic unit of information that need to be indexed so they can be searched normally expressed in JSON format.
+Type 		- logical grouping or categories of documents according to one’s preference.
+Index 		- collection of types of documents with some similarities. An index is identified by name which must be in lowercase.
+Shards 		- Elastic Search provides the ability to divide indexes into multiple pieces across nodes called shards, which allows the content to scale horizontally. By default an index has 5 shards.
+Replicas 	- copies of shards.
+
 Elasticsearch with curl
-Make sure your elasticsearch server is up and running.
-Let’s start by checking the cluster health:
+=======================
+Make sure your elasticsearch server is up and running. Let’s start by checking the cluster health:
+
 Request:
 $ curl -XGET 'localhost:9200'
 Response:
@@ -47,33 +53,41 @@ Response:
   "tagline" : "You Know, for Search"
 }
 You’ll get the above response with the node name as jzftZxE and other details as specified.
+
 Also run the following:
 Request:
 $ curl -XGET 'localhost:9200/_cat/health?v'
-You’ll get a response as shown in the gist below if you are running elasticsearch for the first time.
 
+You’ll get a response as shown in the gist below if you are running elasticsearch for the first time.
 When asking for cluster health, there are 3 possible status we can get:
-Green - cluster is fully functional and everything is good.
-Yellow - cluster is fully functional and all data is available but some replicas are not yet allocated or available.
-Red - cluster is partially functional and some data is not available.
+
+Green 	- cluster is fully functional and everything is good.
+Yellow 	- cluster is fully functional and all data is available but some replicas are not yet allocated or available.
+Red 	- cluster is partially functional and some data is not available.
+
 Creating an index
-Lets create an index called novels :
+================
 Request:
 $  curl -XPUT 'localhost:9200/novels'
-Response:
-{"acknowledged":true,"shards_acknowledged":true}%
-We get a JSON response from the server acknowledging that the index has been created.
-Now, let’s see the number of indices we have by running:
-Request:
-$ curl -XGET 'localhost:9200/_cat/indices?v'
-We get the following:
+Response:							# We get a JSON response from the server acknowledging that the index has been created.
+{"acknowledged":true,"shards_acknowledged":true}%			
 
-You’ll notice that our health response is now yellow instead of green, this is because we only have one operational node in the cluster i.e. jzftZxE .
-Let’s add a document to the index
-Request:
+Request:							# Now, let’s see the number of indices we have by running:
+$ curl -XGET 'localhost:9200/_cat/indices?v'
+Response:
+health status index  uuid                   pri rep docs.count docs.deleted store.size pri.store.size
+yellow open   novels uxSpO39WRxe9qN37bv1YEg   5   1          0            0      1.1kb          1.1kb
+								# You’ll notice that our health response is now yellow instead of green, this is because we only have one operational node in the cluster i.e. jzftZxE .
+
+********************************************************************************************************************************************
+Note: If the following commands throws error("status" : 406) then add "-H 'Content-Type: application/json'" to the command
+e.g. $ curl -XPUT 'localhost:9200/novels/genre/1?pretty' -d'  {"name": "Romance", "interesting": "yes"}' -H 'Content-Type: application/json'
+********************************************************************************************************************************************
+Request:							# Let’s add a document to the index
 $ curl -XPUT 'localhost:9200/novels/genre/1?pretty' -d'
 {"name": "Romance",
 "interesting": "yes"}'
+
 Response:
 {
   "_index" : "novels",
@@ -88,10 +102,11 @@ Response:
   },
   "created" : true
 }
+
 The pretty parameter in the curl url helps us get the response in an easy to read JSON format as shown above after the curl command. In addition to the index name, we have to provide the document type in our case, genre. We also have the option to specify the document id when using PUT alternatively elasticsearch will provide one for us when using POST for easy identification of the document. The request body is specified by the -d parameter specified in the command. In our body we only have one field specified but several fields can be added.
 We get a JSON response shown above after the curl command echoing the index name, document type, id, shard details and true status for created.
-Lets add another documents of the same type as one above using the POST request.
-Request:
+
+Request:								# Lets add another documents of the same type as one above using the POST request.
 $ curl -XPOST 'localhost:9200/novels/genre/?pretty' -d '{"name": "Sci-fi", "interesting": "maybe"}'
 Response:
 {
@@ -107,14 +122,18 @@ Response:
   },
   "created" : true
 }
-As we see from the response, the document is created with a unique id generated with UUid.
-Add two more documents to the index of the same type different from the ones we have already created.
+
+As we see from the response, the document is created with a unique id generated with UUid. Add two more documents to the index of the same type different from the ones we have already created.
+
 Request:
 $ curl -XPUT 'localhost:9200/novels/authors/1?pretty' -d '{"name": "Sidney Sheldon", "novels_count": 18}'
 Request:
 $ curl -XPUT 'localhost:9200/novels/authors/2?pretty' -d '{"name": "Charles Dickens", "novels_count": 16}'
+
 Now run the command to list indices, you’ll notice that under the docs.count column we have 4 instead of 0 as earlier.
+
 Retrieving documents
+====================
 Retrieving documents is specified by the GET request which has the index name, document type and document id.
 Request:
 $  curl -XGET 'localhost:9200/novels/genre/1?pretty'
@@ -130,7 +149,9 @@ Response:
     "interesting" : "yes"
   }
 }
+
 The response from the server gives us the contents of the document we added with the id specified. The field found indicates whether the document has been found or not. Let’s see the value of the field found when we search for a document that does not exist.
+
 Request:
 $ curl -XGET 'localhost:9200/novels/genre/5?pretty'
 Response:
@@ -140,7 +161,9 @@ Response:
   "_id" : "5",
   "found" : false
 }
+
 We can also retrieve the document with the fields we are only interested in as opposed to getting all the details. To only retrieve the contents of field name add the paremeter _source=name to the GET command as below:
+
 Request:
 $ curl -XGET 'localhost:9200/novels/genre/1?pretty&_source=name'
 Response:
@@ -154,7 +177,9 @@ Response:
     "name" : "Romance"
   }
 }
+
 If you are only interested to see if the document exists, you can opt out of retrieving the contents by adding the parameter _source=false as below:
+
 Request:
 $ curl -XGET 'localhost:9200/novels/genre/1?pretty&_source=false'
 Response:
@@ -165,10 +190,13 @@ Response:
   "_version" : 1,
   "found" : true
 }
+
 Updating the documents
-To change certain fields for the document, we usePUT as we did in creating the documents above only that we will change the values that need to be updated and use a pre-existing id.
+======================
+To change certain fields for the document, we use PUT as we did in creating the documents above only that we will change the values that need to be updated and use a pre-existing id.
 Note that in the response on updating the document, the version number will change to 2 or according to the number of times the document has been edited.
 We can also update the document by adding another field using POST and _update parameter in the command as below:
+
 Request:
 $ curl -XPOST 'localhost:9200/novels/authors/2/_update?pretty' -d'
 {"doc":{
@@ -188,7 +216,9 @@ Response:
     "failed" : 0
   }
 }
+
 If you perform a GET operation you we notice the new field was truly added:
+
 Request:
 $ curl -XGET 'localhost:9200/novels/authors/2?pretty'
 Response:
@@ -204,8 +234,9 @@ Response:
     "Years" : "1812-1870"
   }
 }
+
 Deleting documents and the entire index
-We can delete a document as per the example below:
+=======================================
 Request:
 $ curl -XDELETE 'localhost:9200/novels/authors/1?pretty'
 Response:
@@ -222,8 +253,8 @@ Response:
     "failed" : 0
   }
 }
-If we make a GET request we will get a false status for the document with id 1.
-Request:
+
+Request:							# If we make a GET request we will get a false status for the document with id 1.
 $ curl -XGET 'localhost:9200/novels/authors/1?pretty'
 Response:
 {
@@ -232,12 +263,201 @@ Response:
   "_id" : "1",
   "found" : false
 }
-To delete an entire index with it’s documents;
-Request:
+
+Request:							# To delete an entire index with it’s documents;
 $ curl -XDELETE 'localhost:9200/novels?pretty'
-Response:
+Response:							# You’ll get a status of true for acknowledged in the response.
 {
   "acknowledged" : true
 }
 
-You’ll get a status of true for acknowledged in the response.
+
+Incorporating Elasticsearch in python:
+=====================================
+$ source /Users/samirsahoo/virtualenvs/python27/bin/activate            # activate virtual environment
+(my-env) $ pip install elasticsearch
+
+Make sure the Elasticsearch server is up and running i.e. open another command line window and run the command elasticsearch as we did in part one of this tutorial.
+(my-env) $ python
+Python 2.7.13 (default, Apr  4 2017, 08:46:44)
+[GCC 4.2.1 Compatible Apple LLVM 8.0.0 (clang-800.0.42.1)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+Creating an index
+=================
+
+>>> from elasticsearch import Elasticsearch					# Connect Elasticsearch server with the python elasticsearch.
+>>> ES_HOST = {"host": "localhost", "port": 9200}
+>>> es = Elasticsearch(hosts=[ES_HOST])						# We create an instance of Elasticsearch called es and assign it to port 9200 which is the default port for Elasticsearch.
+										# Using the Elasticsearch instance we create an index called novels.
+
+>>> INDEX_NAME = 'novels' 
+>>> response = es.indices.create(index=INDEX_NAME)
+>>> print(response)
+{u'acknowledged': True, u'shards_acknowledged': True}				# Printing the response shows that the index was successfully created.
+
+Adding Documents
+===============
+>>> author1 = {"name": "Sidney Sheldon", "novels_count": 18}
+>>> resp = es.index(index=INDEX_NAME, doc_type="authors", body=author1, id=1)
+>>> print(resp)
+{u'_type': u'authors', u'_shards': {u'successful': 1, u'failed': 0, u'total': 2}, u'_index': u'novels', u'_version': 1, u'created': True, u'result': u'created', u'_id': u'1'}
+
+>>> author2 = {"name": "Charles Dickens", "novels_count": 16}
+>>> resp2 = es.index(index=INDEX_NAME, doc_type="authors", body=author2, id=2)
+>>> print(resp2)
+{u'_type': u'authors', u'_shards': {u'successful': 1, u'failed': 0, u'total': 2}, u'_index': u'novels', u'_version': 1, u'created': True, u'result': u'created', u'_id': u'2'}
+
+We can also add a document without specifying the id using the same method. We’ll do this by adding documents to document type genre.
+
+>>> genre1 = {"name": "Romance", "interesting": "yes"}
+>>> resp1 = es.index(index=INDEX_NAME, doc_type="authors", body=genre1)
+>>> print(resp1)
+{u'_type': u'authors', u'_shards': {u'successful': 1, u'failed': 0, u'total': 2}, u'_index': u'novels', u'_version': 1, u'created': True, u'result': u'created', u'_id': u'AV938ntblB-oCH7JOtOz'}
+
+>>> genre2 = {"name": "Sci-fi", "interesting": "maybe"}
+>>> resp2 = es.index(index=INDEX_NAME, doc_type="authors", body=genre2)
+>>> print(resp2)
+{u'_type': u'authors', u'_shards': {u'successful': 1, u'failed': 0, u'total': 2}, u'_index': u'novels', u'_version': 1, u'created': True, u'result': u'created', u'_id': u'AV939IIPlB-oCH7JOtO0'}
+
+You’ll notice from the response that a unique id is assigned to the document.
+
+Retrieving Documents
+====================
+>>> resp = es.get(index=INDEX_NAME, doc_type="authors", id=1)			# Let us retrieve details of author1 above:
+>>> print(resp)
+{u'_type': u'authors', u'_source': {u'name': u'Sidney Sheldon', u'novels_count': 18}, u'_index': u'novels', u'_version': 1, u'found': True, u'_id': u'1'}
+
+>>> resp = es.get(index=INDEX_NAME, doc_type="authors", id=2)
+>>> print(resp["_source"])
+{u'name': u'Charles Dickens', u'novels_count': 16}
+
+Updating the Documents
+======================
+>>> edit_author1 = {"name": "Sheldon Sid", "novels_count": 18}			# Let’s change the name of author1 of document id 1:
+>>> resp = es.index(index=INDEX_NAME, doc_type="authors", id=1, body=edit_author1)
+>>> print(resp)
+{u'_type': u'authors', u'_shards': {u'successful': 1, u'failed': 0, u'total': 2}, u'_index': u'novels', u'_version': 2, u'created': False, u'result': u'updated', u'_id': u'1'}
+
+>>> resp = es.get(index=INDEX_NAME, doc_type="authors", id=1)
+>>> print(resp)
+{u'_type': u'authors', u'_source': {u'name': u'Sheldon Sid', u'novels_count': 18}, u'_index': u'novels', u'_version': 2, u'found': True, u'_id': u'1'}
+
+From the response, the version has changed to 2 and the name from Sidney Sheldon to Sheldon Sid .
+We can also add another field to the document. This is done using the Elasticsearch.update(args) function. Let’s add years active to author2 document.
+
+>>> resp = es.update(index=INDEX_NAME, doc_type="authors", id=2, body={"doc": {"Years":"1812-1870"}})
+>>> print(resp)
+{u'_type': u'authors', u'_shards': {u'successful': 1, u'failed': 0, u'total': 2}, u'_index': u'novels', u'_version': 2, u'result': u'updated', u'_id': u'2'}
+
+Printing the response we can see that the document was successfully updated and the version changes to 2.
+On retrieving the document we can ascertain this:
+
+>>> resp = es.get(index=INDEX_NAME, doc_type="authors", id=2)
+>>> print(resp)
+{u'_type': u'authors', u'_source': {u'Years': u'1812-1870', u'name': u'Charles Dickens', u'novels_count': 16}, u'_index': u'novels', u'_version': 2, u'found': True, u'_id': u'2'}
+>>> print(resp["_source"])
+{u'Years': u'1812-1870', u'name': u'Charles Dickens', u'novels_count': 16}
+
+The version is 2 instead of 1 and the new details i.e. ‘Years’: ‘1812–1870’ have been added.
+
+Deleting documents and the entire index
+=======================================
+>>> resp = es.delete(index=INDEX_NAME, doc_type="authors", id=2)
+>>> print(resp)
+{u'_type': u'authors', u'_index': u'novels', u'_shards': {u'successful': 1, u'failed': 0, u'total': 2}, u'_version': 3, u'result': u'deleted', u'found': True, u'_id': u'2'}
+>>> resp = es.get(index=INDEX_NAME, doc_type="authors", id=2)			# Let us confirm if truly our document is deleted by retrieving it.
+>>> print(resp)
+.
+.
+.
+raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)
+elasticsearch.exceptions.NotFoundError: TransportError(404, u'{"_index":"novels","_type":"authors","_id":"2","found":false}')
+
+We get an elasticsearch.exceptions.NotFoundError indicating that the document in question does not exist. The found status is false.This error can easily be caught in a python application to prevent an it from crashing.
+To delete an entire index we use Elasticsearch.indices.delete(args) method.
+
+>>> resp = es.indices.delete(index=INDEX_NAME)
+>>> print(resp)
+{u'acknowledged': True}								# We get a response that the delete operation was successful.
+Trying to retrieve a document we get :
+>>> resp = es.get(index=INDEX_NAME, doc_type="authors", id=1)
+.
+.
+.
+raise HTTP_EXCEPTIONS.get(status_code, TransportError)(status_code, error_message, additional_info)
+elasticsearch.exceptions.NotFoundError: TransportError(404, u'index_not_found_exception', u'no such index')
+
+Emphasis on message on the error i.e. ‘index_not_found_exception’, ‘no such index’
+Running the above in a single python file
+Let us now transfer everything we’ve done above into an easy to interact with python file avoiding repetition
+
+Create a file called tutorial.py. We are going to write our functions here. Inside the file add the following code:
+
+######################################### tutorial.py ###################################################################
+
+from elasticsearch import Elasticsearch
+
+# create an instance of elasticsearch and assign it to port 9200
+ES_HOST = {"host": "localhost", "port": 9200}
+es = Elasticsearch(hosts=[ES_HOST])
+
+
+def create_index(index_name):
+    """Functionality to create index."""
+    resp = es.indices.create(index=index_name)
+    print(resp)
+
+
+def document_add(index_name, doc_type, doc, doc_id=None):
+    """Funtion to add a document by providing index_name,
+    document type, document contents as doc and document id."""
+    resp = es.index(index=index_name, doc_type=doc_type, body=doc, id=doc_id)
+    print(resp)
+
+
+def document_view(index_name, doc_type, doc_id):
+    """Function to view document."""
+    resp = es.get(index=index_name, doc_type=doc_type, id=doc_id)
+    document = resp["_source"]
+    print(document)
+
+
+def document_update(index_name, doc_type, doc_id, doc=None, new=None):
+    """Function to edit a document either updating existing fields or adding a new field."""
+    if doc:
+        resp = es.index(index=index_name, doc_type=doc_type,
+                        id=doc_id, body=doc)
+        print(resp)
+    else:
+        resp = es.update(index=index_name, doc_type=doc_type,
+                         id=doc_id, body={"doc": new})
+
+
+def document_delete(index_name, doc_type, doc_id):
+    """Function to delete a specific document."""
+    resp = es.delete(index=index_name, doc_type=doc_type, id=doc_id)
+    print(resp)
+
+
+def delete_index(index_name):
+    """Delete an index by specifying the index name"""
+    resp = es.indices.delete(index=index_name)
+    print(resp)
+
+####################################################################################################################################
+
+From the terminal inside the virtual environment we created, invoke interactive python and import the file as below. To create any index using our function:
+
+>>> import tutorial
+>>> tutorial.create_index('novels')
+{u'acknowledged': True, u'shards_acknowledged': True}
+
+To add a document:
+
+>>> tutorial.document_add('novels', 'authors', {'name':'Sidney Sheldon'}, 1)
+{u'_type': u'authors', u'_shards': {u'successful': 1, u'failed': 0, u'total': 2}, u'_index': u'novels', u'_version': 1, u'created': True, u'result': u'created', u'_id': u'1'}
+To view a document:
+>>> tutorial.document_view(index_name='novels', doc_type='authors', doc_id=1)
+{u'name': u'Sidney Sheldon'}
+
