@@ -1,3 +1,51 @@
+**What is Elasticsearch:-**
+
+Elasticsearch is a distributed, real-time, search and analytics platform.
+
+ElasticSearch (ES) is a distributed and highly available open-source search engine that is built on top of Apache Lucene.
+It’s an open-source which is built in Java thus available for many platforms. You store unstructured data in JSON format which also makes it a
+NoSQL database. So, unlike other NoSQL databases ES also provides search engine capabilities and other related features.
+
+**ElasticSearch Use Cases:-**
+You can use ES for multiple purposes, a couple of them given below:
+        - You are running a website that provides lots of dynamic content; be it an e-commerce website or a blog. By implementing ES you can not only provide a robust search engine for your web app but can also provide native auto-complete features in your app.
+        - You can ingest different kinds of log data and then can use to find trends and statistics.
+
+
+**Why you should use Elasticsearch as opposed to normal database queries?**
+1. Operates near real time which makes it faster to store, search and analyze big volumes of data as opposed to when using a database.
+
+2. It is easy to use; one only needs to understand the basics of curl commands when calling an endpoint i.e. actions are performed using a simple RESTful API.
+
+3. Easily scalable hence ability to extend resources and balance the loading between the nodes in a cluster.
+
+4. Provides a robust search as it incorporates use of faceted search as opposed to full text search which allows users to use filters on the information they need.
+
+*Disadvantages of Elasticsearch*
+ElasticSearch is not perfect for relational data and for this reason many developers opt to use both the database and elasticsearch by dividing the application logic between the two.
+
+Que. Yeah, but what IS Elasticsearch?
+
+Good question! In the previous definition you can see all these hype-sounding tech terms (distributed, real-time, analytics), so let’s try to explain.
+
+ES is distributed, it organizes information in clusters of nodes, so it will run in multiple servers if we intend it to.
+ES is real-time, since data is indexed, we get responses to our queries super fast!
+And last but not least, it does searches and analytics. The main problem we are solving with this tool is exploring our data!
+
+A platform like ES is the foundation for any respectable search engine.
+
+Que. How does it work?
+
+Using a restful API, Elasticsearch saves data and indexes it automatically. It assigns types to fields and that way a search can be done smartly and quickly using filters and different queries.
+
+It’s uses JVM in order to be as fast as possible. It distributes indexes in “shards” of data. It replicates shards in different nodes, so it’s distributed and clusters can function even if not all nodes are operational. Adding nodes is super easy and that’s what makes it so scalable.
+
+ES uses Lucene to solve searches. This is quite an advantage with comparing with, for example, Django query strings. A restful API call allows us to perform searches using json objects as parameters, making it much more flexible and giving each search parameter within the object a different weight, importance and or priority.
+
+The final result ranks objects that comply with the search query requirements. You could even use synonyms, autocompletes, spell suggestions and correct typos. While the usual query strings provides results that follow certain logic rules, ES queries give you a ranked list of results that may fall in different criteria and its order depend on how they comply with a certain rule or filter.
+
+ES can also provide answers for data analysis, like averages, how many unique terms and or statistics. This could be done using aggregations. To dig a little deeper in this feature check the documentation here.
+
 Ref: https://medium.com/the-andela-way/getting-started-with-elasticsearch-with-python-be8a5727c05f
 Installing Elasticsearch on Mac
 ===============================
