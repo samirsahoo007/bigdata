@@ -1,0 +1,382 @@
+https://www.guru99.com/what-is-big-data.html
+Introduction to BIG DATA: Types, Characteristics & Benefits
+ 
+In order to understand 'Big Data', we first need to know what 'data' is. Oxford dictionary defines 'data' as -
+"The quantities, characters, or symbols on which operations are performed by a computer, which may be stored and transmitted in the form of electrical signals and recorded on magnetic, optical, or mechanical recording media. "
+
+In this tutorial we will learn,
+Examples Of 'Big Data'
+Categories Of 'Big Data'
+Characteristics Of 'Big Data'
+Advantages Of Big Data Processing
+
+So, 'Big Data' is also a data but with a huge size. 'Big Data' is a term used to describe collection of data that is huge in size and yet growing exponentially with time.In short, such a data is so large and complex that none of the traditional data management tools are able to store it or process it efficiently.
+
+ Introduction to BIG DATA: Types, Characteristics & Benefits
+
+Examples Of 'Big Data'
+Following are some the examples of 'Big Data'-
+
+* The New York Stock Exchange generates about one terabyte of new trade data per day.
+* Social Media Impact: Statistic shows that 500+terabytes of new data gets ingested into the databases of social media site Facebook, every day. This data is mainly generated in terms of photo and video uploads, message exchanges, putting comments etc.
+* Single Jet engine can generate 10+terabytes of data in 30 minutes of a flight time. With many thousand flights per day, generation of data reaches up to many Petabytes.
+
+Categories Of 'Big Data'
+Big data' could be found in three forms:
+
+Structured
+Unstructured
+Semi-structured
+
+Structured
+Any data that can be stored, accessed and processed in the form of fixed format is termed as a 'structured' data. Over the period of time, talent in computer science have achieved greater success in developing techniques for working with such kind of data (where the format is well known in advance) and also deriving value out of it. However, now days, we are foreseeing issues when size of such data grows to a huge extent, typical sizes are being in the rage of multiple zettabyte.
+
+Do you know? 1021 bytes equals to 1 zettabyte or one billion terabytes forms a zettabyte.
+
+Looking at these figures one can easily understand why the name 'Big Data' is given and imagine the challenges involved in its storage and processing.
+
+Do you know? Data stored in a relational database management system is one example of a 'structured' data.
+
+Examples Of Structured Data
+An 'Employee' table in a database is an example of Structured Data
+
+Employee_ID 	Employee_Name 	Gender 	Department 	Salary_In_lacs
+2365 	Rajesh Kulkarni 	Male 	Finance	650000
+3398 	Pratibha Joshi 	Female 	Admin 	650000
+7465 	Shushil Roy 	Male 	Admin 	500000
+7500 	Shubhojit Das 	Male 	Finance 	500000
+7699 	Priya Sane 	Female 	Finance 	550000
+
+Unstructured
+Any data with unknown form or the structure is classified as unstructured data. In addition to the size being huge, un-structured data poses multiple challenges in terms of its processing for deriving value out of it. Typical example of unstructured data is, a heterogeneous data source containing a combination of simple text files, images, videos etc. Now a day organizations have wealth of data available with them but unfortunately they don't know how to derive value out of it since this data is in its raw form or unstructured format.
+
+Examples Of Un-structured Data
+
+Output returned by 'Google Search'
+
+ Semi-structured
+Semi-structured data can contain both the forms of data. We can see semi-structured data as a strcutured in form but it is actually not defined with e.g. a table definition in relational DBMS. Example of semi-structured data is a data represented in XML file.
+
+Examples Of Semi-structured Data
+
+Personal data stored in a XML file-
+
+<rec><name>Prashant Rao</name><sex>Male</sex><age>35</age></rec>
+<rec><name>Seema R.</name><sex>Female</sex><age>41</age></rec>
+<rec><name>Satish Mane</name><sex>Male</sex><age>29</age></rec>
+<rec><name>Subrato Roy</name><sex>Male</sex><age>26</age></rec>
+<rec><name>Jeremiah J.</name><sex>Male</sex><age>35</age></rec>
+Data Growth over years
+
+ Please note that web application data, which is unstructured, consists of log files, transaction history files etc. OLTP systems are built to work with structured data wherein data is stored in relations (tables).
+
+Characteristics Of 'Big Data'
+(i)Volume – The name 'Big Data' itself is related to a size which is enormous. Size of data plays very crucial role in determining value out of data. Also, whether a particular data can actually be considered as a Big Data or not, is dependent upon volume of data. Hence, 'Volume' is one characteristic which needs to be considered while dealing with 'Big Data'.
+
+(ii)Variety – The next aspect of 'Big Data' is its variety.
+
+Variety refers to heterogeneous sources and the nature of data, both structured and unstructured. During earlier days, spreadsheets and databases were the only sources of data considered by most of the applications. Now days, data in the form of emails, photos, videos, monitoring devices, PDFs, audio, etc. is also being considered in the analysis applications. This variety of unstructured data poses certain issues for storage, mining and analysing data.
+
+(iii)Velocity – The term 'velocity' refers to the speed of generation of data. How fast the data is generated and processed to meet the demands, determines real potential in the data.
+
+Big Data Velocity deals with the speed at which data flows in from sources like business processes, application logs, networks and social media sites, sensors, Mobile devices, etc. The flow of data is massive and continuous.
+
+(iv)Variability – This refers to the inconsistency which can be shown by the data at times, thus hampering the process of being able to handle and manage the data effectively.
+
+Benefits of Big Data Processing
+Ability to process 'Big Data' brings in multiple benefits, such as-
+
+• Businesses can utilize outside intelligence while taking decisions
+
+Access to social data from search engines and sites like facebook, twitter are enabling organizations to fine tune their business strategies.
+
+• Improved customer service
+
+Traditional customer feedback systems are getting replaced by new systems designed with 'Big Data' technologies. In these new systems, Big Data and natural language processing technologies are being used to read and evaluate consumer responses.
+
+• Early identification of risk to the product/services, if any
+
+• Better operational efficiency
+
+'Big Data' technologies can be used for creating staging area or landing zone for new data before identifying what data should be moved to the data warehouse. In addition, such integration of 'Big Data' technologies and data warehouse helps organization to offload infrequently accessed data.
+=====================
+https://www.guru99.com/learn-hadoop-in-10-minutes.html
+
+Hadoop Tutorial: Features, Components, Cluster & Topology
+ 
+Apache HADOOP is a framework used to develop data processing applications which are executed in a distributed computing environment.
+
+In this tutorial we will learn,
+
+Components of Hadoop
+Features Of 'Hadoop'
+Network Topology In Hadoop
+
+Similar to data residing in a local file system of personal computer system, in Hadoop, data resides in a distributed file system which is called as a Hadoop Distributed File system(HDFS).
+Processing model is based on 'Data Locality' concept wherein computational logic is sent to cluster nodes(server) containing data.
+This computational logic is nothing but a compiled version of a program written in a high level language such as Java. Such a program, processes data stored in Hadoop HDFS.
+
+HADOOP is an open source software framework. Applications built using HADOOP are run on large data sets distributed across clusters of commodity computers.
+Commodity computers are cheap and widely available. These are mainly useful for achieving greater computational power at low cost.
+
+Do you know?  Computer cluster consists of a set of multiple processing units (storage disk + processor) which are connected to each other and acts as a single system.
+
+ 
+Components of Hadoop
+Below diagram shows various components in Hadoop ecosystem-
+https://www.guru99.com/images/Big_Data/061114_0803_LearnHadoop4.png
+
+								
+			ZOOKEEPER										AMBARI	
+			Coordination							Provisioning, Managing and Monitoring Hadoop Clusters
+
+
+					FLUME			HIVE			R-CONNECTORS			MAHOUT			PIG			OOZIE			HBASE
+				    log collector	  sql interface			statistics		  machine learning	     scripting		      workflow		columnar datastore	
+
+
+
+
+					SQOOP
+				    data exchange
+					
+															MAP-REDUCE
+													    distributed processing framework
+
+														HSFS
+Hadoop Tutorial: Features, Components, Cluster & Topology
+
+Apache Hadoop consists of two sub-projects –
+
+Hadoop MapReduce : MapReduce is a computational model and software framework for writing applications which are run on Hadoop. These MapReduce programs are capable of processing enormous data in parallel on large clusters of computation nodes.
+HDFS (Hadoop Distributed File System): HDFS takes care of storage part of Hadoop applications. MapReduce applications consume data from HDFS. HDFS creates multiple replicas of data blocks and distributes them on compute nodes in cluster. This distribution enables reliable and extremely rapid computations.
+
+Although Hadoop is best known for MapReduce and its distributed file system- HDFS, the term is also used for a family of related projects that fall under the umbrella of distributed computing and large-scale data processing. Other Hadoop-related projects at Apache include are Hive, HBase, Mahout, Sqoop , Flume and ZooKeeper.
+
+Features Of 'Hadoop'
+• Suitable for Big Data Analysis
+
+As Big Data tends to be distributed and unstructured in nature, HADOOP clusters are best suited for analysis of Big Data. Since, it is processing logic (not the actual data) that flows to the computing nodes, less network bandwidth is consumed. This concept is called as data locality concept which helps increase efficiency of Hadoop based applications.
+
+• Scalability
+
+HADOOP clusters can easily be scaled to any extent by adding additional cluster nodes, and thus allows for growth of Big Data. Also, scaling does not require modifications to application logic.
+ 
+• Fault Tolerance
+
+HADOOP ecosystem has a provision to replicate the input data on to other cluster nodes. That way, in the event of a cluster node failure, data processing can still proceed by using data stored on another cluster node.
+
+Network Topology In Hadoop
+Topology (Arrangment) of the network, affects performance of the Hadoop cluster when size of the hadoop cluster grows. In addition to the performance, one also needs to care about the high availability and handling of failures. In order to achieve this Hadoop cluster formation makes use of network topology.
+
+Typically, network bandwidth is an important factor to consider while forming any network. However, as measuring bandwidth could be difficult, in Hadoop, network is represented as a tree and distance between nodes of this tree (number of hops) is considered as important factor in the formation of Hadoop cluster. Here, distance between two nodes is equal to sum of their distance to their closest common ancestor.
+
+Hadoop cluster consists of data center, the rack and the node which actually executes jobs. Here, data center consists of racks and rack consists of nodes. Network bandwidth available to processes varies depending upon location of the processes. That is, bandwidth available becomes lesser as we go away from-
+
+Processes on the same node
+Different nodes on the same rack
+Nodes on different racks of the same data center
+Nodes in different data centers
+================
+
+Hadoop PIG Tutorial: Introduction, Installation & Example
+ 
+INTRODUCTION TO PIG
+In Map Reduce framework, programs need to be translated into a series of Map and Reduce stages. However, this is not a programming model which data analysts are familiar with. So, in order to bridge this gap, an abstraction called Pig was built on top of Hadoop.
+
+Pig is a high level programming language useful for analyzing large data sets. Pig was a result of development effort at Yahoo!
+Pig enables people to focus more on analyzing bulk data sets and to spend less time in writing Map-Reduce programs.
+Similar to Pigs, who eat anything, the Pig programming language is designed to work upon any kind of data. That's why the name, Pig!
+
+Pig consists of two components:
+
+Pig Latin, which is a language
+Runtime environment, for running PigLatin programs.
+
+A Pig Latin program consist of a series of operations or transformations which are applied to the input data to produce output. These operations describe a data flow which is translated into an executable representation, by Pig execution environment. Underneath, results of these transformations are series of MapReduce jobs which a programmer is unaware of. So, in a way, Pig allows programmer to focus on data rather than the nature of execution.
+
+PigLatin is a relatively stiffened language which uses familiar keywords from data processing e.g., Join, Group and Filter.
+
+			Pig Latin
+			    |
+			    |
+			    |Transformation
+			    |	
+			    |
+			    v
+			Logical Plan
+			    |
+			    |
+			    |Transformation
+			    |	
+			    |
+			    v
+			Physical Plan
+			    |
+			    |
+			    |Transformation
+			    |	
+			    |
+			    v
+			Map-Reduce Plan
+			    |
+			    |
+			    |Transformation
+			    |	
+			    |
+			    v
+			Hadoop Execution
+
+Execution modes:	Pig has two execution modes:
+
+Local mode : In this mode, Pig runs in a single JVM and makes use of local file system. This mode is suitable only for analysis of small data sets using Pig
+Map Reduce mode: In this mode, queries written in Pig Latin are translated into MapReduce jobs and are run on a Hadoop cluster (cluster may be pseudo or fully distributed). MapReduce mode with fully distributed cluster is useful of running Pig on large data sets.
+
+Create your First PIG Program
+Problem Statement: Find out Number of Products Sold in Each Country.
+
+Input: Our input data set is a CSV file, SalesJan2009.csv
+
+Prerequisites:
+This tutorial is developed on Linux - Ubuntu operating System.
+You should have Hadoop (version 2.2.0 used for this tutorial) already installed and is running on the system.
+You should have Java (version 1.8.0 used for this tutorial) already installed on the system.
+You should have set JAVA_HOME accordingly.
+ 
+This guide is divided into 2 parts
+
+Pig Installation
+Pig Demo
+
+PART 1) Pig Installation
+Before we start with the actual process, change user to 'hduser' (user used for Hadoop configuration).
+
+Step 1) Download stable latest release of Pig (version 0.12.1 used for this tutorial) from any one of the mirrors sites available at
+http://pig.apache.org/releases.html
+
+Select tar.gz (and not src.tar.gz) file to download.
+
+Step 2) Once download is complete, navigate to the directory containing the downloaded tar file and move the tar to the location where you want to setup Pig. In this case we will move to /usr/local
+
+Hadoop PIG Tutorial: Introduction, Installation & Example
+
+Move to directory containing Pig Files
+
+cd /usr/local
+
+Extract contents of tar file as below
+
+sudo tar -xvf pig-0.12.1.tar.gz
+
+Hadoop PIG Tutorial: Introduction, Installation & Example
+
+Step 3). Modify ~/.bashrc to add Pig related environment variables
+
+Open ~/.bashrc file in any text editor of your choice and do below modifications-
+
+export PIG_HOME=<Installation directory of Pig>
+export PATH=$PIG_HOME/bin:$HADOOP_HOME/bin:$PATH
+ 
+Step 4) Now, source this environment configuration using below command
+
+. ~/.bashrc
+
+Step 5) We need to recompile PIG to support Hadoop 2.2.0
+
+Here are the steps to do this-
+
+Go to PIG home directory
+cd $PIG_HOME
+Install ant
+sudo apt-get install ant
+
+Recompile PIG
+
+sudo ant clean jar-all -Dhadoopversion=23
+
+Please note that, in this recompilation process multiple components are downloaded. So, system should be connected to internet.
+
+Also, in case this process stuck somewhere and you dont see any movement on command prompt for more than 20 minutes then press ctrl + c and rerun the same command.
+In our case it takes 20 minutes
+
+Step 6) Test the Pig installation using command
+
+pig -help
+
+PART 2) Pig Demo
+Step 7) Start Hadoop
+
+$HADOOP_HOME/sbin/start-dfs.sh
+$HADOOP_HOME/sbin/start-yarn.sh
+
+Step 8) Pig takes file from HDFS in MapReduce mode and stores the results back to HDFS.
+
+Copy file SalesJan2009.csv (stored on local file system, ~/input/SalesJan2009.csv) to HDFS (Hadoop Distributed File System) Home Directory
+
+Here the file is in Folder input. If the file is stored in some other location give that name
+
+$HADOOP_HOME/bin/hdfs dfs -copyFromLocal ~/input/SalesJan2009.csv /
+Verify whether file is actually copied of not.
+
+$HADOOP_HOME/bin/hdfs dfs -ls /
+
+Step 9) Pig Configuration
+
+First navigate to $PIG_HOME/conf
+
+cd $PIG_HOME/conf
+
+sudo cp pig.properties pig.properties.original
+
+Open pig.properties using text editor of your choice, and specify log file path using pig.logfile
+sudo gedit pig.properties
+
+Loger will make use of this file to log errors.
+
+Step 10) Run command 'pig' which will start Pig command prompt which is an interactive shell Pig queries.
+pig
+
+Step 11) In Grunt command prompt for Pig, execute below Pig commands in order.
+
+-- A. Load the file containing data.
+
+salesTable = LOAD '/SalesJan2009.csv' USING PigStorage(',') AS (Transaction_date:chararray,Product:chararray,Price:chararray,Payment_Type:chararray,Name:chararray,City:chararray,State:chararray,Country:chararray,Account_Created:chararray,Last_Login:chararray,Latitude:chararray,Longitude:chararray);
+Press Enter after this command.
+
+-- B. Group data by field Country
+
+GroupByCountry = GROUP salesTable BY Country;
+
+-- C. For each tuple in 'GroupByCountry', generate the resulting string of the form-> Name of Country : No. of products sold
+
+CountByCountry = FOREACH GroupByCountry GENERATE CONCAT((chararray)$0,CONCAT(':',(chararray)COUNT($1)));
+
+Press Enter after this command.
+
+-- D. Store the results of Data Flow in the directory 'pig_output_sales' on HDFS
+
+STORE CountByCountry INTO 'pig_output_sales' USING PigStorage('\t');
+
+This command will take some time to execute. Once done, you should see following screen
+
+Step 12) Result can be seen through command interface as,
+
+$HADOOP_HOME/bin/hdfs dfs -cat pig_output_sales/part-r-00000
+
+            OR
+
+Results can also be seen via web interface as-
+
+Results through web interface-
+
+Open http://localhost:50070/ in web browser.
+
+Now select 'Browse the filesystem' and navigate upto /user/hduser/pig_output_sales
+
+Hadoop PIG Tutorial: Introduction, Installation & Example
+
+Open part-r-00000
+
+Read it(not required now): Linear Regression with TensorFlow [Examples]. TensorFlow for machine learning. TensorFlow for data flow.
+Tell that you've used python multithreading for docSearch data processing
+

@@ -1,0 +1,696 @@
+Go through: https://axsauze.github.io/hadoop-overview/CHEATSHEET.html and all subtopics in it.
+  
+==================================Hadoop HDFS Command Cheatsheet from http://images.linoxide.com/hadoop-hdfs-commands-cheatsheet.pdf===================================================
+ List Files and directories
+        hdfs dfs -ls /
+        hdfs dfs -ls -d /hadoop
+        hdfs dfs -ls -R /hadoop
+
+  Read/Write Files
+        hdfs dfs -text /hadoop/derby.log
+        hdfs dfs -cat /hadoop/test
+        hdfs dfs -appendToFile /home/ubuntu/test1 /hadoop/text2                                         #Appends the content of a local file test1 to a hdfs file test2.
+
+  Upload/Download Files
+        hdfs dfs -put /home/ubuntu/sample /hadoop                                                       # Copies the file from local file system to HDFS.
+        hdfs dfs -put -f /home/ubuntu/sample /hadoop                                                    # in case the local already exits in the given destination path, using -f option with put command will overwrite it.
+        hdfs dfs -put -l /home/ubuntu/sample /hadoop                                                    # Copies the file from local file system to HDFS. Allow DataNode to lazily persist the file to disk. Forces replication factor of 1.
+        hdfs dfs -put -p /home/ubuntu/sample /hadoop                                                    # Copies the file from local file system to HDFS. Passing -p preserves access and modification times, ownership and the mode.
+        hdfs dfs -get /newfile /home/ubuntu/                                                            # Copies the file from HDFS to local file system.
+        hdfs dfs -get -p /newfile /home/ubuntu/                                                         # Copies the file from HDFS to local file system. Passing -p preserves access and modification times, ownership and the mode.
+
+        hdfs dfs -copyFromLocal /home/ubuntu/sample /hadoop                                             # Works similarly to the put command, except that the source is restricted to a local file reference.
+        hdfs dfs -copyToLocal /newfile /home/ubuntu/                                                    # Works similarly to the put command, except that the destination is restricted to a local file reference.
+
+        hdfs dfs -moveFromLocal /home/ubuntu/sample /hadoop                                             # Works similarly to the put command, except that the source is deleted after it's copied.
+
+Note*** copyFromLocal is similar to put command, except that the source is restricted to a local file reference. So, basically you can do with put, all that you do with copyFromLocal, but not vice-versa.
+	Similarly, copyToLocal is similar to get command, except that the destination is restricted to a local file reference. Hence, you can use get instead of copyToLocal, but not the other way round.
+
+
+Let's make an example: If your HDFS contains the path: /tmp/dir/abc.txt And if your local disk also contains this path then the hdfs API won't know which one you mean, unless you specify a scheme like file:// or hdfs://. 
+Maybe it picks the path you did not want to copy. Therefore you have -copyFromLocal which is preventing you from accidentally copying the wrong file, by limiting the parameter you give to the local filesystem.
+Put is for more advanced users who know which scheme to put in front.
+
+Variation 1: Loading data from local file system and storing the same in HDFS
+
+Source File Location: file://home/hadoop/data1.txt
+Destination File Location: hdfs:/data/data1.txt
+Using copyFromLocal:
+
+hdfs dfs -copyFromLocal file://home/hadoop/data1.txt hdfs:/data/data1.txt
+
+Variation 3:  Loading data from STDIN
+
+Source Location – STDIN (Command line insert)
+Destination Location – /put_data/stdin_data_1 ; /put_data/stdin_data_2
+Using copyFromLocal:
+
+hdfs dfs -copyFromLocal - /put_data/stdin_data_1
+CTRL+D
+
+Using put:
+
+hdfs dfs -put - /put_data/stdin_data_2
+
+
+  File Management
+        hdfs dfs -cp /hadoop/file1 /hadoop1                                                             # Copies file from source to destination on HDFS. In this case, copying file1 from hadoop directory to hadoop1 directory.
+        hdfs dfs -cp -p /hadoop/file1 /hadoop1                                                          # Copies file from source to destination on HDFS. Passing -p preserves access and modification times, ownership and the mode.
+
+        hdfs dfs -rm -skipTrash /hadoop                                                                 # The -skipTrash option will bypass trash, if enabled, and delete the specified file(s) immediately.
+
+        hdfs dfs -touchz /hadoop3                                                                       # Creates a file of zero length at <path> with current time as the timestamp of that <path>.
+
+ Ownership and Validation
+      hdfs dfs -checksum /hadoop/file1                                                                  # Dump checksum information for files that match the file pattern <src>
+      hdfs dfs -chmod 755 /hadoop/file1
+      hdfs dfs -chown ubuntu:ubuntu /hadoop                                                             # Changes owner of the file. 1st ubuntu in the command is owner and 2nd one is group.
+      hdfs dfs -chown -R ubuntu:ubuntu /hadoop
+      hdfs dfs -chgrp ubuntu /hadoop                                                                    # Changes group association of the file.
+      hdfs dfs -chgrp -R ubuntu /hadoop                                                             	# Changes group association of the files recursively.
+
+  Filesystem
+          hdfs dfs -df /hadoop
+          hdfs dfs -du /hadoop/file
+          hdfs dfs -du -s /hadoop/file                                                                  # Rather than showing the size of each individual file that matches the pattern, shows the total (summary) size.
+
+  Administration
+        hdfs balancer -threshold 30                                                                     # Runs a cluster balancing utility. Percentage of disk capacity. This overwrites the default threshold.
+        hadoop version
+        hdfs fsck /                                                                                     # It checks the health of the Hadoop file system.
+        hdfs dfsadmin -safemode leave                                                                   # The command to turn off the safemode of NameNode.
+
+        hdfs dfsadmin -refreshNodes                     # Re-read the hosts and exclude files to update the set of Datanodes that are allowed to connect to the Namenode and those that should  be decommissioned or recommissioned.
+        hdfs namenode -format                                                                           # Formats the NameNode.
+
+What is the differene between the following three?
+hadoop fs {args}
+hadoop dfs {args}
+hdfs dfs {args}
+
+Note****** You cannot run "hdfs fs ...". It should be "hadoop fs ..."
+fs = file system (other file systems + distributed file systems)
+dfs = distributed file system (hdfs)
+
+
+  hadoop fs <args>
+        FS relates to a generic file system which can point to any file systems like local, HDFS etc. So this can be used when you are dealing with different file systems such as Local FS, (S)FTP, S3, and others
+
+  hadoop dfs <args>
+        dfs is very specific to HDFS. would work for operation relates to HDFS. This has been deprecated and we should use hdfs dfs instead.
+
+  hdfs dfs <args>
+        same as 2nd i.e would work for all the operations related to HDFS and is the recommended command instead of hadoop dfs
+
+below is the list categorized as hdfs commands.
+
+  namenode|secondarynamenode|datanode|dfs|dfsadmin|fsck|balancer|fetchdt|oiv|dfsgroups
+
+So even if you use hadoop dfs , it will look locate hdfs and delegate that command to hdfs dfs
+
+
+
+
+
+|--------------------------------|
+|       hadoop fs                |-----> HDFS, Local FS, WebHDFS, S3 FS and others
+|                                |
+|                                |
+|                                |
+|        _______________         |
+|       |               |        |
+|       |               |        |
+|       |    hdfs dfs   |        |------> HDFS
+|       |               |        |
+|       |               |        |
+|       |               |        |
+|       |               |        |
+|        _______________         |
+|                                |
+|                                |
+|                                |
+|                                |
+|                                |
+|                                |
+--------------------------------
+==========================================================================================================================================================
+                                  
+
+
+
+
+Hadoop YARN is a cluster management technology that is part of the Hadoop 2.0. YARN full form is Yet Another Resource Negotiator. It was originally used as a redesigned resource manager but now YARN is part of a large scale distributed operating system that is used for the big data applications.
+
+Understanding Hadoop YARN
+YARN is also called as MapReduce 2.0 and this is a software rewrite for decoupling the MapReduce resource management for the scheduling capabilities from the data processing unit. This way Hadoop is able to support a variety of processing approaches and a larger array of applications. With the help of YARN software, Hadoop YARN clusters are now able to run stream data processing and interactive querying side by side with the MapReduce batch jobs. There is a fine balancing act when using the right amount of RAM, CPU and Disk space on the Hadoop cluster and this should be taken care of during the YARN configuration on the Hadoop cluster. In the Hadoop 1.0 the batch processing framework MapReduce was closely paired with the Hadoop Distributed File System that is use for resource management and job scheduling on the Hadoop systems and this helps for processing and condensing of data in a parallel manner.
+
+Comparing YARN with MapReduce
+Criteria				YARN												MapReduce
+Type of processing			Real-time, batch, interactive processing with multiple engines					Silo & batch processing with single engine
+Cluster resource optimization		Excellent due to central resource management							Average due to fixed Map & Reduce slots
+Suitable for				MapReduce & Non – MapReduce applications							Only MapReduce applications
+Managing cluster resource		Done by YARN											Done by JobTracker
+
+How Apache Hadoop YARN works
+The architecture of YARN combines a central resource manager that is a redesign of the way the applications use the Hadoop system resources along with the node manager agents for monitoring of the processing operations in the cluster individual nodes. When Hadoop database is run on the commodity hardware there is a particular interest as a staging area for the data store of large volumes of structured and unstructured that is used for analytical applications. YARN separates the HDFS and MapReduce and this makes the Hadoop environment more suitable for applications that can’t wait for the batch processing jobs to finish.
+
+The Architectural Center of Enterprise Hadoop – YARN
+YARN is part of the Hadoop architectural setup and is a core Hadoop project. The architecture of YARN lets you process data using multiple processing engines using real-time streaming, interactive SQL, batch processing, handling of data stored in single platform and working with analytics in a completely different manner. YARN can be called as the basis of the next generation of the Hadoop ecosystem that is ensuring the forward-thinking organizations are realizing the modern data architecture.
+
+What does Apache Hadoop YARN do?
+It is the important aspect of the enterprise Hadoop setup that is used for resource management process and is a central platform for consistent operations, data governance, security and other aspects of the Hadoop cluster. YARN can extend the Hadoop ecosystem to the newer technologies that are used in the data centers and can benefit from the linear style storage, processing and economical nature of this tool. It is a consistent platform that is used for writing data access applications that run in Hadoop.
+
+What are the advantages of YARN
+===============================
+The central architecture of YARN ensures that the Hadoop cluster can be enhanced in the following ways :
+
+Multi-tenancy:
+           YARN lets you access the various proprietary and open source engines for deploying Hadoop as a set standard for real-time, interactive and batch processing tasks that are able to access the same data set and parse it.
+
+Cluster Utilization:
+      YARN lets you use the cluster of the Hadoop in a dynamic way rather than a static manner that is so used by the MapReduce applications and this is better and optimized way of utilizing the cluster.
+
+Scalability: 
+      YARN gives the power of scalability to the Hadoop cluster. The Resource Manager of the YARN helps to work on the scheduling of the Hadoop cluster and keeping pace with expansion of the cluster through thousands of nodes and of the order of petabytes of data making it hugely useful of today’s big data applications.
+
+Compatibility:
+	The YARN tools is highly compatible with the existing Hadoop MapReduce applications and thus those projects that are working the MapReduce in the Hadoop 1.0 version can easily move on to the Hadoop 2.0 with YARN without any hiccup thus ensuring there is complete compatibility.
+
+Hadoop YARN in-depth understanding and its uses
+===============================================
+As it is obvious by now the YARN tool is used as a system for managing the distributed applications. So the YARN architecture has a central ResourceManager that is used for arbitrating all the available cluster resources and the NodeManager that takes its instructions from the ResourceManager and is assigned with the task of managing the resource available on a single node.
+
+Resource Manager:
+	The Resource Manager in the YARN of Hadoop 2.0 is a fundamentally an application scheduler that is used for scheduling of the jobs. Mesos scheduler on the other hand is a general purpose scheduler for data center. So the job of YARN scheduler is allocating the available resources in the system along with the other competing applications. It helps to manage the cluster utilization so that all the resources are occupied at all times. There could be various constraints under which the Resource Manager will have to work and these could the system level agreements, capacity guarantees and the fairness among other things. There is a pluggable scheduler that is used for the various algorithms that are used for capacity and fair scheduling as the case may be.
+
+ApplicationMaster:
+	One of the key features of the Hadoop 2.0 YARN is the availability of the Application Master. It is used for working with the Node Manager and can negotiate the resources with the Resource Manager. It extensively monitors the resource consumption, the various containers, tracking the status and monitoring the process and progress.
+
+Application Master lets the Hadoop YARN to show the following features :
+
+Scalability : 
+	It is the Application Master that lets one get the functionality of the Resource Manager for dramatically improving the scale of the entire system. The tests have shown that it is possible to simulate the entire 10,000 node cluster without any significant issues. The Resource Manager on the other hand is completely dedicated to working as a pure scheduler such that it does not attempt to offer the fault-tolerance to the resources. So due to this the responsibility of this falls directly on the Application Master. There is an Application Master for every application and so due to this there is no bottleneck in the cluster.
+
+Openness : 
+	The Application Master makes the YARN ecosystem that much more open thanks to the application specific code framework that lets you generalize the system so that the various frameworks can now be supported including the Graph Processing, MapReduce, MPI among others. Moving all application framework specific code into the Application Master generalizes the system so that we can now support multiple frameworks such as MapReduce, MPI and Graph Processing.
+
+Some of the advantages of YARN
+==============================
+Application Master provides the enough functionality while taking care of all the complexities. This allows the application-framework authors to have the right amount of power and flexibility.Application Master is not a privileged service but it is more of an user codeIf the Application Master has aberrant resources granted to the YARN system then the Resource Manager and Node Manager has to protect itself from it.
+Every application has an Application Master instance allocated to it. Thus it is possible to implement Application Master for managing a set of applications. There are Application Master for Hive and Pig for managing the set of  MapReduce jobs. It is also possible to work with bigger services that are managed by their own applications like HBase in YARN.
+
+Conclusion 
+==========
+Hadoop YARN is the new framework which is part of the Apache Hadoop ecosystem. Due to this it is being extensively used for writing applications by Hadoop developers. It lets people to create applications and work with huge amounts of data and manipulate it in an efficient manner. YARN is much more effective and versatile than Hadoop MapReduce and this is exactly what is required in a world inundated with big data and there is a perennial search for the next most valuable tool for working in the ever-increasing and challenging environment of Big Data Hadoop.
+
+
+
+Zookeeper and Hue
+=================
+Zookeeper
+It allows the distribution of processes to organize with each other through a shared hierarchical name space of data registers.
+
+Zookeeper Service is replicated or duplicated over a set of machines.
+All machines save a copy of the data in memory set.
+A leader is chosen based on the service startup
+Clients is only connected to a single Zookeeper server and keep a TCP connection constantly.
+Client can read from any Zookeeper server then writes go through the leader and requires the majority consensus.
+
+Hue
+It is an open source platform based on Web interface for analyzing the data with Hadoop and Spark. It is a series of application consisting of executing queries, copying files, building workflows.
+
+Features of Hue
+
+It following features are as follows–
+
+Spark Notebooks
+Wizards to import data onto Hadoop
+Dynamic search dashboards are required for Solr
+Browsers are required for YARN, HDFS, Hive table Metastore, HBase, ZooKeeper
+SQL Editors are implemented for Impala, Hive, MySql, Sqlite, PostGres, Sqlite and Oracle
+Pig Editor, Sqoop2, Oozie workflows Editors and Dashboards
+
+
+Oozie and Flume
+===============
+Oozie
+Oozie is a workflow scheduler system to manage Apache Hadoop jobs.
+Oozie Workflow jobs are Directed Acyclical Graphs (DAGs) of actions.
+Oozie Coordinator jobs are recurrent Oozie Workflow jobs triggered by time (frequency) and data availability.
+
+Oozie is integrated with the rest of the Hadoop stack supporting several types of Hadoop jobs out of the box (such as Java map-reduce, Streaming map-reduce, Pig, Hive, Sqoop and Distcp) as well as system specific jobs (such as Java programs and shell scripts).
+Oozie is a scalable, reliable and extensible system.
+
+It runs both as a server and a client which submits a workflow to the server directly. This workflow based on a DAG of action nodes and control flow nodes. An action node executes a workflow task similar as moving files in HDFS, running a MapReduce job or running a Pig job.
+
+A control-flow node handles the complete workflow execution between actions by allowing such constructs as conditional logic or parallel execution. When the workflow is finished then Oozie can make an HTTP callback to the client to notify it constantly workflow status. Hence it’s possible to get callbacks every time the workflow enters or exits an action node.
+
+It permits the failed workflows to run from a random point. When the early actions made in the workflow are time consuming to execute then this part is useful for handling with redundant errors
+
+Other open Source Data Pipeline – Luigi vs Azkaban vs Oozie vs Airflow
+
+Why Oozie Security?
+User are not allowed to alter job of another user
+Hadoop does not support the authentication of end user
+Oozie has to verify and confirms its user before transferring the job to Hadoop
+oozie and flume
+
+Flume
+Apache Flume is a continuous data ingestion system which is intended basically for big data ecosystem. It has consists of the following features:
+Distributed log collection for hadoop - apache flume
+
+Apache Flume is a distributed, reliable, and available service for efficiently collecting, aggregating, and moving large amounts of streaming data into the Hadoop Distributed File System (HDFS). ... YARN coordinates data ingest from Apache Flume and other services that deliver raw data into an Enterprise Hadoop cluster.
+
+Open source
+Scalable
+Reliable
+Manageable
+Customizable
+flume
+
+
+https://oozie.apache.org/docs/3.1.3-incubating/DG_Examples.html
+
+
+
+
+
+
+
+
+
+Sqoop and Impala
+Sqoop is an automated set of volume data transfer tool which allows to simple import, export of data from structured based data which stores NoSql systems, relational databases and enterprise data warehouses to Hadoop ecosystems.
+
+Key features of Sqoop
+It has following features:
+
+JDBC based implementation are used
+Auto generation of tedious user side code
+Integration with hive
+Extensible Backend
+
+Why Sqoop
+Forcing Map Reduce to access data from RDBMS is repetitive, error prone and costlier than excepted.
+Data are required to prepare for effective map reduce consumption.
+
+Important Sqoop control commands to import RDBMS data are as follows:
+
+Append: Append data to an existing dataset in HDFS by using the append command
+Columns: columns are used to import from the table. –columns <col,col……>
+Where: where clause to use during the import from the table. –where <where clause>
+The common large components in Sqoop are namely Blog and Clob. If the object is less than 16 MB, it is stored as an in line with the rest of the data. If there are big objects, then they are temporarily stored in a subdirectory containing the name _lob. Those data are then materialized in memory for processing further. If we set the lob limit as ZERO (0) then it is stored in external memory for a time peroid.
+
+Sqoop allows to Export and Import the data from the data table based on where clause. And the syntax is as follows:
+
+–-columns <col1,col2……>
+–-where <condition>
+–-query <SQL query>
+
+Example:
+
+sqoop import –connect jdbc:mysql://db.one.com/corp –table INTELLIPAAT_EMP –where “start_date> ’2016-07-20’ ”
+sqoopeval –connect jdbc:mysql://db.test.com/corp –query “SELECT * FROM intellipaat_emp LIMIT 20”
+sqoop import –connect jdbc:mysql://localhost/database –username root –password aaaaa –columns “name,emp_id,jobtitle”
+
+Sqoop supports data imported for the following services:
+
+Accumulo
+Sqoop basically needs a connector to connect different relational databases. Almost all Database vendors are using the JDBC connector available specific for the typical Database; Sqoop needs a JDBC driver of the database for further interaction. No, Sqoop requires the JDBC and a connector to connect to the database.
+
+Sqoop command to control the number of mappers
+
+We can control the large number of mappers by executing the following parameter –num-mapers in sqoop command. The –num-mapper’s arguments control the number of map tasks, where the degree of parallelism is being used. Initially start with a small number of map tasks, and then later choose a high number of mappers starting with the performance which may down on the database side.
+
+Syntax: -m, –num-mappers <n>
+Sqoop command are shown all the databases in MySQL server
+$ sqoop list –databases –connect jdbc:mysql://database.test.com/
+Sqoopmetastore
+It is a tool basically used for hosting in a shared metadata repository. Multiple and remote users can define and execute saved jobs that are defined in meta store. End users are configured to connect the metastore with respect to sqoop-site.xml or with the
+
+–meta-connect argument.
+
+The purpose and usage of sqoop-merge is:
+
+This tool combines two set of datasets where entries are the one dataset which overwrite entries of an older dataset preserving only the new version of the records between both the data sets.
+
+Impala
+It is an open source platform massively parallel processing (MPP) SQL query engine for data stored in a computer cluster running Apache Hadoop.
+Cloudera Impala provides fast, interactive SQL queries directly on your Apache Hadoop data stored in HDFS or HBase. ... This provides a familiar and unified platform for real-time or batch-oriented queries. Cloudera Impala is an addition to tools available for querying big data.
+
+Goals of Impala
+General purpose SQL query engine:
+•Must work both for transactional and analytical workloads
+•Support queries that get from milliseconds to hours timelimit.
+Runs directly within Hadoop:
+•Reads Hadoop file formats which are broadly used
+•Talks to Hadoop storage managers which are extensively used
+•Runs on same nodes that run Hadoop processes
+High performance:
+•Runtime code generation
+•Usage of C++ in place of Java
+•Completely new execution engine which is not build on MapReduce
+impala
+
+
+HBase
+HBase: The Hadoop Database
+It is an open source platform and is horizontally scalable. It is the database which distributed based on the column oriented. It is built on top most of the Hadoop file system. It is based on the non relational database system (NoSQL). 
+HBase is truly and faithful, open source implementation devised on Google’s Bigtable.
+
+Column oriented databases are those databases which store the data tables in terms of sections of columns of data instead of rows of data. It is specified based on distribution, persistent, strictly consistent storage system with near-optimal write in terms of Input/output channel saturation and excellent reading performance which make use makes use of efficient disk space by supporting pluggable compression algorithms that can be chosen based on the nature of the data in particular set of column families.
+
+HBase manages shifting the load and failures elegantly and clearly to the client side. Scalability is built in and clusters can be grown or shrunk while the system is still production stage. Changing the cluster does not involve any difficult rebalancing or resharding procedure but is fully automated as per the customer requirements.
+
+HBase = HDFS + DB Engine
+
+Why we need HBase?
+There are number of limitations in RDBMS are as follows–
+
+RDBMS is better for 
+1. STRUCTURED
+2. NORMALIZED
+3. SCHEMA oriented database
+4. SMALL RECORD COUNT
+
+Not preferable for unstructured data.
+Works very well for a limited number of records
+Doesn’t contain de -normalized data.
+Schema oriented database.
+
+Features of HBase
+Easy java API for client for better understanding.
+Integrates with Hadoop, both as a source and destination.
+It is schema-less so it doesn’t follow the concept of fixed columns schema and defines only column families.
+Good only for semi-structured as well as structured data.
+Automatic failure support.
+Provides data replication or copy across clusters.
+It is linearly scalable.
+HBase provides fast lookups for larger table’s contents.
+Provides low latency access to single rows from a collection of billions records (Random access).
+Implicitly uses the Hash tables and gives random access and it saves the data in indexed HDFS files for faster ways of lookups.
+
+Architecture of HBase Cluster
+It contains following components:
+See image Apache_Hbase_architecture
+
+Zookeeper –Centralized service which are used to preserve configuration information for Hbase.
+Catalog Tables – Keep track of locations region servers.
+Master – Monitors all the region server instances in the single cluster
+Region Servers – It is responsible for serving and managing regions
+Region – A set of table belonging to the table column and it holds a subset of table’ rows based on partition.
+
+
+Apache Hive
+Pig and Hive are open source platform mainly used for same purpose. These tools that ease the complexity of writing difficult/complexed programs of java based MapReduce. Hive is like a data warehouse that uses the MapReduce for the purpose of analyzing data stored on HDFS. It provides a query language called HiveQL that is familiar to the Structured Query Language (SQL) standard. It is developed based on facebook concepts. Hive was created who are posing strong analysts having strong SQL skills but few java programming skills are required to run queries on the large volumes of data that Face book stored in HDFS. Apache Pig and Hive are two projects that are consider as the top most layer of Hadoop and provide a higher-level language for using MapReduce library of Hadoop management.
+
+Why hive?
+It consists of a query language based on the standard SQL instead of giving a rapid development of map and reduces tasks. Hive takes HiveQL statements and then automatically transforms each and every query into one or more MapReduce jobs. Later it runs the overall MapReduce program and executes the output to the user whereas Hadoop streaming decreases the mandatory code, compile, and submit cycle. Hive removes it completely instead requires only the composition of HiveQL statements.
+
+This interface to Hadoop not only accelerates the time required to produce results from data analysis but also it significantly expands for whom this Hadoop and MapReduce are helpful.
+
+What makes Hive Hadoop popular?
+The users are provided with strong and powerful statistics functions.
+It is similar to SQL and hence it is very easy to understand the concepts.
+It can be combined with the HBase for querying the data in HBase. This kind of feature is not available in pig. Pig function named HbaseStorage () is mainly used for loading the data from HBase.
+Supported by Hue.
+Various user groups are considered such as CNET, Last.fm, Facebook, and Digg etc.
+
+Difference between hive and pig
+Hive					Pig
+Used for Data Analysis			Used for Data and Programs
+Used as Structured Data			Pig is Semi-Structured Data
+Hive has HiveQL				Pig has Latin
+Hive is used for creating reports	Pig is used for programming
+Hive works on the server side		Pig works on the client side
+Hive does not support avro		Pig supports Avro
+
+hive>select * form employee;
+hive> describe employee;
+
+The Apache Hive is mainly data warehouse software which allows you to read, write and manage huge number volumes of datasets stored in a distributed environment using SQL. It is possible to project structure onto data that is termed as 
+storage. Users can be connected to Hive using a JDBC driver and a command line tool.
+Hive is an open Source platform system. Use Hive for analyzing and querying in large number of datasets consisting the Hadoop files. It’s similar to the SQL programming. The current version of Hive is 0.13.1.
+Hive supports ACID transaction: Atomicity, Consistency, Isolation, and Durability. ACID transactions are provided at the row levels, those are Insert, Delete, and Update options so that Hive supports ACID transaction.
+Hive is not considered as a complete database. The design rules and regulations of Hadoop and HDFS put restrictions on what Hive can do in the field of programming.
+Hive is most suitable for following data warehouse applications
+
+Analyzing the static data
+Less Responsive time
+No rapid changes in datasets.
+Hive doesn’t provide fundamental features required for OLTP (Online Transaction Processing). Hive is proper usage for data warehouse applications in large data sets.
+
+The two types of tables in Hive
+Managed table
+External table
+
+We can change the settings within Hive session, using the command known as SET. It is used to change Hive job settings for a query to gain the exact results.
+
+Example: The following below commands shows buckets are occupied according to the table definition.
+
+hive> SET hive.enforce.bucketing=true;
+We can see the current value of any property by using the value of SET with the property name. SET will allows to list all the properties with their values set by Hive.
+
+hive> SET hive.enforce.bucketing;
+hive.enforce.bucketing=true
+And this above list will not be include by defaults of Hadoop. So we should use the below as follows:
+
+SET -v
+It will list all the properties including Hadoop functioning defaults in the system.
+
+Apache Pig
+Pig raises the level of abstraction for processing large amount of datasets. It is a fundamental platform for analyzing large amount of data sets which consists of a high level language for expressing data analysis programs. It is an open source platform developed by yahoo.
+
+Advantages of Pig
+Reusing the code
+Faster development
+Less number of lines of code
+Schema and type checking etc
+Pig is made up of two pieces:
+First is the language which allows to express data flows known as Pig Latin.
+Second one is execution environment created to run Pig Latin programs. There are now presently two environments that are local execution in a single JVM and distributed execution on the basis of Hadoop cluster.
+A Pig Latin program is huge collection of series of operations or transformations which are implemented to the input data files to generate output. These operations express a data flow that the pig execution environment transforms into an executable representation and then runs it accurately.
+
+What makes Pig Hadoop popular?
+Easy to learn read and write and implement if you know SQL.
+It implements a new approach of multi query.
+Provides a large number of nested data types such as Maps, Tuples and Bags which are not easily available in MapReduce along with some other data operations like Filters, Ordering and Joins.
+It consist of different user groups for instance up to 90% of Yahoo’s MapReduce is done by Pig and up to 80% of Twitter’s MapReduce is also done by Pig and various other companies like Sales force, LinkedIn and Nokia etc are majoritively using the Pig.
+Free Ebook: Step by Step Guide to Master Hadoop
+GET EBOOK
+The Apache Pig is a platform for managing large sets of data which consists of high-level programming to analyze the data as per the requirements assigned. Pig mainly consists of the infrastructure to evaluate the complexity of the program. The advantages of Pig programming is that it can easily handle parallel processes correspondingly managing a very large number of data. The programming on this platform is done by using the textual language Pig Latin.
+
+Pig Latin comes with the following features:
+Simple programming: it is easy to code, execute and manage the program.
+Better optimization: system can automatically optimize the execution as per the requirement raised.
+Extensive nature: Used to achieve highly specific processing tasks.
+Pig can be used for following purposes:
+ETL data pipeline
+Research on raw data
+Iterative processing.
+
+The scalar data types in pig are in the form of int, float, double, long, chararray, and byte array. The complex data types in Pig are namely the map, tuple, and bag.
+
+Map: The data element consisting the data type chararray where element has pig data type include complex data type
+
+Example- [city’#’bang’,’pin’#560001]
+In this city and pin are data element mapping the values here.
+
+Tuple: Collection of data types and it has defined fixed length. It consists of multiple fields and those are ordered in sequence.
+
+Bag: It is a huge collection of tuples ,unordered sequence , tuples arranged in the bag are separated by comma.
+
+Example: {(‘Bangalore’, 560001),(‘Mysore’,570001),(‘Mumbai’,400001)
+LOAD function: Load function helps to load the data from the file system. It is a known as a relational operator. In the first step in data-flow language it is required to mention the input, which is completed by using the keyword named 
+as ‘load’.
+
+The LOAD syntax is
+
+LOAD ‘mydata’ [USING function] [AS schema];
+Example- A = LOAD ‘intellipaat.txt’;
+A = LOAD ‘intellipaat.txt’ USINGPigStorage(‘\t’);
+
+The relational operations in Pig segmentation is as follows:
+foreach, order by, filters, group, distinct, join, limit.
+foreach: Takes a set of expressions and applies them to almost all the records in the data pipeline to next operator.
+
+A =LOAD ‘input’ as (emp_name: charrarray, emp_id: long, emp_add : chararray, phone : chararray, preferences : map []);
+B = foreach A generate emp_name, emp_id;
+
+Filters: It contains a predicate and it provides us to select which records will be retained in our data pipeline permanently.
+
+Syntax: alias = FILTER alias BY expression;
+Otherwise it indicates the name of the relation, By indicates required keyword and the expression containing Boolean.
+Example: M = FILTER N BY F5 == 4;
+
+Running Pig Programs
+There are namely 3 ways of executing Pig programs which works on both local and MapReduce mode:
+
+•Script 
+
+Pig can run a script file that contains Pig commands. For example, pig script.pig runs the commands in the local file script.pig. Alternatively, for very short scripts, you can use the -e option to run a script specified as a string on 
+the command line.
+
+•Grunt
+
+Grunt is an interactive shell programming for running Pig commands. Grunt is started when no file is specified for Pig to run, and the -e option apparently not used. It is also possible to run Pig scripts from within Grunt using run and exec.
+
+•Embedded
+
+You can execute all the Pig programs from Java and can use JDBC to run SQL programs from Java.
+
+Example: Word count in Pig Lines=LOAD ‘input/hadoop.log’ AS (line: chararray); Words = FOREACH Lines GENERATE FLATTEN (TOKENIZE (line)) AS word; Groups = GROUP Words BY word; Counts = FOREACH Groups GENERATE group, COUNT (Words); Results = ORDER Words BY Counts DESC; Top5 = LIMIT Results 5; STORE Top5 INTO /output/top5words;
+
+Streaming
+It uses UNIX standard streams as the interface between Hadoop and your program so you can write Mapreduce program in any language which can write to standard output and read standard input. Hadoop offers a lot of methods to help non-Java development.
+
+The primary mechanisms are Hadoop Pipes which gives a native C++ interface to Hadoop and Hadoop Streaming which permits any program that uses standard input and output to be used for map tasks and reduce tasks.
+With this utility one can create and run Map/Reduce jobs with any executable or script as the mapper and/or the reducer.
+
+GET CERTIFIED
+Example using Python
+Streaming supports any programming language that can read from standard input and write to standard output. For Hadoop streaming one must consider the word-count problem. Codes are written for the mapper and the reducer in python script 
+to be run under Hadoop.
+
+Mapper Code
+
+!/usr/bin/python
+import sys
+for intellipaatline in sys.stdin: # Input takes from standard input
+intellipaatline = intellipaatline.strip() # Remove whitespace either side
+words = intellipaatline.split() # Break the line into words
+for myword in words: # Iterate the words list
+output print '%s\t%s' % (myword, 1) # Write the results to standard
+
+Reducer Code
+
+#!/usr/bin/python
+from operator import item getter import sys
+current_word = ""
+current_count = 0
+word = ""
+for intellipaatline in sys.stdin: # Input takes from standard input
+intellipaatline = intellipaatline.strip()# Remove whitespace either side
+word , count = intellipaatline.split('\t', 1) # Split the input we got from mapper.py
+try: # Convert count variable to integer
+count = int(count)
+except ValueError:
+# Count was not a number, so silently ignore this line continue
+if current_word == word: current_count += count
+else:
+if current_word:
+print '%s\t%s' % (current_word, current_count) # Write result to standard o/p
+current_count = count
+current_word = word
+if current_word == word: # Do not forget to output the last word if needed!
+print '%s\t%s' % (current_word, current_count)
+
+Mapper and Reducer codes should be saved in mapper.py and reducer.py in Hadoop home directory.
+
+WordCount Execution
+$ $HADOOP_HOME/bin/hadoop jar contrib/streaming/hadoop-streaming-1. 2.1.jar \
+-input input_dirs \ -
+output output_dir \ -
+mapper<path/mapper.py \
+-reducer <path/reducer.py
+Where “\” is used for line continuation for clear readability
+
+How Streaming Works
+Input is read from standard input and the output is emitted to standard output by Mapper and the Reducer. Utility creates a Map/Reduce job, submits the job to an appropriate cluster, and monitors the progress of the job until completion.
+Every mapper task will launch the script as a separate process when the mapper is initialized after a script is specified for mappers. Mapper task inputs are converted into lines and fed to the standard input and Line oriented outputs are collected from the standard output of the procedure Mapper and every line is changed into a key, value pair which is collected as the outcome of the mapper.
+Each reducer task will launch the script as a separate process and then the reducer is initialized after a script is specified for reducers. As the reducer task runs, reducer task input key/values pairs are converted into lines and feds to the standard input (STDIN) of the process.
+Each line of the line-oriented outputs is converted into a key/value pair after it is collected from the standard output (STDOUT) of the process, which is then collected as the output of the reducer.
+
+Important Commands
+Parameters	Description
+-input directory/file-name	Input location for mapper. (Required)
+-output directory-name	Output location for reducer. (Required)
+-mapper executable or script or JavaClassName	Mapper executable. (Required)
+-reducer executable or script or JavaClassName	Reducer executable. (Required)
+-file file-name	Create the mapper, reducer or combiner executable available locally on the compute nodes.
+-inputformat JavaClassName	Class you offer should return key, value pairs of Text class. If not specified TextInputFormat is used as the default.
+-outputformat JavaClassName	Class you offer should take key, value pairs of Text class. If not specified TextOutputformat is used as the default.
+-partitioner JavaClassName	Class that determines which reduce a key is sent to.
+-combiner streaming Command or JavaClassName	Combiner executable for map output.
+-inputreader	For backwards compatibility: specifies a record reader class instead of an input format class.
+-verbose	Verbose output.
+-lazyOutput	Creates output lazily. For example if the output format is based on FileOutputFormat, the output file is created only on the first call to output.collect or Context.write.
+-numReduceTasks	Specifies the number of reducers.
+-mapdebug	Script to call when map task fails.
+-reducedebug	Script to call when reduction makes the task failure
+-cmdenv name=value	Passes the environment variable to streaming commands.
+Wish to Learn Hadoop? Click Here
+
+Hadoop Pipes
+It is the name of the C++ interface to Hadoop MapReduce. Unlike Streaming which uses standard I/O to communicate with the map and reduce code Pipes uses sockets as the channel over which the tasktracker communicates with the process running the C++ map or reduce function. JNI is not used.
+
+What is Hadoop and Cloudera?
+Hadoop is an ecosystem of open source components that fundamentally changes the way enterprises store, process, and analyze data. ... CDH, Cloudera's open source platform, is the most popular distribution of Hadoop and related projects in the world (with support available via a Cloudera Enterprise subscription).
+
+Cloudera, Inc. is a US-based software company that provides a software platform for data engineering, data warehousing, machine learning and analytics that runs in the cloud or on premises.
+
+What is the difference between HBase and Hive?
+Hive vs. HBase - Difference between Hive and HBase. Hive is query engine that whereas HBase is a data storage particularly for unstructured data. Apache Hive is mainly used for batch processing i.e. ... Unlike Hive, operations in HBase are run in real-time on the database instead of transforming into mapreduce jobs.
+
+===================================== Hive =====================================
+Hive is a data warehouse infrastructure tool to process structured data in Hadoop. It resides on top of Hadoop to summarize Big Data, and makes querying and analyzing easy.
+
+This is a brief tutorial that provides an introduction on how to use Apache Hive HiveQL with Hadoop Distributed File System. 
+
+The term ‘Big Data’ is used for collections of large datasets that include huge volume, high velocity, and a variety of data that is increasing day by day. Using traditional data management systems, it is difficult to process Big Data. Therefore, the Apache Software Foundation introduced a framework called Hadoop to solve Big Data management and processing challenges.
+
+Hadoop
+Hadoop is an open-source framework to store and process Big Data in a distributed environment. It contains two modules, one is MapReduce and another is Hadoop Distributed File System (HDFS).
+
+MapReduce: It is a parallel programming model for processing large amounts of structured, semi-structured, and unstructured data on large clusters of commodity hardware.
+
+HDFS:Hadoop Distributed File System is a part of Hadoop framework, used to store and process the datasets. It provides a fault-tolerant file system to run on commodity hardware.
+
+The Hadoop ecosystem contains different sub-projects (tools) such as Sqoop, Pig, and Hive that are used to help Hadoop modules.
+
+Sqoop: It is used to import and export data to and from between HDFS and RDBMS.
+Pig: It is a procedural language platform used to develop a script for MapReduce operations.
+Hive: It is a platform used to develop SQL type scripts to do MapReduce operations.
+
+Note: There are various ways to execute MapReduce operations:
+
+The traditional approach using Java MapReduce program for structured, semi-structured, and unstructured data.
+The scripting approach for MapReduce to process structured and semi structured data using Pig.
+The Hive Query Language (HiveQL or HQL) for MapReduce to process structured data using Hive.
+
+What is Hive
+Hive is a data warehouse infrastructure tool to process structured data in Hadoop. It resides on top of Hadoop to summarize Big Data, and makes querying and analyzing easy.
+
+Initially Hive was developed by Facebook, later the Apache Software Foundation took it up and developed it further as an open source under the name Apache Hive. It is used by different companies. For example, Amazon uses it in Amazon Elastic MapReduce.
+
+Hive is not
+A relational database
+A design for OnLine Transaction Processing (OLTP)
+A language for real-time queries and row-level updates
+
+Features of Hive
+It stores schema in a database and processed data into HDFS.
+It is designed for OLAP.
+It provides SQL type language for querying called HiveQL or HQL.
+It is familiar, fast, scalable, and extensible.
+
+Architecture of Hive
+https://www.tutorialspoint.com/hive/images/hive_architecture.jpg
+
+This component diagram contains different units. The following table describes each unit:
+
+Unit Name	Operation
+User Interface	Hive is a data warehouse infrastructure software that can create interaction between user and HDFS. The user interfaces that Hive supports are Hive Web UI, Hive command line, and Hive HD Insight (In Windows server).
+Meta Store	Hive chooses respective database servers to store the schema or Metadata of tables, databases, columns in a table, their data types, and HDFS mapping.
+HiveQL Process Engine	HiveQL is similar to SQL for querying on schema info on the Metastore. It is one of the replacements of traditional approach for MapReduce program. Instead of writing MapReduce program in Java, we can write a query for MapReduce job and process it.
+Execution Engine	The conjunction part of HiveQL process Engine and MapReduce is Hive Execution Engine. Execution engine processes the query and generates results as same as MapReduce results. It uses the flavor of MapReduce.
+HDFS or HBASE	Hadoop distributed file system or HBASE are the data storage techniques to store data into file system.
+
+Working of Hive: https://www.tutorialspoint.com/hive/images/how_hive_works.jpg
+
+
+
+
+
+
