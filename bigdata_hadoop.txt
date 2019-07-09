@@ -1,5 +1,13 @@
 https://www.whizlabs.com/blog/big-data-interview-questions/
 
+What is the purpose of Splunk?
+
+Splunk is a tool for searching, correlating, reporting and alerting on (mainly) log data. Think of it as a powerful analytical tool, which also has capabilities to store data in its own internal format for a specified amount of time.
+
+It's machine generated data analytics platform. e.g. Reactorx Cloud app
+
+Splunk Query : index=proton sourcetype=plasmanotif_app_log ("Status-401" AND "env-beta")
+
 Basic Big Data Interview Questions
 
 1. What do you know about the term “Big Data”?
