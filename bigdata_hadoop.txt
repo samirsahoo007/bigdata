@@ -195,15 +195,18 @@ Answer: Apache Hadoop runs in the following three modes –
 Standalone (Local) Mode – By default, Hadoop runs in a local mode i.e. on a non-distributed, single node. This mode uses the local file system to perform input and output operation. This mode does not support the use of HDFS, so it is used for debugging. No custom configuration is needed for configuration files in this mode.
 Pseudo-Distributed Mode – In the pseudo-distributed mode, Hadoop runs on a single node just like the Standalone mode. In this mode, each daemon runs in a separate Java process. As all the daemons run on a single node, there is the same node for both the Master and Slave nodes.
 Fully – Distributed Mode – In the fully-distributed mode, all the daemons run on separate individual nodes and thus forms a multi-node cluster. There are different nodes for Master and Slave nodes.
+
 25. Explain the core components of Hadoop.
 
 Answer: Hadoop is an open source framework that is meant for storage and processing of big data in a distributed manner. The core components of Hadoop are –
 
 HDFS (Hadoop Distributed File System) – HDFS is the basic storage system of Hadoop. The large data files running on a cluster of commodity hardware are stored in HDFS. It can store data in a reliable manner even when hardware fails.
+
 Best big data interview questions and answers
 Core Components of Hadoop
 Hadoop MapReduce – MapReduce is the Hadoop layer that is responsible for data processing. It writes an application to process unstructured and structured data stored in HDFS. It is responsible for the parallel processing of high volume of data by dividing data into independent tasks. The processing is done in two phases Map and Reduce. The Map is the first phase of processing that specifies complex logic code and the Reduce is the second phase of processing that specifies light-weight operations.
 YARN – The processing framework in Hadoop is YARN. It is used for resource management and provides multiple data processing engines i.e. data science, real-time streaming, and batch processing.
+
 26. What are the configuration parameters in a “MapReduce” program?
 
 The main configuration parameters in “MapReduce” framework are:
@@ -215,6 +218,7 @@ The output format of data
 The class which contains the map function
 The class which contains the reduce function
 JAR file which contains the mapper, reducer and the driver classes
+
 27. What is a block in HDFS and what is its default size in Hadoop 1 and Hadoop 2? Can we change the block size?
 
 Blocks are smallest continuous data storage in a hard drive. For HDFS, blocks are stored across Hadoop cluster.
@@ -419,7 +423,7 @@ Data movement over a network depends on bandwidth.
 50. What is Sequencefileinputformat?
 
 Hadoop uses a specific file format which is known as Sequence file. The sequence file stores data in a serialized key-value pair. Sequencefileinputformat is an input format to read sequence files.
-=============================================================================================================================================
+========================================================================================================================
 
 https://intellipaat.com/interview-question/big-data-hadoop-interview-questions/
 
@@ -430,6 +434,7 @@ Criteria	Hadoop	Spark
 Dedicated storage	HDFS	None
 Speed of processing	average	excellent
 Libraries	Separate tools available	Spark Core, SQL, Streaming, MLlib, GraphX
+
 2. What are real-time industry applications of Hadoop?
 Hadoop, well known as Apache Hadoop, is an open-source software platform for scalable and distributed computing of large volumes of data. It provides rapid, high performance and cost-effective analysis of structured and unstructured data generated on digital platforms and within the enterprise. It is used in almost all departments and sectors today.Some of the instances where Hadoop is used:
 
@@ -446,8 +451,6 @@ Financial agencies are using Big Data Hadoop to reduce risk, analyze fraud patte
 Getting access to unstructured data like output from medical devices, doctor’s notes, lab results, imaging reports, medical correspondence, clinical data, and financial data.
 Read this log to find out how Big Data is transforming real estate now.
 
-Become Hadoop Certified in 85 hrs.
-GET CERTIFIED
 3. How is Hadoop different from other parallel computing systems?
 Hadoop is a distributed file system, which lets you store and handle massive amount of data on a cloud of machines, handling data redundancy. Go through this HDFS content to know how the distributed file system works. The primary benefit is that since data is stored in several nodes, it is better to process it in distributed manner. Each node can process the data stored on it instead of spending time in moving it over the network.
 
@@ -506,8 +509,6 @@ Sequence File Input Format: used for reading files in sequence
 DataNode stores data in HDFS; it is a node where actual data resides in the file system. Each datanode sends a heartbeat message to notify that it is alive. If the namenode does noit receive a message from datanode for 10 minutes, it considers it to be dead or out of place, and starts replication of blocks that were hosted on that data node such that they are hosted on some other data node.A BlockReport contains list of all blocks on a DataNode. Now, the system starts to replicate what were stored in dead DataNode.
 
 The NameNode manages the replication of data blocksfrom one DataNode to other. In this process, the replication data transfers directly between DataNode such that the data never passes the NameNode.
-
-Learn Hadoop from Experts! Enrol Today
 
 10. What are the core methods of a Reducer?
 The three core methods of a Reducer are:
@@ -591,7 +592,7 @@ You can write your query for the data you want to import from Hive to HDFS. The 
 21. What companies use Hadoop, any idea?
 Learn how Big Data and Hadoop have changed the rules of the game in this blog post. Yahoo! (the biggest contributor to the creation of Hadoop) – Yahoo search engine uses Hadoop, Facebook – Developed Hive for analysis,Amazon,Netflix,Adobe,eBay,Spotify,Twitter,Adobe.
 
-================================================================================================================================
+=========================================================================================================================
 
 https://www.edureka.co/blog/interview-questions/top-50-hadoop-interview-questions-2016/
 
