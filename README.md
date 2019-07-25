@@ -90,3 +90,8 @@ All these toolkits or components revolve around one term i.e. Data. That’s the
 
 # Oozie: 
 * Oozie simply performs the task of a scheduler, thus scheduling jobs and binding them together as a single unit. There is two kinds of jobs .i.e Oozie workflow and Oozie coordinator jobs. Oozie workflow is the jobs that need to be executed in a sequentially ordered manner whereas Oozie Coordinator jobs are those that are triggered when some data or external stimulus is given to it.
+
+
+
+Refer: http://bigdata.andreamostosi.name
+
