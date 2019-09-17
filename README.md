@@ -91,6 +91,31 @@ All these toolkits or components revolve around one term i.e. Data. That’s the
 # Oozie: 
 * Oozie simply performs the task of a scheduler, thus scheduling jobs and binding them together as a single unit. There is two kinds of jobs .i.e Oozie workflow and Oozie coordinator jobs. Oozie workflow is the jobs that need to be executed in a sequentially ordered manner whereas Oozie Coordinator jobs are those that are triggered when some data or external stimulus is given to it.
 
+# How Spark Is Better than Hadoop?
+* In-memory Processing: 
+	Spark is 100 times faster than MapReduce as everything is done here in memory.
+* Stream Processing: 
+	It involves continuous input and output of data. Stream processing is also called real-time processing.
+	
+* Less Latency: 
+	Since it caches most of the input data in memory by the Resilient Distributed Dataset (RDD).
+	Each dataset in an RDD is partitioned into logical portions, which can then be computed on different nodes of a cluster.
+* Lazy Evaluation: 
+	Apache Spark starts evaluating only when it is absolutely needed. This plays an important role in contributing to its speed.
+
+# Components of Spark:
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/Components-of-Spark.jpg)
+	
+# Why Use Hadoop and Spark Together?
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/Why-Use-Hadoop-and-Spark-Together.jpg)
+* Spark does not have its own distributed file system. By combining Spark with Hadoop, you can make use of various Hadoop capabilities. For example, resources are managed via YARN Resource Manager. You can integrate Hadoop with Spark to perform Cluster Administration and Data Management.
+
+* Hadoop provides enhanced security, which is a critical component for production workloads. Spark workloads can be deployed on available resources anywhere in a cluster, without manually allocating and tracking individual tasks.
+
+* Spark can run on Hadoop, stand-alone Mesos, or in the Cloud.
+* Spark’s MLlib components provide capabilities that are not easily achieved by Hadoop’s MapReduce. By using these components, * Machine Learning algorithms can be executed faster inside the memory.
+
+
 
 
 Refer: http://bigdata.andreamostosi.name
