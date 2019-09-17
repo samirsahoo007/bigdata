@@ -104,12 +104,10 @@ All these toolkits or components revolve around one term i.e. Data. That’s the
 	Apache Spark starts evaluating only when it is absolutely needed. This plays an important role in contributing to its speed.
 
 # Components of Spark:
-	![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/Components-of-Spark.jpg)
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/Components-of-Spark.jpg)
 	
 # Why Use Hadoop and Spark Together?
-
-	![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/Why-Use-Hadoop-and-Spark-Together.jpg)
-
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/Why-Use-Hadoop-and-Spark-Together.jpg)
 * Spark does not have its own distributed file system. By combining Spark with Hadoop, you can make use of various Hadoop capabilities. For example, resources are managed via YARN Resource Manager. You can integrate Hadoop with Spark to perform Cluster Administration and Data Management.
 
 * Hadoop provides enhanced security, which is a critical component for production workloads. Spark workloads can be deployed on available resources anywhere in a cluster, without manually allocating and tracking individual tasks.
