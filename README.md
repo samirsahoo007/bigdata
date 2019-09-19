@@ -130,12 +130,13 @@ Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kib
 * Spark’s MLlib components provide capabilities that are not easily achieved by Hadoop’s MapReduce. By using these components, * Machine Learning algorithms can be executed faster inside the memory.
 
 
+### Single Node Multiple Brokers
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/single_node_multiple_broker.png)
- 					Single Node Multiple Brokers
+ 					
 					
- 
+### Multiple Nodes Multiple Brokers
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/multiple-node-multiple-broker.jpg)
-					Multiple Nodes Multiple Brokers
+					
 
 Refer: http://bigdata.andreamostosi.name
 
