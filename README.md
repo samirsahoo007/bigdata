@@ -160,14 +160,19 @@ While designing a Kafka system, it’s always a wise decision to factor in topic
 					
 ### Multiple Nodes Multiple Brokers
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/multiple-node-multiple-broker.jpg)
-	
-Kafka @ LinkedIn
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka1.png)
 
 Kafka Ecosystem: Kafka REST Proxy and Confluent Schema Registry
 
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka-ecosystem-rest-proxy-schema-registry.png)
+	
+
+Kafka @ LinkedIn
+
+
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka1.png)
+
 
 
 LinkedIn Newsfeed is powered by Kafka
