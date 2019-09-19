@@ -166,14 +166,18 @@ Kafka @ LinkedIn
 
 Kafka Ecosystem: Kafka REST Proxy and Confluent Schema Registry
 
+
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka-ecosystem-rest-proxy-schema-registry.png)
 
+
 LinkedIn Newsfeed is powered by Kafka
+
  
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka2.png)
 
 
 LinkedIn recommendations are powered by Kafka
+
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka3.png)
 
