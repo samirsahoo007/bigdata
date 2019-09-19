@@ -152,7 +152,15 @@ While, ZooKeeper is used for managing, coordinating Kafka broker. Each Kafka bro
 					
 ### Multiple Nodes Multiple Brokers
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/multiple-node-multiple-broker.jpg)
-					
+	
+Kafka @ LinkedIn
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka1.png)
+
+ LinkedIn Newsfeed is powered by Kafka
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka2.png)
+
+LinkedIn recommendations are powered by Kafka
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka3.png)
 
 Refer: http://bigdata.andreamostosi.name
 
