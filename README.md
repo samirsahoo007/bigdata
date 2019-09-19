@@ -14,6 +14,10 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Solar, Lucene: Searching and Indexing
 * Zookeeper: Managing cluster
 * Oozie: Job Scheduling
+* Kibana - data visualisation tool for Elasticsearch
+* Elasticsearch - data store & analytics / search engine
+* Beeline - Hive command line interface
+* Datasift - online service that streams tweets matching a given pattern to a nominated datastore (such as MongoDB)
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/HadoopEcosystem-min.png)
 
