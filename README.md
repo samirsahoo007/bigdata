@@ -32,6 +32,9 @@ Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kib
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elasticsearch_ex2.jpeg)
 
+## ES-Hadoop architecture
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elasticsearch_hadoop.jpg)
+
 # HDFS - Hadoop Distributed File System:
 
 * HDFS is the primary or major component of Hadoop ecosystem and is responsible for storing large data sets of structured or unstructured data across various nodes and thereby maintaining the metadata in the form of log files.
