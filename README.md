@@ -141,6 +141,7 @@ Note: Publish/Subscribe is a messaging model where senders send the messages, wh
 * Website activity tracking, Log aggregation, Stream processing are some of the use cases of Kafka.
 
 ## Kafka Architecture:
+Kafka is deployed as a cluster implemented on one or more servers. The cluster is capable of storing topics which consist of streams of ‘records’ or ‘messages’. Every message holds details like a key and a value. Brokers are abstractions used to manage the persistence and replication of the message.
 
 * Producer: A producer can be any application who can publish messages to a topic. 
 * Topic: A topic is a category or feed name to which records are published. 
