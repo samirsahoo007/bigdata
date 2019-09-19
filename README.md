@@ -161,6 +161,13 @@ While designing a Kafka system, it’s always a wise decision to factor in topic
 ### Multiple Nodes Multiple Brokers
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/multiple-node-multiple-broker.jpg)
 
+
+Kafka Ecosystem: Diagram of Connect Source, Connect Sink, and Kafka Streams
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka-ecosystem.png)
+
+
+
 Kafka Ecosystem: Kafka REST Proxy and Confluent Schema Registry
 
 
