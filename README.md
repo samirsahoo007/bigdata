@@ -152,7 +152,11 @@ While, ZooKeeper is used for managing, coordinating Kafka broker. Each Kafka bro
 
 ### Single Node Multiple Brokers
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/single_node_multiple_broker.png)
- 					
+
+# Topic Replication Factor in Kafka
+While designing a Kafka system, it’s always a wise decision to factor in topic replication. As a result, its topics’ replicas from another broker can solve the crisis, if a broker goes down. For example, we have 3 brokers and 3 topics. Broker1 has Topic 1 and Partition 0, its replica is in Broker2, so on and so forth. It has got a replication factor of 2; it means it will have one additional copy other than the primary one. Below is the image of Topic Replication Factor:
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka-topic-replication.png)
 					
 ### Multiple Nodes Multiple Brokers
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/multiple-node-multiple-broker.jpg)
@@ -160,10 +164,16 @@ While, ZooKeeper is used for managing, coordinating Kafka broker. Each Kafka bro
 Kafka @ LinkedIn
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka1.png)
 
- LinkedIn Newsfeed is powered by Kafka
+
+
+
+LinkedIn Newsfeed is powered by Kafka
+ 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka2.png)
 
+
 LinkedIn recommendations are powered by Kafka
+
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka3.png)
 
 
