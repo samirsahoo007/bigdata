@@ -18,6 +18,7 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Elasticsearch - data store & analytics / search engine
 * Beeline - Hive command line interface
 * Datasift - online service that streams tweets matching a given pattern to a nominated datastore (such as MongoDB)
+* Apache Storm - Storm is about real-time processing of data streams. It consists of higher level of abstraction than simple message passing (which permits describing topologies as a DAG), per-process fault-tolerance and definite at-least-once semantics for each message in the structure.
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/HadoopEcosystem-min.png)
 
@@ -134,6 +135,8 @@ Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kib
 
 Note: Publish/Subscribe is a messaging model where senders send the messages, which are then consumed by the multiple consumers. 
 
+* Kafka is usually integrated with Apache Storm, Apache HBase, and Apache Spark in order to process real-time streaming data. It is capable of delivering massive message streams to Hadoop cluster regardless of the industry or use case.
+
 * Basically, Kafka is a data ingestion mechanism through which you can load data into Hadoop clusters in real time. 
 * Website activity tracking, Log aggregation, Stream processing are some of the use cases of Kafka.
 
@@ -161,6 +164,8 @@ Kafka @ LinkedIn
 
 LinkedIn recommendations are powered by Kafka
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka3.png)
+
+
 
 Refer: http://bigdata.andreamostosi.name
 
