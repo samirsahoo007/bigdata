@@ -26,6 +26,12 @@ Note: Apart from the above-mentioned components, there are many other components
 
 All these toolkits or components revolve around one term i.e. Data. That’s the beauty of Hadoop that it revolves around data and hence making its synthesis easier.
 
+## Analytics with Kibana and Elasticsearch through Hadoop
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elastic_search_example1.png)
+Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kibana-and-elasticsearch-through-hadoop-part-1-introduction/
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elasticsearch_ex2.jpeg)
+
 # HDFS - Hadoop Distributed File System:
 
 * HDFS is the primary or major component of Hadoop ecosystem and is responsible for storing large data sets of structured or unstructured data across various nodes and thereby maintaining the metadata in the form of log files.
