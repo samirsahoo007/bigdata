@@ -18,6 +18,7 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Elasticsearch - data store & analytics / search engine
 * Beeline - Hive command line interface
 * Datasift - online service that streams tweets matching a given pattern to a nominated datastore (such as MongoDB)
+* Apache Storm - Storm is about real-time processing of data streams. It consists of higher level of abstraction than simple message passing (which permits describing topologies as a DAG), per-process fault-tolerance and definite at-least-once semantics for each message in the structure.
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/HadoopEcosystem-min.png)
 
@@ -134,10 +135,13 @@ Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kib
 
 Note: Publish/Subscribe is a messaging model where senders send the messages, which are then consumed by the multiple consumers. 
 
+* Kafka is usually integrated with Apache Storm, Apache HBase, and Apache Spark in order to process real-time streaming data. It is capable of delivering massive message streams to Hadoop cluster regardless of the industry or use case.
+
 * Basically, Kafka is a data ingestion mechanism through which you can load data into Hadoop clusters in real time. 
 * Website activity tracking, Log aggregation, Stream processing are some of the use cases of Kafka.
 
 ## Kafka Architecture:
+Kafka is deployed as a cluster implemented on one or more servers. The cluster is capable of storing topics which consist of streams of ‘records’ or ‘messages’. Every message holds details like a key and a value. Brokers are abstractions used to manage the persistence and replication of the message.
 
 * Producer: A producer can be any application who can publish messages to a topic. 
 * Topic: A topic is a category or feed name to which records are published. 
@@ -148,11 +152,31 @@ While, ZooKeeper is used for managing, coordinating Kafka broker. Each Kafka bro
 
 ### Single Node Multiple Brokers
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/single_node_multiple_broker.png)
- 					
+
+# Topic Replication Factor in Kafka
+While designing a Kafka system, it’s always a wise decision to factor in topic replication. As a result, its topics’ replicas from another broker can solve the crisis, if a broker goes down. For example, we have 3 brokers and 3 topics. Broker1 has Topic 1 and Partition 0, its replica is in Broker2, so on and so forth. It has got a replication factor of 2; it means it will have one additional copy other than the primary one. Below is the image of Topic Replication Factor:
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka-topic-replication.png)
 					
 ### Multiple Nodes Multiple Brokers
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/multiple-node-multiple-broker.jpg)
-					
+	
+Kafka @ LinkedIn
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka1.png)
+
+
+
+
+LinkedIn Newsfeed is powered by Kafka
+ 
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka2.png)
+
+
+LinkedIn recommendations are powered by Kafka
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka3.png)
+
+
 
 Refer: http://bigdata.andreamostosi.name
 
