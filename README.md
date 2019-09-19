@@ -129,6 +129,22 @@ Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kib
 * Spark can run on Hadoop, stand-alone Mesos, or in the Cloud.
 * Spark’s MLlib components provide capabilities that are not easily achieved by Hadoop’s MapReduce. By using these components, * Machine Learning algorithms can be executed faster inside the memory.
 
+# Kafka:
+* Apache Kafka is a distributed streaming platform that lets you publish and subscribe to streams of records. 
+
+Note: Publish/Subscribe is a messaging model where senders send the messages, which are then consumed by the multiple consumers. 
+
+* Basically, Kafka is a data ingestion mechanism through which you can load data into Hadoop clusters in real time. 
+* Website activity tracking, Log aggregation, Stream processing are some of the use cases of Kafka.
+
+## Kafka Architecture:
+
+* Producer: A producer can be any application who can publish messages to a topic. 
+* Topic: A topic is a category or feed name to which records are published. 
+* Consumer: A consumer can be any application that subscribes to a topic and consume the messages. 
+* Broker: Kafka cluster is a set of servers, each of which is called a broker. 
+
+While, ZooKeeper is used for managing, coordinating Kafka broker. Each Kafka broker is coordinating with other Kafka brokers using ZooKeeper. Producer and consumer are notified by ZooKeeper service about the presence of new broker in Kafka system or failure of the broker in Kafka system.
 
 ### Single Node Multiple Brokers
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/single_node_multiple_broker.png)
