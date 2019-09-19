@@ -131,10 +131,11 @@ Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kib
 
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/single_node_multiple_broker.png)
- Single Node Multiple Brokers
+ 					Single Node Multiple Brokers
+					
  
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/multiple-node-multiple-broker.jpg)
-Multiple Nodes Multiple Brokers
+					Multiple Nodes Multiple Brokers
 
 Refer: http://bigdata.andreamostosi.name
 
