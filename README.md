@@ -28,6 +28,7 @@ All these toolkits or components revolve around one term i.e. Data. That’s the
 
 ## Analytics with Kibana and Elasticsearch through Hadoop
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elastic_search_example1.png)
+Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kibana-and-elasticsearch-through-hadoop-part-1-introduction/
 
 # HDFS - Hadoop Distributed File System:
 
