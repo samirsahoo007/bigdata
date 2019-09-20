@@ -157,6 +157,8 @@ While, ZooKeeper is used for managing, coordinating Kafka broker. Each Kafka bro
 While designing a Kafka system, it’s always a wise decision to factor in topic replication. As a result, its topics’ replicas from another broker can solve the crisis, if a broker goes down. For example, we have 3 brokers and 3 topics. Broker1 has Topic 1 and Partition 0, its replica is in Broker2, so on and so forth. It has got a replication factor of 2; it means it will have one additional copy other than the primary one. Below is the image of Topic Replication Factor:
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka-topic-replication.png)
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka-architecture-topic-partition-consumer-group-offset-producers.png)
 					
 ### Multiple Nodes Multiple Brokers
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/multiple-node-multiple-broker.jpg)
