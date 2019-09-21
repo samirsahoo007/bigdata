@@ -143,10 +143,10 @@ Note: Publish/Subscribe is a messaging model where senders send the messages, wh
 ## Kafka Architecture:
 Kafka is deployed as a cluster implemented on one or more servers. The cluster is capable of storing topics which consist of streams of ‘records’ or ‘messages’. Every message holds details like a key and a value. Brokers are abstractions used to manage the persistence and replication of the message.
 
-* Producer: A producer can be any application who can publish messages to a topic. 
-* Topic: A topic is a category or feed name to which records are published. 
-* Consumer: A consumer can be any application that subscribes to a topic and consume the messages. 
-* Broker: Kafka cluster is a set of servers, each of which is called a broker. 
+* Producer: publish messages to a topic
+* Topic: category or feed name to which records are published
+* Consumer: subscribes to a topic and consume the messages 
+* Broker: set of servers in Kafka cluster
 
 While, ZooKeeper is used for managing, coordinating Kafka broker. Each Kafka broker is coordinating with other Kafka brokers using ZooKeeper. Producer and consumer are notified by ZooKeeper service about the presence of new broker in Kafka system or failure of the broker in Kafka system.
 
