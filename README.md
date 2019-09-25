@@ -403,12 +403,14 @@ Splunk Enterprise can index many different kinds of data, as illustrated by the 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/WhatSplunkCanIndex.jpg)
 
 The Splunk App for Jenkins helps engineering teams, including developers, test/QA engineers and program managers as well as Jenkins admins to:
-	* Get instant visibility into test results.
-	* Gain instant and detailed insights into the progress and results of Jenkins builds.  
-	* Monitor the health of Jenkins infrastructure.
+* Search,analyse and report
+* Get instant visibility into test results.
+* Gain instant and detailed insights into the progress and results of Jenkins builds.
+* Monitor the health of Jenkins infrastructure.
 	
 	
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/splunk_jenkins1.png)
+
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/splunk_jenkins1.png)
 
