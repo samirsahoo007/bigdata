@@ -395,3 +395,17 @@ Cloudera: what is running our cluster.
 Hortonworks HDP.
 MapR.
 Amazon EMR: EC2 + Hadoop set up automatically.
+
+
+# Splunk
+
+The Splunk App for Jenkins helps engineering teams, including developers, test/QA engineers and program managers as well as Jenkins admins to:
+	* Get instant visibility into test results.
+	* Gain instant and detailed insights into the progress and results of Jenkins builds.  
+	* Monitor the health of Jenkins infrastructure.
+	
+	
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/splunk_jenkins1.png)
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/splunk_jenkins1.png)
+
