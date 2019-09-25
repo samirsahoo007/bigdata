@@ -399,6 +399,7 @@ Amazon EMR: EC2 + Hadoop set up automatically.
 
 # Splunk
 
+Splunk Enterprise can index many different kinds of data, as illustrated by the following diagram.
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/WhatSplunkCanIndex.jpg)
 
 The Splunk App for Jenkins helps engineering teams, including developers, test/QA engineers and program managers as well as Jenkins admins to:
