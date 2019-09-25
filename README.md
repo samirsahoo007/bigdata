@@ -206,6 +206,26 @@ LinkedIn recommendations are powered by Kafka
 
 Refer: http://bigdata.andreamostosi.name
 
+# Flafka
+Cloudera engineers and other open source community members have recently committed code for Kafka-Flume integration, informally called "Flafka," to the Flume project. Flume is a distributed, reliable, and available system for efficiently collecting, aggregating, and moving large amounts of data from many different sources to a centralized data store. Flume provides a tested, production-hardened framework for implementing ingest and real-time processing pipelines. Using the new Flafka source and sink, now available in CDH 5.2, Flume can both read and write messages with Kafka.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/flafka-f11.png)
+
+Flume can act as a both a consumer (above) and producer for Kafka (below)
+Producers – Use Flume sources to write to Kafka			Consumers – Write to Flume sinks reading from Kafka
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/flafka-f31.png)
+
+## Example: Transaction Ingest
+Assume that you are ingesting transaction data from a card processing system, and want to pull the transactions directly from Kafka and write them into HDFS.
+
+The record simply contains a UUID for a transaction_id, a dummy credit-card number, timestamp, amount, and store_id for the transaction.
+
+888fc23a-5361-11e4-b76d-22000ada828b|4916177742705110|2014-10-14 01:18:29|67.88|1433
+888fdb26-5361-11e4-b76d-22000ada828b|4929011455520|2014-10-14 01:18:29|45.22|886
+888ff1e2-5361-11e4-b76d-22000ada828b|4532623020656|2014-10-14 01:18:29|27.14|681
+88900c72-5361-11e4-b76d-22000ada828b|4024007162856600|2014-10-14 01:18:29|34.63|577
+
 # Doing Computation
 The goal: get the compute work to some computer with processor/memory to do it, and get the results back.
 
