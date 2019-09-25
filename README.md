@@ -202,9 +202,16 @@ LinkedIn recommendations are powered by Kafka
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka3.png)
 
-
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/fig1-large.jpg)
+			Traffic Data Monitoring Using IoT, Kafka and Spark Streaming
+			
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/netflix.png)
+			(Building an Event-Driven Reactive Asynchronous System with Spring Boot and Kafka)
 
 Refer: http://bigdata.andreamostosi.name
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/architecture-00-b.png)
+			Building Analytics Engine Using Akka, Kafka & ElasticSearch
 
 # Flafka
 Cloudera engineers and other open source community members have recently committed code for Kafka-Flume integration, informally called "Flafka," to the Flume project. Flume is a distributed, reliable, and available system for efficiently collecting, aggregating, and moving large amounts of data from many different sources to a centralized data store. Flume provides a tested, production-hardened framework for implementing ingest and real-time processing pipelines. Using the new Flafka source and sink, now available in CDH 5.2, Flume can both read and write messages with Kafka.
