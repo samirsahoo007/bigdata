@@ -24,6 +24,8 @@ Following are the components that collectively form a Hadoop ecosystem:
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/HADOOP-ECOSYSTEM.png)
 
+				(https://www.edureka.co/blog/hadoop-ecosystem)
+
 
 Note: Apart from the above-mentioned components, there are many other components too that are part of the Hadoop ecosystem.
 
