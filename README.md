@@ -18,6 +18,9 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Elasticsearch - data store & analytics / search engine
 * Beeline - Hive command line interface
 * Datasift - online service that streams tweets matching a given pattern to a nominated datastore (such as MongoDB)
+* Flume, Sqoop - Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data)
+* Ambari - Provision, Monitor and Maintain cluster
+* Apache Drill - SQL on Hadoop
 * Apache Storm - Storm is about real-time processing of data streams. It consists of higher level of abstraction than simple message passing (which permits describing topologies as a DAG), per-process fault-tolerance and definite at-least-once semantics for each message in the structure.
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/HadoopEcosystem-min.png)
