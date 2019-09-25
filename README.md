@@ -213,6 +213,16 @@ Refer: http://bigdata.andreamostosi.name
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/architecture-00-b.png)
 			Building Analytics Engine Using Akka, Kafka & ElasticSearch
 
+# Kafka streaming
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/microservices-exercises-combined.png)
+
+Read more at https://docs.confluent.io/current/tutorials/examples/microservices-orders/docs/index.html
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/mapr-architectures.png)
+			Fast Data Processing Pipeline for Predicting Flight Delays Using Apache APIs
+Read more at https://dzone.com/articles/fast-data-processing-pipeline-for-predicting-fligh-2
+
 # Flafka
 Cloudera engineers and other open source community members have recently committed code for Kafka-Flume integration, informally called "Flafka," to the Flume project. Flume is a distributed, reliable, and available system for efficiently collecting, aggregating, and moving large amounts of data from many different sources to a centralized data store. Flume provides a tested, production-hardened framework for implementing ingest and real-time processing pipelines. Using the new Flafka source and sink, now available in CDH 5.2, Flume can both read and write messages with Kafka.
 
