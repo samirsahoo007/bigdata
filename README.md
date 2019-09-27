@@ -226,13 +226,21 @@ Read more at https://docs.confluent.io/current/tutorials/examples/microservices-
 			Fast Data Processing Pipeline for Predicting Flight Delays Using Apache APIs
 Read more at https://dzone.com/articles/fast-data-processing-pipeline-for-predicting-fligh-2
 
-# Kafka with Spark
+# Kafka with Spark (Building real-time applications)
+
+Traditional machine learning methods have been developed to work using batch or offline approaches.
+Spark streaming and Kafka Integration are the best combinations to build real-time applications. Spark is an in-memory processing engine on top of the Hadoop ecosystem, and Kafka is a distributed public-subscribe messaging system. Kafka can stream data continuously from a source and Spark can process this stream of data instantly with its in-memory processing primitives. By integrating Kafka and Spark, a lot can be done. We can even build a real-time machine learning application.
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/Data-Pipeline-With-Checkpoints-1.jpg)
 
 			Highly scalable and fault tolerant data pipeline for a real-time data stream.
 			
 In a stream processing application, it's often useful to retain state between batches of data being processed. For example, in our previous attempt, we are only able to store the current frequency of the words. What if we want to store the cumulative frequency instead? Spark Streaming makes it possible through a concept called checkpoints. Please note that we'll be using checkpoints only for the session of data processing. This does not provide fault-tolerance. However, checkpointing can be used for fault tolerance as well. Here, we are using the local filesystem to store checkpoints. However, for robustness, this should be stored in a location like HDFS, S3 or Kafka. 
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kafka_spark_pipeline.png)
+
+Here, we use a Receiver to receive the data. So, by using the Kafka high-level consumer API, we implement the Receiver. Further, the received data is stored in Spark executors. Then jobs launched by Kafka – Spark Streaming processes the data.
+Although, it is a possibility that this approach can lose data under failures under default configuration. Hence, we have to additionally enable write-ahead logs in Kafka Spark Streaming, to ensure zero-data-loss. That saves all the received Kafka data into write-ahead logs on a distributed file system synchronously. In this way, it is possible to recover all the data on failure.
 
 # Flafka
 Cloudera engineers and other open source community members have recently committed code for Kafka-Flume integration, informally called "Flafka," to the Flume project. Flume is a distributed, reliable, and available system for efficiently collecting, aggregating, and moving large amounts of data from many different sources to a centralized data store. Flume provides a tested, production-hardened framework for implementing ingest and real-time processing pipelines. Using the new Flafka source and sink, now available in CDH 5.2, Flume can both read and write messages with Kafka.
