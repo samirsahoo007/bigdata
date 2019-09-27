@@ -22,6 +22,9 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Ambari - Provision, Monitor and Maintain cluster
 * Apache Drill - SQL on Hadoop
 * Apache Storm - Storm is about real-time processing of data streams. It consists of higher level of abstraction than simple message passing (which permits describing topologies as a DAG), per-process fault-tolerance and definite at-least-once semantics for each message in the structure.
+* Apache Kafka is a scalable, high performance, low latency platform that allows reading and writing streams of data like a messaging system. 
+* Spark Streaming is part of the Apache Spark platform that enables scalable, high throughput, fault tolerant processing of data streams.
+* Apache Cassandra is a distributed and wide-column NoSQL data store.
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/HadoopEcosystem-min.png)
 
@@ -224,11 +227,6 @@ Read more at https://docs.confluent.io/current/tutorials/examples/microservices-
 Read more at https://dzone.com/articles/fast-data-processing-pipeline-for-predicting-fligh-2
 
 # Kafka with Spark
-
-Apache Kafka is a scalable, high performance, low latency platform that allows reading and writing streams of data like a messaging system. 
-Spark Streaming is part of the Apache Spark platform that enables scalable, high throughput, fault tolerant processing of data streams.
-Apache Cassandra is a distributed and wide-column NoSQL data store.
-Kafka requires Apache Zookeeper to run.
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/Data-Pipeline-With-Checkpoints-1.jpg)
 
