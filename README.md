@@ -22,6 +22,9 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Ambari - Provision, Monitor and Maintain cluster
 * Apache Drill - SQL on Hadoop
 * Apache Storm - Storm is about real-time processing of data streams. It consists of higher level of abstraction than simple message passing (which permits describing topologies as a DAG), per-process fault-tolerance and definite at-least-once semantics for each message in the structure.
+* Apache Kafka is a scalable, high performance, low latency platform that allows reading and writing streams of data like a messaging system. 
+* Spark Streaming is part of the Apache Spark platform that enables scalable, high throughput, fault tolerant processing of data streams.
+* Apache Cassandra is a distributed and wide-column NoSQL data store.
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/HadoopEcosystem-min.png)
 
@@ -222,6 +225,14 @@ Read more at https://docs.confluent.io/current/tutorials/examples/microservices-
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/mapr-architectures.png)
 			Fast Data Processing Pipeline for Predicting Flight Delays Using Apache APIs
 Read more at https://dzone.com/articles/fast-data-processing-pipeline-for-predicting-fligh-2
+
+# Kafka with Spark
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/Data-Pipeline-With-Checkpoints-1.jpg)
+
+			Highly scalable and fault tolerant data pipeline for a real-time data stream.
+			
+In a stream processing application, it's often useful to retain state between batches of data being processed. For example, in our previous attempt, we are only able to store the current frequency of the words. What if we want to store the cumulative frequency instead? Spark Streaming makes it possible through a concept called checkpoints. Please note that we'll be using checkpoints only for the session of data processing. This does not provide fault-tolerance. However, checkpointing can be used for fault tolerance as well. Here, we are using the local filesystem to store checkpoints. However, for robustness, this should be stored in a location like HDFS, S3 or Kafka. 
 
 # Flafka
 Cloudera engineers and other open source community members have recently committed code for Kafka-Flume integration, informally called "Flafka," to the Flume project. Flume is a distributed, reliable, and available system for efficiently collecting, aggregating, and moving large amounts of data from many different sources to a centralized data store. Flume provides a tested, production-hardened framework for implementing ingest and real-time processing pipelines. Using the new Flafka source and sink, now available in CDH 5.2, Flume can both read and write messages with Kafka.
