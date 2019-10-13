@@ -6,23 +6,17 @@ Following are the components that collectively form a Hadoop ecosystem:
 
 * Oozie: Job Scheduling
 * Chukwa: data collection system for monitoring large distributed systems 
-* Flume, Sqoop - Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data)
-<details>
-
-  <summary> Flume, Sqoop - Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data)</summary>
-
-Flume is service for efficiently collecting, aggregating, and moving large amounts of log data
-Sqoop is a tool designed to transfer data between Hadoop and relational database servers. It is used to import data from relational databases such as MySQL, Oracle to Hadoop HDFS, and export from Hadoop file system to relational databases.
-</details>
-* HDFS: Hadoop Distributed File System
-* YARN: Yet Another Resource Negotiator
-* MapReduce: Programming based Data Processing
-* Spark: In-Memory data processing
-* PIG, HIVE: Query based processing of data services
-* HBase: NoSQL Database
+* Flume, Sqoop - Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data). More below
+* Zookeeper: Managing cluste (provides a distributed configuration service, a synchronization service and a naming registry for distributed systems)
+* HIVE, PIG: Query based processing of data services
 * Mahout, Spark MLLib: Machine Learning algorithm libraries
+* Avro: row-oriented remote procedure call and data serialization framework(uses JSON for defining data types and protocols,& serializes data in a compact binary format. Apache Spark SQL can access Avro as a data source)
+* MapReduce: Programming based Data Processing
+* YARN: Yet Another Resource Negotiator
+* HDFS: Hadoop Distributed File System
+* HBase: NoSQL Database
+* Spark: In-Memory data processing
 * Solar, Lucene: Searching and Indexing
-* Zookeeper: Managing cluster
 * Kibana - data visualisation tool for Elasticsearch
 * Elasticsearch - data store & analytics / search engine
 * Beeline - Hive command line interface
@@ -33,6 +27,14 @@ Sqoop is a tool designed to transfer data between Hadoop and relational database
 * Apache Kafka is a scalable, high performance, low latency platform that allows reading and writing streams of data like a messaging system. 
 * Spark Streaming is part of the Apache Spark platform that enables scalable, high throughput, fault tolerant processing of data streams.
 * Apache Cassandra is a distributed and wide-column NoSQL data store.
+
+#### Notes:
+* Flume is service for efficiently collecting, aggregating, and moving large amounts of log data
+
+* Sqoop is a tool designed to transfer data between Hadoop and relational database servers. It is used to import data from relational databases such as MySQL, Oracle to Hadoop HDFS, and export from Hadoop file system to relational databases.
+
+* Hive has a declarative SQL like language termed as HiveQL. Pig has a procedural data flow like language termed as Pig Latin. 
+* Hive is basically used for generation/creation of reports. Pig is basically used for programming(Map Reduce). Hive operates on the server side of an HDFS cluster.
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/HadoopEcosystem-min.png)
 
