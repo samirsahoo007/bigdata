@@ -4,6 +4,15 @@ Hadoop Ecosystem is a platform or a suite which provides various services to sol
 
 Following are the components that collectively form a Hadoop ecosystem:
 
+* Oozie: Job Scheduling
+* Chukwa: data collection system for monitoring large distributed systems 
+* <details>
+
+  <summary> Flume, Sqoop - Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data)</summary>
+
+Flume is service for efficiently collecting, aggregating, and moving large amounts of log data
+Sqoop is a tool designed to transfer data between Hadoop and relational database servers. It is used to import data from relational databases such as MySQL, Oracle to Hadoop HDFS, and export from Hadoop file system to relational databases.
+</details>
 * HDFS: Hadoop Distributed File System
 * YARN: Yet Another Resource Negotiator
 * MapReduce: Programming based Data Processing
@@ -13,12 +22,10 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Mahout, Spark MLLib: Machine Learning algorithm libraries
 * Solar, Lucene: Searching and Indexing
 * Zookeeper: Managing cluster
-* Oozie: Job Scheduling
 * Kibana - data visualisation tool for Elasticsearch
 * Elasticsearch - data store & analytics / search engine
 * Beeline - Hive command line interface
 * Datasift - online service that streams tweets matching a given pattern to a nominated datastore (such as MongoDB)
-* Flume, Sqoop - Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data)
 * Ambari - Provision, Monitor and Maintain cluster
 * Apache Drill - SQL on Hadoop
 * Apache Storm - Storm is about real-time processing of data streams. It consists of higher level of abstraction than simple message passing (which permits describing topologies as a DAG), per-process fault-tolerance and definite at-least-once semantics for each message in the structure.
