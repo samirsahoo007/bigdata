@@ -6,7 +6,8 @@ Following are the components that collectively form a Hadoop ecosystem:
 
 * Oozie: Job Scheduling
 * Chukwa: data collection system for monitoring large distributed systems 
-* <details>
+* Flume, Sqoop - Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data)
+<details>
 
   <summary> Flume, Sqoop - Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data)</summary>
 
