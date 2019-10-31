@@ -4,17 +4,18 @@ Hadoop Ecosystem is a platform or a suite which provides various services to sol
 
 Following are the components that collectively form a Hadoop ecosystem:
 
-* Oozie: Job Scheduling
-* Chukwa: data collection system for monitoring large distributed systems 
-* Flume, Sqoop - Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data). More below
-* Zookeeper: Managing cluste (provides a distributed configuration service, a synchronization service and a naming registry for distributed systems)
-* HIVE, PIG: Query based processing of data services
+* Oozie: Job Scheduling, workflow monitoring
+* Chukwa: Monitoring, data collection system for monitoring large distributed systems 
+* Flume, Sqoop - (Monitoring)Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data). More below
+* Zookeeper: cluster management(provides a distributed configuration service, a synchronization service and a naming registry for distributed systems)
+* HIVE, PIG: Query based processing of data services(SQL, Dataflow)
 * Mahout, Spark MLLib: Machine Learning algorithm libraries
-* Avro: row-oriented remote procedure call and data serialization framework(uses JSON for defining data types and protocols,& serializes data in a compact binary format. Apache Spark SQL can access Avro as a data source)
+* Avro: (RPC)row-oriented remote procedure call and data serialization framework(uses JSON for defining data types and protocols,& serializes data in a compact binary format. Apache Spark SQL can access Avro as a data source)
+* Sqoop: (RDBMS Connector) Data Ingesting Services on structured data
 * MapReduce: Programming based Data Processing
-* YARN: Yet Another Resource Negotiator
+* YARN: Cluster and resource management(Yet Another Resource Negotiator)
 * HDFS: Hadoop Distributed File System
-* HBase: NoSQL Database
+* HBase: Column DB Storage (NoSQL Database)
 * Spark: In-Memory data processing
 * Solar, Lucene: Searching and Indexing
 * Kibana - data visualisation tool for Elasticsearch
@@ -23,10 +24,10 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Datasift - online service that streams tweets matching a given pattern to a nominated datastore (such as MongoDB)
 * Ambari - Provision, Monitor and Maintain cluster
 * Apache Drill - SQL on Hadoop
-* Apache Storm - Storm is about real-time processing of data streams. It consists of higher level of abstraction than simple message passing (which permits describing topologies as a DAG), per-process fault-tolerance and definite at-least-once semantics for each message in the structure.
-* Apache Kafka is a scalable, high performance, low latency platform that allows reading and writing streams of data like a messaging system. 
+* Apache Storm - real-time processing of data streams. It consists of higher level of abstraction than simple message passing (which permits describing topologies as a DAG), per-process fault-tolerance and definite at-least-once semantics for each message in the structure.
+* Kafka is a scalable, high performance, low latency platform that allows reading and writing streams of data like a messaging system. 
 * Spark Streaming is part of the Apache Spark platform that enables scalable, high throughput, fault tolerant processing of data streams.
-* Apache Cassandra is a distributed and wide-column NoSQL data store.
+* Cassandra is a distributed and wide-column NoSQL data store.
 
 #### Notes:
 * Flume is service for efficiently collecting, aggregating, and moving large amounts of log data
