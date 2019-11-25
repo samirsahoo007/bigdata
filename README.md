@@ -275,6 +275,151 @@ The record simply contains a UUID for a transaction_id, a dummy credit-card numb
 888ff1e2-5361-11e4-b76d-22000ada828b|4532623020656|2014-10-14 01:18:29|27.14|681
 88900c72-5361-11e4-b76d-22000ada828b|4024007162856600|2014-10-14 01:18:29|34.63|577
 
+# Log Data with Flume in HDFS
+
+Some of the data that ends up in the Hadoop Distributed File System (HDFS) might land there via database load operations or other types of batch processes, but what if you want to capture the data that’s flowing in high-throughput data streams, such as application log data? Apache Flume is the current standard way to do that easily, efficiently, and safely.
+
+Apache Flume, another top-level project from the Apache Software Foundation, is a distributed system for aggregating and moving large amounts of streaming data from different sources to a centralized data store.
+
+Put another way, Flume is designed for the continuous ingestion of data into HDFS. The data can be any kind of data, but Flume is particularly well-suited to handling log data, such as the log data from web servers. Units of the data that Flume processes are called events; an example of an event is a log record.
+
+To understand how Flume works within a Hadoop cluster, you need to know that Flume runs as one or more agents, and that each agent has three pluggable components: sources, channels, and sinks:
+
+Sources retrieve data and send it to channels.
+
+Channels hold data queues and serve as conduits between sources and sinks, which is useful when the incoming flow rate exceeds the outgoing flow rate.
+
+Sinks process data that was taken from channels and deliver it to a destination, such as HDFS.
+
+An agent must have at least one of each component to run, and each agent is contained within its own instance of the Java Virtual Machine (JVM).
+
+An event that is written to a channel by a source isn’t removed from that channel until a sink removes it by way of a transaction. If a network failure occurs, channels keep their events queued until the sinks can write them to the cluster. An in-memory channel can process events quickly, but it is volatile and cannot be recovered, whereas a file-based channel offers persistence and can be recovered in the event of failure.
+
+Each agent can have several sources, channels, and sinks, and although a source can write to many channels, a sink can take data from only one channel.
+
+An agent is just a JVM that’s running Flume, and the sinks for each agent node in the Hadoop cluster send data to collector nodes, which aggregate the data from many agents before writing it to HDFS, where it can be analyzed by other Hadoop tools.
+
+Agents can be chained together so that the sink from one agent sends data to the source from another agent. Avro, Apache’s remote call-and-serialization framework, is the usual way of sending data across a network with Flume, because it serves as a useful tool for the efficient serialization or transformation of data into a compact binary format.
+
+In the context of Flume, compatibility is important: An Avro event requires an Avro source, for example, and a sink must deliver events that are appropriate to the destination.
+
+What makes this great chain of sources, channels, and sinks work is the Flume agent configuration, which is stored in a local text file that’s structured like a Java properties file. You can configure multiple agents in the same file. Look at an sample file, which is named flume-agent.conf — it’s set to configure an agent named shaman:
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/flume_img0.jpg)
+
+### Types of flume sources and sinks
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/Types-of-Flume-Source-01-1.jpg)
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/Types-of-Flume-Sinks-01.jpg)
+```
+# Identify the components on agent shaman:
+shaman.sources = netcat_s1
+shaman.sinks = hdfs_w1
+shaman.channels = in-mem_c1
+# Configure the source:
+shaman.sources.netcat_s1.type = netcat
+shaman.sources.netcat_s1.bind = localhost
+shaman.sources.netcat_s1.port = 44444
+# Describe the sink:
+shaman.sinks.hdfs_w1.type = hdfs
+shaman.sinks.hdfs_w1.hdfs.path = hdfs://<path>
+shaman.sinks.hdfs_w1.hdfs.writeFormat = Text
+shaman.sinks.hdfs_w1.hdfs.fileType = DataStream
+# Configure a channel that buffers events in memory:
+shaman.channels.in-mem_c1.type = memory
+shaman.channels.in-mem_c1.capacity = 20000
+shaman.channels.in-mem_c1.transactionCapacity = 100
+# Bind the source and sink to the channel:
+shaman.sources.netcat_s1.channels = in-mem_c1
+shaman.sinks.hdfs_w1.channels = in-mem_c1
+```
+
+The configuration file includes properties for each source, channel, and sink in the agent and specifies how they’re connected. In this example, agent shaman has a source that listens for data (messages to netcat) on port 44444, a channel that buffers event data in memory, and a sink that logs event data to the console.
+
+This configuration file could have been used to define several agents; here, you’re configuring only one to keep things simple.
+
+To start the agent, use a shell script called flume-ng, which is located in the bin directory of the Flume distribution. From the command line, issue the agent command, specifying the path to the configuration file and the agent name.
+
+The following sample command starts the Flume agent:
+
+flume-ng agent -f /<path to flume-agent.conf> -n shaman
+The Flume agent’s log should have entries verifying that the source, channel, and sink started successfully.
+
+To further test the configuration, you can telnet to port 44444 from another terminal and send Flume an event by entering an arbitrary text string. If all goes well, the original Flume terminal will output the event in a log message that you should be able to see in the agent’s log.
+
+## Flume Case Study: Website Log Aggregation
+
+### Problem Statement
+
+This case study focuses on a multi hop flume agent to aggregate the log reports from various web servers which have to be analyzed with the help of Hadoop. Consider a scenario we have multiple servers located in various locations serving from different data centers. The objective is to distribute the log files based on the device type and  store a backup of all logs. For example logs of US server has to be transferred based on the data center the server is located and copy all of the logs in the master database.
+
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/web-log.png)
+ 
+
+In this case every server flume agent has a single source and two channels and sinks. One sending the data to the main database flume agent and other to the flume agent that is dividing the data based on the user agent present in the logs.
+
+### Proposed Solution
+
+Before aggregating the logs, configuration has to be set for various components in our architecture. In case of the web server flume system, as discussed two sinks are needed, channels to distribute the same data to both the destinations. In the beginning, define the names of the various components that are going to be used:
+
+```
+​server_agent.sources = apache_server
+server_agent.channels = storage1 storage2
+server_agent.sinks= sink1 sink2
+The source is configured to execute the command in the shell to retrieve the data. It is assumed as a Apache2 server and the logs location hasn’t been changed. The location can be varied based on the requirement. Then introduce a header for each event defining the data center from which it originated
+
+​server_agent.sources.apache_server.type = exec
+server_agent.sources.apache_server.command = tail -f 
+     /var/log/apache2/access.log
+server_agent.sources.apache_server.batchSize = 1
+server_agent.sources.apache_server.interceptors = int1
+server_agent.sources.apache_server.interceptors.int1.type = static
+server_agent.sources.apache_server.interceptors.int1.key = datacenter
+server_agent.sources.apache_server.interceptors.int1.value = US
+```
+
+The sink is considered to be of avro sink retrieving events from the channel ‘storage1’. It is connected to the source of the master database flume agent which has to be of avro type. It has been defined to replicate all the events received by source to all the sources in the agent. The same goes with another sink with a different channel, IP and port number. We have choose two different channel as an event is successfully sent to one sink it is immediately deleted and can’t be sent to other sink.
+
+```
+source_agent.sinks.sink1.type = avro
+source_agent.sinks.sink1.channel = storage1
+source_agent.sinks.sink1.hostname = 
+source_agent.sinks.sink1.port = 
+source_agent.sinks.sink2.type = avro
+source_agent.sinks.sink2.channel = storage2
+source_agent.sinks.sink2.hostname = 
+source_agent.sinks.sink2.port = 
+source_agent.sources.apache_server.selector.type = replicating
+```
+
+The same configuration for all the server flume agents with just a variation in the datacenter value. The sink1 sends the data to be stored in the master database while sink2 sends data to divide the data and store them in different databases. The code for the user agent based flume agent is similar to the server agent code with additional feature of Multiplexing as different events have to be sent to different channels based on the header value. Select the header ‘datacenter’ and divide the data between channels c1 and c2 based on the value of the header.
+
+```
+​database_agent.sources.r1.selector.type = multiplexing
+database_agent.sources.r1.selector.header = datacenter
+database_agent.sources.r1.selector.mapping.ASIA = c1
+database_agent.sources.r1.selector.mapping.US = c2
+```
+
+### Executing Solution
+
+Start individual agents on each server using the following command:
+
+```
+​$ bin/flume-ng agent -n $agent_name -c conf -f
+conf/flume-conf.properties.template
+```
+
+As the log reports are generated in the apache log file, the log reports are transferred to various servers as required without bandwidth or security concerns with better reliability.
+
+Ref: https://www.dummies.com/programming/big-data/hadoop/log-data-with-flume-in-hdfs/
+Twitter Data Streaming: https://www.edureka.co/blog/apache-flume-tutorial/
+Types of flume source: https://data-flair.training/blogs/flume-source/
+Types of flume sink: https://data-flair.training/blogs/flume-sink/
+
+
 # Doing Computation
 The goal: get the compute work to some computer with processor/memory to do it, and get the results back.
 
