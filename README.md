@@ -472,6 +472,7 @@ Twitter Data Streaming: https://www.edureka.co/blog/apache-flume-tutorial/
 Types of flume source: https://data-flair.training/blogs/flume-source/
 Types of flume sink: https://data-flair.training/blogs/flume-sink/
 Create your first flume program: https://www.guru99.com/create-your-first-flume-program.html
+User guide: https://flume.apache.org/FlumeUserGuide.html
 
 
 # Doing Computation
