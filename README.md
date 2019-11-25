@@ -277,7 +277,58 @@ The record simply contains a UUID for a transaction_id, a dummy credit-card numb
 
 # Flume Architecture
 
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/UserGuide_image00.png)
+
+			Data flow model
+OR
+
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/061114_1038_Introductio2.png)
+
+## Data ingestion
+Flume supports a number of mechanisms to ingest data from external sources.
+
+### RPC
+An Avro client included in the Flume distribution can send a given file to Flume Avro source using avro RPC mechanism:
+
+```
+$ bin/flume-ng avro-client -H localhost -p 41414 -F /usr/logs/log.10
+The above command will send the contents of /usr/logs/log.10 to to the Flume source listening on that ports.
+```
+
+### Executing commands
+There’s an exec source that executes a given command and consumes the output. A single ‘line’ of output ie. text followed by carriage return (‘\r’) or line feed (‘\n’) or both together.
+
+### Network streams
+Flume supports the following mechanisms to read data from popular log stream types, such as:
+
+1. Avro
+2. Thrift
+3. Syslog
+4. Netcat
+
+### Setting multi-agent flow¶
+Two agents communicating over Avro RPC
+
+In order to flow the data across multiple agents or hops, the sink of the previous agent and source of the current hop need to be avro type with the sink pointing to the hostname (or IP address) and port of the source.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/UserGuide_image03.png)
+
+### Consolidation
+A very common scenario in log collection is a large number of log producing clients sending data to a few consumer agents that are attached to the storage subsystem. For example, logs collected from hundreds of web servers sent to a dozen of agents that write to HDFS cluster.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/UserGuide_image02.png)
+			A fan-in flow using Avro RPC to consolidate events in one place
+
+This can be achieved in Flume by configuring a number of first tier agents with an avro sink, all pointing to an avro source of single agent (Again you could use the thrift sources/sinks/clients in such a scenario). This source on the second tier agent consolidates the received events into a single channel which is consumed by a sink to its final destination.
+
+### Multiplexing the flow
+Flume supports multiplexing the event flow to one or more destinations. This is achieved by defining a flow multiplexer that can replicate or selectively route an event to one or more channels.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/UserGuide_image01.png)
+			A fan-out flow using a (multiplexing) channel selector
+
+The above example shows a source from agent “foo” fanning out the flow to three different channels. This fan out can be replicating or multiplexing. In case of replicating flow, each event is sent to all three channels. For the multiplexing case, an event is delivered to a subset of available channels when an event’s attribute matches a preconfigured value. For example, if an event attribute called “txnType” is set to “customer”, then it should go to channel1 and channel3, if it’s “vendor” then it should go to channel2, otherwise channel3. The mapping can be set in the agent’s configuration file.
+
 
 ## Log Data with Flume in HDFS
 
@@ -308,8 +359,6 @@ Agents can be chained together so that the sink from one agent sends data to the
 In the context of Flume, compatibility is important: An Avro event requires an Avro source, for example, and a sink must deliver events that are appropriate to the destination.
 
 What makes this great chain of sources, channels, and sinks work is the Flume agent configuration, which is stored in a local text file that’s structured like a Java properties file. You can configure multiple agents in the same file. Look at an sample file, which is named flume-agent.conf — it’s set to configure an agent named shaman:
-
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/flume_img0.jpg)
 
 ### Types of flume sources and sinks
 
