@@ -275,7 +275,11 @@ The record simply contains a UUID for a transaction_id, a dummy credit-card numb
 888ff1e2-5361-11e4-b76d-22000ada828b|4532623020656|2014-10-14 01:18:29|27.14|681
 88900c72-5361-11e4-b76d-22000ada828b|4024007162856600|2014-10-14 01:18:29|34.63|577
 
-# Log Data with Flume in HDFS
+# Flume Architecture
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/061114_1038_Introductio2.png)
+
+## Log Data with Flume in HDFS
 
 Some of the data that ends up in the Hadoop Distributed File System (HDFS) might land there via database load operations or other types of batch processes, but what if you want to capture the data that’s flowing in high-throughput data streams, such as application log data? Apache Flume is the current standard way to do that easily, efficiently, and safely.
 
