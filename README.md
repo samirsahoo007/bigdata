@@ -422,6 +422,7 @@ Ref: https://www.dummies.com/programming/big-data/hadoop/log-data-with-flume-in-
 Twitter Data Streaming: https://www.edureka.co/blog/apache-flume-tutorial/
 Types of flume source: https://data-flair.training/blogs/flume-source/
 Types of flume sink: https://data-flair.training/blogs/flume-sink/
+Create your first flume program: https://www.guru99.com/create-your-first-flume-program.html
 
 
 # Doing Computation
