@@ -29,13 +29,23 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Spark Streaming is part of the Apache Spark platform that enables scalable, high throughput, fault tolerant processing of data streams.
 * Cassandra is a distributed and wide-column NoSQL data store.
 ==============
-* Hue is a Web interface for analyzing data with Apache Hadoop. Itallows you to browse, query (hive, pig or impala) and visualizie data. 
+* Hue is a web-based interactive query editor that enables you to interact with data warehouses. It helps in analyzing data with Apache Hadoop. Itallows you to browse, query (hive, pig or impala) and visualizie data. 
 
 Hue Server is a "container" web application that sits in between your CDH installation and the browser. It hosts the Hue applications and communicates with various servers that interface with CDH components.
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue.jpg)
 
+By default, for hive you are provided a hive shell which is used to submit query.
+Now, you can run the same query using hive query editor that comes with hue. 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_4.5.png)
 	open source SQL Assistant for Databases & Data Warehouses
+
+This panel enables you to:
+
+Browse your databases
+Drill down to specific tables
+View HDFS directories and cloud storage
+Discover indexes and HBase or Kudu tables
+Find documents
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_4_assistant_2.gif)
 
@@ -46,6 +56,18 @@ Hue Server is a "container" web application that sits in between your CDH instal
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/dashboard_layout_dimensions.gif)
 	Visually discover insights
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_overview_central_region.png)
+
+
+I can click on a document to open it up in appropriate query editor:
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_hive_query_editor_1.png)
+
+I can view and edit the query, and then run it on my cluster with a single click of the Execute button. After I do this, I can inspect the logs as the job runs:
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_hive_query_log_1.png)
+
+After the query runs to completion I can see the results, again with one click:
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_hive_query_results_1.png)
 
 
 ==============
