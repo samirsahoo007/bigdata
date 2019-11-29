@@ -28,6 +28,12 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Kafka is a scalable, high performance, low latency platform that allows reading and writing streams of data like a messaging system. 
 * Spark Streaming is part of the Apache Spark platform that enables scalable, high throughput, fault tolerant processing of data streams.
 * Cassandra is a distributed and wide-column NoSQL data store.
+==============
+* Hue is a Web interface for analyzing data with Apache Hadoop. 
+
+Hue Server is a "container" web application that sits in between your CDH installation and the browser. It hosts the Hue applications and communicates with various servers that interface with CDH components.
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue.jpg)
+==============
 
 #### Notes:
 * Flume is service for efficiently collecting, aggregating, and moving large amounts of log data
