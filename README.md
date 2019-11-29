@@ -70,6 +70,7 @@ After the query runs to completion I can see the results, again with one click:
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_hive_query_results_1.png)
 
 
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/HIVE-VS-HUE.jpg)
 ==============
 
 #### Notes:
