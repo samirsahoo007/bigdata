@@ -690,10 +690,12 @@ The Splunk App for Jenkins helps engineering teams, including developers, test/Q
 
 # Hue:
 
+Hue(Hadoop User Experience) is a web-based interactive query editor that enables you to interact with data warehouses. It allows you to browse, analyze query (hive, pig or impala) and visualizie data. 
 Hue Server is a "container" web application that sits in between your CDH installation and the browser. It hosts the Hue applications and communicates with various servers that interface with CDH components.
+e.g. By default, for hive you are provided a hive shell which is used to submit query. Now, you can run the same query using hive query editor that comes with hue. 
+
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue.jpg)
 
-By default, for hive you are provided a hive shell which is used to submit query. Now, you can run the same query using hive query editor that comes with hue. 
 
 ## Features of Hue
 
@@ -718,28 +720,33 @@ By default, for hive you are provided a hive shell which is used to submit query
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_overview_central_region.png)
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_4.5.png)
-	open source SQL Assistant for Databases & Data Warehouses
+			open source SQL Assistant for Databases & Data Warehouses
 
-This panel enables you to:
+* The left panel enables you to:
 
-Browse your databases
-Drill down to specific tables
-View HDFS directories and cloud storage
-Discover indexes and HBase or Kudu tables
-Find documents
+* Browse your databases
+
+* Drill down to specific tables
+
+* View HDFS directories and cloud storage
+
+* Discover indexes and HBase or Kudu tables
+
+* Find documents
 
 The user can write SQL like queries and execution of these queries can produce MapReduce job by processing data and the job browser can be checked from the browser even when it is in running state.
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_4_assistant_2.gif)
 
 
-Pick one of the multiple interpreters for Apache Hive, Apache Impala, Apache Presto and all the others too: MySQL, SparkSQL, Oracle, Apache Phoenix, KSQL, Elastic Search, Apache Druid, PostgreSQL, Redshift, BigQuery...
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/blog_top_search_.png)
-	Find and connect your data
+Connect to all the databases
 
+Pick one of the multiple interpreters for Apache Hive, Apache Impala, Apache Presto and all the others too: MySQL, SparkSQL, Oracle, Apache Phoenix, KSQL, Elastic Search, Apache Druid, PostgreSQL, Redshift, BigQuery...
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/blog_top_search_.png)
+
+Visually discover insights
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/dashboard_layout_dimensions.gif)
-	Visually discover insights
-
 
 
 I can click on a document to open it up in appropriate query editor:
