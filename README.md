@@ -28,50 +28,7 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Kafka is a scalable, high performance, low latency platform that allows reading and writing streams of data like a messaging system. 
 * Spark Streaming is part of the Apache Spark platform that enables scalable, high throughput, fault tolerant processing of data streams.
 * Cassandra is a distributed and wide-column NoSQL data store.
-==============
-* Hue is a web-based interactive query editor that enables you to interact with data warehouses. It helps in analyzing data with Apache Hadoop. Itallows you to browse, query (hive, pig or impala) and visualizie data. 
-
-Hue Server is a "container" web application that sits in between your CDH installation and the browser. It hosts the Hue applications and communicates with various servers that interface with CDH components.
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue.jpg)
-
-By default, for hive you are provided a hive shell which is used to submit query.
-Now, you can run the same query using hive query editor that comes with hue. 
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_4.5.png)
-	open source SQL Assistant for Databases & Data Warehouses
-
-This panel enables you to:
-
-Browse your databases
-Drill down to specific tables
-View HDFS directories and cloud storage
-Discover indexes and HBase or Kudu tables
-Find documents
-
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_4_assistant_2.gif)
-
-
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/blog_top_search_.png)
-	Find and connect your data
-
-
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/dashboard_layout_dimensions.gif)
-	Visually discover insights
-
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_overview_central_region.png)
-
-
-I can click on a document to open it up in appropriate query editor:
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_hive_query_editor_1.png)
-
-I can view and edit the query, and then run it on my cluster with a single click of the Execute button. After I do this, I can inspect the logs as the job runs:
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_hive_query_log_1.png)
-
-After the query runs to completion I can see the results, again with one click:
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_hive_query_results_1.png)
-
-
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/HIVE-VS-HUE.jpg)
-==============
+* Hue(Hadoop User Experience) is a web-based interactive query editor that enables you to interact with data warehouses. It allows you to browse, analyze query (hive, pig or impala) and visualizie data. 
 
 #### Notes:
 * Flume is service for efficiently collecting, aggregating, and moving large amounts of log data
@@ -730,3 +687,96 @@ The Splunk App for Jenkins helps engineering teams, including developers, test/Q
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/splunk_jenkins1.png)
 
+
+# Hue:
+
+Hue Server is a "container" web application that sits in between your CDH installation and the browser. It hosts the Hue applications and communicates with various servers that interface with CDH components.
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue.jpg)
+
+By default, for hive you are provided a hive shell which is used to submit query. Now, you can run the same query using hive query editor that comes with hue. 
+
+## Features of Hue
+
+* Hadoop API Access
+
+* Presence of HDFS File Browser
+
+* Browser and Job Designer
+
+* User Admin Interface
+
+* Editor for Hive Query
+
+* Editor for Pig Query
+
+* Hadoop Shell Access
+
+* Workflows can access Oozie Interface
+
+* SOLR searches can get a separate interface
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_overview_central_region.png)
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_4.5.png)
+	open source SQL Assistant for Databases & Data Warehouses
+
+This panel enables you to:
+
+Browse your databases
+Drill down to specific tables
+View HDFS directories and cloud storage
+Discover indexes and HBase or Kudu tables
+Find documents
+
+The user can write SQL like queries and execution of these queries can produce MapReduce job by processing data and the job browser can be checked from the browser even when it is in running state.
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_4_assistant_2.gif)
+
+
+Pick one of the multiple interpreters for Apache Hive, Apache Impala, Apache Presto and all the others too: MySQL, SparkSQL, Oracle, Apache Phoenix, KSQL, Elastic Search, Apache Druid, PostgreSQL, Redshift, BigQuery...
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/blog_top_search_.png)
+	Find and connect your data
+
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/dashboard_layout_dimensions.gif)
+	Visually discover insights
+
+
+
+I can click on a document to open it up in appropriate query editor:
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_hive_query_editor_1.png)
+
+I can view and edit the query, and then run it on my cluster with a single click of the Execute button. After I do this, I can inspect the logs as the job runs:
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_hive_query_log_1.png)
+
+After the query runs to completion I can see the results, again with one click:
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_hive_query_results_1.png)
+
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/HIVE-VS-HUE.jpg)
+
+## Job Browser
+Hadoop ecosystems consist of many jobs and sometimes developers may need to know that which job is currently running on the Hadoop cluster and which job has been successfully completed and which has errors. Through Job browser, you can access all of the job-related information right from inside the browser. For this there is a button in Hue that can enlist the number of jobs and their status. Following image shows the job browser screen of Hue:Apache Hue Hadoop TutorialAbove image shows MapReduce type job that has been finished successfully. Along with Job ID, Application Type, Name, Status and Duration of the job is also listed with its time of submission and the name of the user that have. To show the job status, four color codes are used that are listed below:
+
+For Successful Job – Green Code is Used
+
+For Currently Running Jobs – Yellow color is Used
+
+For Failed Jobs- Red Color is Used
+
+For Manually Killed Jobs – Black Color is Used
+
+If the user needs to access more information about any job then by clicking the job or Job ID user can access the job details. Moreover, another job-related information like in above case two subtasks were also performed for the above-listed job one is MapReduce and other is Reduce that is shown in the below image:
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/6-1.png)
+
+So recent tasks for the job are displayed and that is MapReduce and Reduce. Here other job-related properties like metadata can also be accessed easily from the same platform. Information like the user who has submitted the job, Total execution duration of this job, the time when it was started and ended along with their temporary storage paths and tablespaces, etc can also be listed and checked through Hue job interface like shown in the below image:
+
+## Oozie Workflows
+Hue also provides the interface for Oozie workflow. All of the past and previous workflows of Hadoop cluster can be checked through this workflow interface. Again, three colors can be used to check the workflow status:
+
+Successful Jobs – Green
+Running Jobs – Yellow
+Failed Job – Red
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/10.png)
+
+New workflows can also be designed through this interface. An inbuilt Oozie editor is there that can be used to create new workflows just by using drag and drop interface.
