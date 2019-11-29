@@ -29,10 +29,25 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Spark Streaming is part of the Apache Spark platform that enables scalable, high throughput, fault tolerant processing of data streams.
 * Cassandra is a distributed and wide-column NoSQL data store.
 ==============
-* Hue is a Web interface for analyzing data with Apache Hadoop. 
+* Hue is a Web interface for analyzing data with Apache Hadoop. Itallows you to browse, query (hive, pig or impala) and visualizie data. 
 
 Hue Server is a "container" web application that sits in between your CDH installation and the browser. It hosts the Hue applications and communicates with various servers that interface with CDH components.
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue.jpg)
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_4.5.png)
+	open source SQL Assistant for Databases & Data Warehouses
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/hue_4_assistant_2.gif)
+
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/blog_top_search_.png)
+	Find and connect your data
+
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/dashboard_layout_dimensions.gif)
+	Visually discover insights
+
+
 ==============
 
 #### Notes:
