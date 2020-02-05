@@ -285,6 +285,8 @@ OR
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/061114_1038_Introductio2.png)
 
+Undoubtedly, Apache Flume is robust and reliable due to its tunable reliability and recovery mechanisms. It also uses a simple extendable model for data that allows the application of online analytics. Flume sends the data to the Spark ecosystem, where data acceptance and processing happens
+
 ## Data ingestion
 Flume supports a number of mechanisms to ingest data from external sources.
 
@@ -629,7 +631,7 @@ Where the work happened is transparent.
 
 A task with Celery: tasks.py.
 
-Let's try it…
+Let's try it...
 
 window1> celery -A tasks worker --loglevel=info --hostname=worker1@%h
 window2> celery -A tasks worker --loglevel=info --hostname=worker2@%h
@@ -669,6 +671,111 @@ Hortonworks HDP.
 MapR.
 Amazon EMR: EC2 + Hadoop set up automatically.
 
+### Another Scenario:
+Let's discuss an industry scenario which employs Spark to process data in real-time. The source of the data is Apache Flume. Flume is a service, which can move large amounts of data. It is usually disperse and can process all forms of data. Industries use Flume to process real-time log data.
+
+### Flume Integration
+
+There are two approaches to integrate flume with Spark Streaming
+
+Push-based approach: Spark listens on particular port for Avro event and flume connects to that port and publishes event
+
+Pull-based approach: You use special Spark Sink in flume that keeps collecting published data and Spark pulls that data at certain frequency
+
+#### Push-based approach
+
+In this approach, Spark Streaming sets up a receiver that acts as an Avro agent for Flume. You need:
+
+a Spark worker to run on a specific machine (used in Flume configuration)
+create an Avro sink in your Flume configuration to push data to a port on that machine
+     agent.sinks = avroSink
+     agent.sinks.avroSink.type = avro
+     agent.sinks.avroSink.channel = memoryChannel
+     agent.sinks.avroSink.hostname = localhost
+     agent.sinks.avroSink.port = 33333
+
+#### Pull-based approach
+
+Instead of Flume pushing data directly to Spark Streaming, this approach runs a custom Flume sink allowing:
+
+Flume to push data into the sink, and data stays buffered
+Spark Streaming uses a reliable Flume receiver and transaction to pull data from the sink. This solution guarantees that a transaction succeeds only after data is recevide and replicated by Spark Streaming Therefore this solution guarantees stronger reliability and fault-tolerance and should be preferred when these requirements are mandatory, the difference with respect to the push-based approach is that you are required to configure Flume to run a custom sink.
+To setup this configuration you need to:
+
+select a machine that will run the custom sink in a Flume agent, this is where the Flume pipeline is configured to send data.
+the Spark Streaming - Flume integration jar contains the custom sink implementation and it must be used to configure a Flume sink like
+  agent.sinks = spark
+  agent.sinks.spark.type = org.apache.spark.streaming.flume.sink.SparkSink
+  agent.sinks.spark.hostname = localhost
+  agent.sinks.spark.port = 33333
+  agent.sinks.spark.channel = memoryChannel
+Examples
+
+Examples for these approaches are:
+
+FlumeMultiPullBased
+
+FlumeSinglePullBased
+
+FlumeMultiPushBased
+
+FlumeSinglePushBased
+
+examples of flume configurations are provided in resources folder, you can also find a start.sh script that can be used to start Flume agent.
+
+Push-based
+
+To execute push-based examples you need to:
+
+start Spark Streaming example. It creates a sink to which flume will connect to
+start Flume pipeline, the provided configurations use a Flume source that monitors a file for new input lines
+
+Pull-based
+
+To execute pull-based examples you need to:
+
+start Flume agent, it creates the pipeline with the configured custom sink
+start Spark Streaming example. It connects to the custom sink to retrieve data
+
+## Spark Streaming
+Spark Streaming is a component of the Spark ecosystem that enables scalable, high-throughput, fault-tolerant stream processing of live data. Also, the source of this data can be any of the following: Kafka, Flume, TCP sockets, etc. The data can be processing can be done using complex algorithms, which expresses high-level functions like map, filter, flatMap, reduce, join, window, etc.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/flume/images/2-fig2.png)
+
+# Flume vs Kafka
+
+"What tool is the best for transporting data/logs across servers in a system?"
+
+## Problems targeted by these systems
+
+Flume is designed to ease the ingestion of data from one component to other.
+It's focus is mostly on Hadoop although now it has sources and sinks for several other tools also, like Solr.
+
+Kafka on the other hand is a messaging system that can store data for several days (depending on the data size of-course).
+Kafka focuses more on the pipe while Flume focuses more on the end-points of the pipe.
+That's why Kafka does not provide any sources or sinks specific to any component like Hadoop or Solr.
+It just provides a reliable way of getting the data across from one system to another.
+Kafka uses partitioning for achieving higher throughput of writes and uses replication for reliability and higher read throughput.
+
+Push / Pull
+
+Flume pushes data while Kafka needs the consumers to pull the data. Due to push nature, Flume needs some work at the consumers' end for replicating data-streams to multiple sinks. With Kafka, each consumer manages its own read pointer, so its relatively easy to replicate channels in Kafka and also much easier to parallelize data-flow into multiple sinks like Solr and Hadoop.
+
+Latest trend is to use both Kafka and Flume together.
+
+KafkaSource and KafkaSink for Flume are available which help in doing so.
+The combination of these two gives a very desirable system because Flume's primary effort is to help ingest data into Hadoop and doing this in Kafka without Flume is a significant effort. Also note that Flume by itself is not sufficient for processing streams of data as Flume's primary purpose is not to store and replicate data streams. Hence it would be poor system if it uses only a single one of these two tools.
+
+#### Persistence storage on disk
+
+Kafka keeps the messages on disk till the time it is configured to keep them.
+Thus if a Kafka broker goes offline for a while and comes back, the messages are not lost.
+
+Flume also maintains a write-ahead-log which helps it to restore messages during a crash.
+
+#### Flume error handling and transactional writes
+
+Flume is meant to pass messages from source to sink (All of which implement Flume interfaces for get and put, thus treating Flume as an adapter). For example, a Flume log reader could send messages to a Flume sink which duplicates the incoming stream to Hadoop Flume Sink and Solr Flume Sink. For a chained system of Flume sources and sinks, Flume achieves reliability by using transactions - a sending Flume client does not close its write transaction unless the receiving client writes the data to its own Write-Ahead-Log and informs the sender about the same. If the receiver does not acknowledge the writing of WAL to the sender, then the sender marks this as a failure. The sender then begins to buffer all such events unless it can no longer hold any more. At this point, it begins to reject writes from its own upstream clients as well. 
 
 # Splunk
 
