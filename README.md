@@ -672,6 +672,25 @@ MapR.
 Amazon EMR: EC2 + Hadoop set up automatically.
 
 ### Another Scenario:
+
+Real-time data is data with potentially high business value, but also with a perishable expiration date. If the value of the data is not realized in a certain window of time, its value is lost and the decision or action that was needed as a result never occurs. This category of big data comes in continuously and often quickly, so we call it streaming data. Streaming data needs special attention because a sudden price change, a critical threshold met, a sensor reading changing rapidly, or a blip in a log file can all be of immense value, but only if we are alerted in time.
+
+There are four big names in big data technologies designed to handle time-sensitive, streaming data -- Kafka, Kinesis, Flume, and Storm. They are alike in their ability to process massive amounts of streaming data generated from social media, logging systems, click streams, Internet-of-Things devices, and so forth. However, each has a few distinctions, strengths, and weaknesses.
+
+Kafka is one of the better-known streaming data processors. Born at LinkedIn, Kafka has been and is used by some big names in the industry, such as LinkedIn, Netflix, PayPal, Spotify, and Uber. In short, Kafka is a distributed messaging system that maintains feeds of messages called topics. Publishers write data to topics and subscribers read from topics. Kafka topics are partitioned and replicated across multiple nodes in your Hadoop cluster.
+
+Kafka messages are simple, byte-long arrays that can store objects in virtually any format with a key attached to each message, so that all messages within a topic will arrive together within the same partition or be delivered to the same subscriber. Kafka is unique in how it treats each topic like a log file, and the messages within are ordered by a unique offset. To be efficient, subscribers must track their own location within each log, which allows Kafka to dedicate itself to processing data for large volumes of users and data with little overhead.
+
+Kafka has a follow-on competitor -- Amazon Kinesis. Kafka and Kinesis are much the same under the hood. However, although Kafka is very fast and also free, it requires you to make it into an enterprise-class solution for your organization. Amazon filled that gap by offering Kinesis as an out-of-the-box streaming data tool with the speed and scale of Kafka in an enterprise-ready package. Kinesis has shards -- what Kafka calls partitions -- that Amazon users pay for by the shard-hour and payload.
+
+Apache Flume is also a service for collecting large amounts of streaming data, particularly logs. Kafka and Kinesis require consumers to pull data. Flume pushes data to consumers using mechanisms it calls data sinks. Flume can push data to many popular sinks right out of the box, including HDFS, HBase, Cassandra, and some relational databases. Thus, it’s a quick starter, as opposed to Kafka, where you have to build your consumers’ ability to plug into the data stream from scratch. Kafka provides event replication, meaning if a node goes down, the others will pick up the slack and still make the data available. Flume does not. Thus, if your data is so mission-critical that if any loss is unacceptable, then Kafka is the way to go.
+
+Finally, Apache Storm involves streaming data. Storm is the bridge between batch processing and stream processing, which Hadoop is not natively designed to handle. Storm runs continuously, processing a stream of incoming data and dicing it into batches, so Hadoop can more easily ingest it. Data sources are called spouts and each processing node is a bolt. Bolts perform computations and processes on the data, including pushing output to data stores and other services.
+
+If you have a streaming data use case, you have some architectural decisions to make regarding which solution you should choose. If you want a fault-tolerant, do-it-yourself solution and you have the developers to support it, go with Kafka. If you need something that works out of the box, choose Kinesis or Flume, once you decide whether push or pull makes more sense. Finally, if streaming data is, for now, just a small add-on to your already developed Hadoop environment, Storm is a good choice.
+
+Streaming data offers an opportunity for real-time business value. Knowing who's who in streaming data technologies and which one best integrates with your infrastructure will help you make the right architectural decisions.
+
 Let's discuss an industry scenario which employs Spark to process data in real-time. The source of the data is Apache Flume. Flume is a service, which can move large amounts of data. It is usually disperse and can process all forms of data. Industries use Flume to process real-time log data.
 
 ### Flume Integration
