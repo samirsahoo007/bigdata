@@ -796,6 +796,91 @@ Flume also maintains a write-ahead-log which helps it to restore messages during
 
 Flume is meant to pass messages from source to sink (All of which implement Flume interfaces for get and put, thus treating Flume as an adapter). For example, a Flume log reader could send messages to a Flume sink which duplicates the incoming stream to Hadoop Flume Sink and Solr Flume Sink. For a chained system of Flume sources and sinks, Flume achieves reliability by using transactions - a sending Flume client does not close its write transaction unless the receiving client writes the data to its own Write-Ahead-Log and informs the sender about the same. If the receiver does not acknowledge the writing of WAL to the sender, then the sender marks this as a failure. The sender then begins to buffer all such events unless it can no longer hold any more. At this point, it begins to reject writes from its own upstream clients as well. 
 
+# Apache Spark vs. MapReduce
+## How did Spark become so efficient in data processing compared to MapReduce?
+
+Spark can be deployed on a variety of platforms. It runs on Windows and UNIX (such as Linux and Mac OS) and can be deployed in standalone mode on a single node when it has a supported OS. Spark can also be deployed in a cluster node on Hadoop YARN as well as Apache Mesos. Spark is a Java Virtual Machine (JVM)-based distributed data processing engine that scales, and it is fast compared to many other data processing frameworks. Spark originated at the University of California at Berkeley and later became one of the top projects in Apache. 
+
+Apache Spark includes several libraries to help build applications for machine learning (MLlib), stream processing (Spark Streaming), and graph processing (GraphX). 
+
+To test the hypothesis that simple specialized frameworks provide value, we identified one class of jobs that were found to perform poorly on Hadoop by machine learning researchers at our lab — iterative jobs where a dataset is reused across a number of iterations. We built a specialized framework called Spark optimized for these workloads.
+
+The biggest claim from Spark regarding speed is that it is able to "run programs up to 100x faster than Hadoop MapReduce in memory, or 10x faster on disk." Spark could make this claim because it does the processing in the main memory of the worker nodes and prevents the unnecessary I/O operations with the disks. The other advantage Spark offers is the ability to chain the tasks even at an application programming level without writing onto the disks at all or minimizing the number of writes to the disks.
+
+How did Spark become so efficient in data processing compared to MapReduce? It comes with a very advanced directed acyclic graph (DAG) data processing engine. What it means is that for every Spark job, a DAG of tasks is created to be executed by the engine. The DAG in mathematical parlance consists of a set of vertices and directed edges connecting them. The tasks are executed as per the DAG layout.
+
+In the case of MapReduce, the DAG consists of only two vertices, with one vertex for the map task and the other one for the reduce task. The edge is directed from the map vertex to the reduce vertex. The in-memory data processing combined with its DAG-based data processing engine makes Spark very efficient. In Spark's case, the DAG of tasks can be as complicated as it can. Thankfully, Spark comes with utilities that can give an excellent visualization of the DAG of any Spark job that is running. In a word count example, Spark's Scala code will look something like the following code snippet. The details of this programming aspects will be covered in the coming chapters:
+
+val textFile = sc.textFile("README.md") 
+val wordCounts = textFile.flatMap(line => line.split(" ")).map(word => 
+(word, 1)).reduceByKey((a, b) => a + b) 
+wordCounts.collect()
+The web application that comes with Spark is capable of monitoring workers and applications. The DAG of the preceding Spark job generated on the fly will look like this:
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/spark.png)
+
+In addition to the core data processing engine, Spark comes with a powerful stack of domain-specific libraries that use the core Spark libraries and provide various functionalities useful for various big data processing needs. The following table lists the supported libraries:
+
+Bottom line: Spark performs better when all the data fits in memory, especially on dedicated clusters. Hadoop MapReduce is designed for data that doesn’t fit in memory, and can run well alongside other services.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/splunk_jenkins1.png)
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/spark_history.png)
+
+Ref: https://www.slideshare.net/ishizaki/exploiting-gpus-in-spark
+
+### RDD 
+	is a fault-tolerant collection of elements that can be operated on in parallel.
+
+### DataFrame
+	is a Dataset organised into named columns. It is conceptually equivalent to a table in a relational database or a data frame in R/Python, but with richer optimisations under the hood.
+
+### Dataset
+	is a distributed collection of data. Dataset is a new interface added in Spark 1.6 that provides the benefits of RDDs (strong typing, ability to use powerful lambda functions) with the benefits of Spark SQL’s optimized execution engine.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/rdddfds.jpg)
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/rdddfds2.jpg)
+
+#### Q: Can you convert one to the other like RDD to DataFrame or vice-versa?
+
+Yes, both are possible
+1. RDD to DataFrame with .toDF()
+
+val rowsRdd: RDD[Row] = sc.parallelize(
+  Seq(
+    Row("first", 2.0, 7.0),
+    Row("second", 3.5, 2.5),
+    Row("third", 7.0, 5.9)
+  )
+)
+
+val df = spark.createDataFrame(rowsRdd).toDF("id", "val1", "val2")
+
+df.show()
++------+----+----+
+|    id|val1|val2|
++------+----+----+
+| first| 2.0| 7.0|
+|second| 3.5| 2.5|
+| third| 7.0| 5.9|
++------+----+----+
+more ways: Convert an RDD object to Dataframe in Spark
+
+2. DataFrame/DataSet to RDD with .rdd() method
+
+val rowsRdd: RDD[Row] = df.rdd() // DataFrame to RDD
+
+
+Note:
+
+Dataset of Rows (Dataset[Row]) in Scala/Java will often refer as DataFrames.
+
+Also
+
+val sampleRDD = sqlContext.jsonFile("hdfs://localhost:9000/jsondata.json")
+val sample_DF = sampleRDD.toDF()
+
 # Splunk
 
 Splunk Enterprise can index many different kinds of data, as illustrated by the following diagram.
@@ -811,7 +896,6 @@ The Splunk App for Jenkins helps engineering teams, including developers, test/Q
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/splunk_jenkins1.png)
 
 
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/splunk_jenkins1.png)
 
 
 # Hue:
