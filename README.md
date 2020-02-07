@@ -844,6 +844,8 @@ Ref: https://www.slideshare.net/ishizaki/exploiting-gpus-in-spark
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/Hadoop-MapReduce-vs-Apache-Spark.jpg)
 
+![alt text](https://intellipaat.com/blog/wp-content/uploads/2016/07/Difference-between-MapReduce-and-Spark_A.jpg)
+
 #### Q: Can you convert one to the other like RDD to DataFrame or vice-versa?
 
 Yes, both are possible
