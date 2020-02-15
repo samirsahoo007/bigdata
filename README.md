@@ -223,6 +223,49 @@ LinkedIn recommendations are powered by Kafka
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/netflix.png)
 			(Building an Event-Driven Reactive Asynchronous System with Spring Boot and Kafka)
 
+# Hystrix: What is it and why is it used?
+
+Hystrix is a latency and fault tolerance library designed to isolate points of access to remote systems, services and 3rd party libraries. which helps in
+
+* Stop cascading failures
+
+* Realtime monitoring of configurations changes
+
+* Concurrency aware request caching
+
+* Automated batching through request collapsing
+
+* IE. If a micro service is failing then return the default response and wait until it recovers.
+
+In any distributed environment (with lot of dependencies), inevitably some of the many service dependencies fail. So Hystrix library is used to control the interaction between these distributed services by adding some latency tolerance and fault tolerance logic. It does so by the following methods:
+
+* Isolating the points of access between the services
+
+* Stopping cascading failures in distributed system
+
+* Introducing timeout for particular action
+
+* Fallback and gracefully degrade when possible.
+
+* Complex distributed architectures have lot of dependencies, any one of them will inevitably fail at some point. For example, an application having 50 services has 99.99% uptime for each of it’s services, thus we can expect that
+
+over all uptime is 99.99⁵⁰ = 99.5%
+
+0.5% of downtime
+
+so 0.5% of 1 billion requests = 5,000,000 failures
+
+this means 4hr+ downtime/month, even when all the dependencies have an excellent uptime individually.
+
+We see that even when all dependencies perform well, the aggregate impact of even 0.01% downtime leads to 4 hour downtime per month if we do not make the whole system resilient. The above example or statistics shows the importance of Hystrix in any distributed system.
+
+Hence, all of the failing and latency needs to be isolated and managed, so that a single failing dependency can not take down an entire application and whole of the system. Hystrix puts a wrapper around the dependencies and limits concurrent access to any one of them. If Hystrix library is used in the system, then the clients execute on separate threads. This isolates them from the calling threads, and so the caller may walk away from the dependency call that is taking a long time. When Hystrix is used then each dependencies is isolated form one other, restricted in the resources it can saturate when the latency occur and covered it in fall back logic that and covered in fallback logic that decides what response to make when any time of failure occurs in the dependencies.
+
+
+![alt text](https://github.com/Netflix/Hystrix/wiki/How-it-Works)
+
+
+
 Refer: http://bigdata.andreamostosi.name
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/architecture-00-b.png)
