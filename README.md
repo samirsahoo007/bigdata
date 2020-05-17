@@ -128,6 +128,33 @@ Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kib
 # Oozie: 
 * Oozie simply performs the task of a scheduler, thus scheduling jobs and binding them together as a single unit. There is two kinds of jobs .i.e Oozie workflow and Oozie coordinator jobs. Oozie workflow is the jobs that need to be executed in a sequentially ordered manner whereas Oozie Coordinator jobs are those that are triggered when some data or external stimulus is given to it.
 
+# Pepperdata (https://www.pepperdata.com/):
+
+- It's an Application Profiler — a platform that developers can use to understand how to optimize the capacity of applications running within their networks.
+
+- The Pepperdata Application Profiler is essentially a big data production platform that is accompanied by three products — a cluster analyzer, a capacity optimizer, and a policy enforcer.
+
+- Real-time visibility for troubleshooting, debugging, and planning.
+
+- Automated tuning for optimal performance on-prem and in the cloud.
+
+- Run More Apps, Track Spend, and Manage Costs
+
+- Rely on Hadoop to guarantee service levels in mixed workload and multi-tenant production clusters. Pepperdata installs in less than 30 minutes on your existing Hadoop cluster without any modifications to the scheduler, workflow, or jobs.
+
+## Application Description
+Diagnose problems faster. Pepperdata gives you a both a macro and granular view of everything that’s happening across the cluster by monitoring the use of CPU, memory, disk I/O, and network for every job and task, by user or group in real time. This detailed telemetry data is captured second by second, and is saved so that you can analyze performance variations and anomalies over time.
+
+Guarantee SLAs. Pepperdata senses contention for CPU, memory, disk I/O, and network at run time and will automatically slow down low-priority tasks when needed to ensure that high-priority SLAs are maintained.
+
+Increase cluster throughput by 30-70%. In many cases, jobs will run much faster. Pepperdata knows the true hardware resource capacity of your cluster and dynamically allows more tasks to run on servers that have free resources at any given moment.
+
+### Note:
+
+Application Profiler is based off the open source <b>Dr. Elephant</b> project created by LinkedIn, and its software is integrated with the open source project as well. Dr. Elephant is a set of monitoring tools for Hadoop and Spark, and it automatically gathers metrics to increase cluster efficiency. It gives developers suggestions of what to change in their code when there is a bug or a capacity issue.
+
+Pepperdata’s software is essentially the same as Dr. Elephant except it’s packaged with more features to provide more context.
+
 # How Spark Is Better than Hadoop?
 * In-memory Processing: 
 	Spark is 100 times faster than MapReduce as everything is done here in memory.
