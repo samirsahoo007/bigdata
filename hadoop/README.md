@@ -85,15 +85,25 @@ Make changes to yarn files
 
 `
 $ open yarn-site.xml
+
 <configuration>
+
 <property>
+
 <name>yarn.nodemanager.aux-services</name>
+
 <value>mapreduce_shuffle</value>
+
 </property>
+
 <property>
+
 <name>yarn.nodemanager.env-whitelist</name>
+
 <value>JAVA_HOME,HADOOP_COMMON_HOME,HADOOP_HDFS_HOME,HADOOP_CONF_DIR,CLASSPATH_PREPEND_DISTCACHE,HADOOP_YARN_HOME,HADOOP_MAPRED_HOME</value>
+
 </property>
+
 </configuration>
 `
 
@@ -104,7 +114,9 @@ If this does not return a last login time, use the following commands to remove 
 
 `
 $ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+
 $ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+
 $ chmod 0600 ~/.ssh/authorized_keys
 `
 
@@ -112,6 +124,7 @@ Format NameNode
 
 `
 $ cd /usr/local/Cellar/hadoop/3.3.0/libexec/bin
+
 $ hdfs namenode -format
 `
 A warning will tell you that a directory for logs is being created. You will be prompted to re-format filesystem in Storage Directory root. Say Y and press RETURN.
@@ -120,7 +133,9 @@ Run Hadoop
 
 `
 $ cd /usr/local/cellar/hadoop/3.2.1/libexec/sbin
+
 $ ./start-all.sh
+
 $ jps
 `
 
