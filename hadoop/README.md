@@ -124,23 +124,14 @@ $ ./start-all.sh
 $ jps
 `
 
-After running jps, you should have confirmation that all the parts of Hadoop have been installed and running. You should see something like this:
-
-`
-66896 ResourceManager
-66692 SecondaryNameNode
-66535 DataNode
-67350 Jps
-66422 NameNode67005 NodeManager
+After running jps, you should have confirmation that all the parts of Hadoop have been installed and running. 
 Open a web browser to see your configurations for the current session.
 
 http://localhost:9870
-`
+
+### Close Hadoop
+
+$ ./stop-all.sh
 
 
-
-
-
-
-$ cd /usr/local/Cellar/hadoop/3.3.0/libexec
 
