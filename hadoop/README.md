@@ -7,11 +7,11 @@ $ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/inst
 
 Confirm you have the correct version of java (version 8) on your machine. If it returns anything other than 1.8., be sure to install the correct version.
 
-`
+```
 $ java -version
 
 $ brew cask install homebrew/cask-versions/adoptopenjdk8
-`
+```
 
 ### Install Hadoop
 `
