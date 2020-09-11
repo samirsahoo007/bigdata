@@ -22,31 +22,33 @@ $ brew install hadoop
 
 Find java home path
 
-` 
+```
 $ /usr/libexec/java_home
-`
+```
 
 Open the document containing the environment variable settings:
-`
+
+```
 $ cd /usr/local/Cellar/hadoop/3.3.0/libexec/etc/hadoop/
 $ open hadoop-env.sh
-`
+```
 
 and Add the location for export JAVA_HOME
 
 `
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home"
+$ export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-14.0.2.jdk/Contents/Home"
 `
 
 Replace information for export HADOOP_OPTS
-`
+
+```
 change export HADOOP_OPTS="-Djava.net.preferIPv4Stack=true"
 to export HADOOP_OPTS="-Djava.net.preferIPv4Stack=true -Djava.security.krb5.realm= -Djava.security.krb5.kdc="
-`
+```
 
 Make changes to core files
 
-`
+```
 $ open core-site.xml
 <configuration>
   <property>
@@ -54,11 +56,11 @@ $ open core-site.xml
     <value>hdfs://localhost:9000</value>
   </property>
 </configuration>
-`
+```
 
 Make changes to hdfs files
 
-`
+```
 $ open hdfs-site.xml
 <configuration>
   <property>
@@ -66,11 +68,11 @@ $ open hdfs-site.xml
     <value>1</value>
   </property>
 </configuration>
-`
+```
 
 Make changes to mapred files
 
-`
+```
 $ open mapred-site.xml
 <configuration>
   <property>
@@ -81,11 +83,11 @@ $ open mapred-site.xml
     <name>mapreduce.application.classpath</name>   <value>$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/*:$HADOOP_MAPRED_HOME/share/hadoop/mapreduce/lib/*</value>
   </property>
 </configuration>
-`
+```
 
 Make changes to yarn files
 
-`
+```
 $ open yarn-site.xml
 
 <configuration>
@@ -107,39 +109,40 @@ $ open yarn-site.xml
 </property>
 
 </configuration>
-`
+```
 
 Remove password requirement
 
 Check if you're able to ssh(ssh localhost) without a password before moving to the next step to prevent unexpected results when formatting the NameNode.
 If this does not return a last login time, use the following commands to remove the need to insert a password.
 
-`
+```
 $ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 
 $ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
 $ chmod 0600 ~/.ssh/authorized_keys
-`
+```
 
 Format NameNode
 
-`
+```
 $ cd /usr/local/Cellar/hadoop/3.3.0/libexec/bin
 
 $ hdfs namenode -format
-`
+```
+
 A warning will tell you that a directory for logs is being created. You will be prompted to re-format filesystem in Storage Directory root. Say Y and press RETURN.
 
 Run Hadoop
 
-`
+```
 $ cd /usr/local/cellar/hadoop/3.2.1/libexec/sbin
 
 $ ./start-all.sh
 
 $ jps
-`
+```
 
 After running jps, you should have confirmation that all the parts of Hadoop have been installed and running. 
 Open a web browser to see your configurations for the current session.
