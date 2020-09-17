@@ -139,4 +139,14 @@ http://localhost:9870
 $ ./stop-all.sh
 
 
+## What is a sequence file
 
+Sequence files are binary files containing serialized key/value pairs. You can compress a sequence file at the record (key-value pair) or block levels. This is one of the advantage of using sequence file. Also, sequebce files are binary files, they provide faster read/write than that of text file format.
+
+### Problem With Small Files and Hadoop
+
+Now, one of the main problem that sequence file format solves is the problem of processing too many small files in Hadoop. As you know Hadoop is not good for processing large number of small files as referencing (memory) large amounts of small files generates a lot of overhead for the namenode. Besides this memory overhead, the second problem arises in terms of number of mappers as more number of mappers will be executed for each files (as the file size is smaller than that of block).
+
+### Solution: Sequence File
+
+Sequence files allows you to solve this problem of small files. As sequence files are the files containing key-value pairs. So, you can use it to hold multiple key-value pairs where the key can be unique file metadata, like  filename+timestamp and value is the content of the ingested file. Now, this way you are  able to club too many small files as a single file and then you can use this for processing as an input for MapReduce. This is the reason why sequence files often are used in custom-written map-reduce programs.
