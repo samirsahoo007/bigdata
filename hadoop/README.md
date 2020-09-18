@@ -124,7 +124,7 @@ A warning will tell you that a directory for logs is being created. You will be 
 Run Hadoop
 
 ```
-$ cd /usr/local/cellar/hadoop/3.2.1/libexec/sbin
+$ cd /usr/local/cellar/hadoop/3.3.0/libexec/sbin/
 $ ./start-all.sh
 $ jps
 ```
