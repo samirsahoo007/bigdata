@@ -136,8 +136,11 @@ So even if you use hadoop dfs , it will look locate hdfs and delegate that comma
 --------------------------------
 
 
-docker network ls						# Docker network
+docker network create --subnet=172.20.0.0/16 mynet123		# create you own docker network (mynet123)
+docker run --net mynet123 --ip 172.18.0.22 -it ubuntu bash	# set ip
 
+docker network ls						# Docker network
+docker network rm <NETWORK_ID> 					# remove netowork id
 ==========================================================================================================================================================
                                   
 
