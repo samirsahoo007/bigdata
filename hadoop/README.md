@@ -189,4 +189,31 @@ bytearray(b'\x01\x02\x03')
 b'Python'
 >>> bytearray('Python', 'ascii')
 b'Python'
+
+
+
+# Define the list
+listdata = [72, 69, 76, 76, 79]
+# Print the content of the list
+print("\nThe dictionary values are :\n", listdata)
+ 
+# Initialize bytearray object with list
+byteArrayObject = bytearray(listdata)
+# Print bytearray object value
+print("\nThe output of bytearray() method :\n", byteArrayObject)
+ 
+# Convert the bytearray object into  bytes object
+byteObject = bytes(byteArrayObject)
+# Print bytes object value
+print("\nThe output of bytes() method :\n", byteObject)
+ 
+print("\nThe ASCII values of bytes")
+# Iterate the bytes object using loop
+for val in byteObject:
+  print(val,' ', end='')
+ 
+print("\nThe string values of bytes")
+# Iterate the bytes object using loop
+for val in byteObject:
+  print(chr(val),' ', end='')
 ```
