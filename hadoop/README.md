@@ -150,3 +150,43 @@ Now, one of the main problem that sequence file format solves is the problem of 
 ### Solution: Sequence File
 
 Sequence files allows you to solve this problem of small files. As sequence files are the files containing key-value pairs. So, you can use it to hold multiple key-value pairs where the key can be unique file metadata, like  filename+timestamp and value is the content of the ingested file. Now, this way you are  able to club too many small files as a single file and then you can use this for processing as an input for MapReduce. This is the reason why sequence files often are used in custom-written map-reduce programs.
+
+
+# What is bytearray?
+
+A bytearray is very similar to a regular python string (str in python2.x, bytes in python3). There is an important difference though, that is strings are immutable, whereas bytearrays are mutable (like a list of characters).
+
+The Python bytearray() function returns bytearray object which is a mutable sequence of integers in the range 0 <= x < 256. Hence, bytearray() function allows one to manipulate its elements as the numbers in the 0-256 range or one-char strings.
+
+```
+bytearray([source[, encoding[, errors]]])
+```
+
+1: First parameter is Source (optional)
+
+Source is an optional parameter that can be used to initialize the array in a few different ways:
+
+    If the source is a string, encoding is required. You must also give the encoding (and optionally, errors) parameters; bytearray() then converts the string to bytes using str.encode().
+    If the source is an integer, the array will have that size and will be initialized with null bytes.
+    If the source is an object conforming to the buffer interface, a read-only buffer of the object will be used to initialize the bytes array.
+    If the source is an iterable, it must be an iterable of integers in the range 0 <= x < 256, which are used as the initial contents of the array.
+    Without an argument, the bytearray() method will create an array of size 0.
+
+2: Second parameter is Encoding (optional)
+
+Encoding is also optional. However, it is required if the source is a string. Examle: utf-8, ascii etc.
+
+3: Third parameter is Error (optional)
+
+```
+>>> bytearray()  #without argument
+bytearray(b' ')
+>>> bytearray(3)  #array of bytes of given integer
+bytearrey(b'\x00\x00\x00')
+>>> bytearray([1,2,3])  #bytearray() in iterable list
+bytearray(b'\x01\x02\x03') 
+>>> bytearray('Python','utf-8')  #bytearray() and string
+b'Python'
+>>> bytearray('Python', 'ascii')
+b'Python'
+```
