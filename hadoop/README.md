@@ -237,3 +237,10 @@ Apache spark is 100 times faster than map reduce programming which is the backen
 Spark is more efficient in memory, all intermediate data between tasks is stored in memory. Where as hive uses mapreduce to store intermediate data in disk, which adds lot of overhead in performance.
 
 
+# HiveContext and SQLContext
+
+HiveContext is a super set of the SQLContext. Additional features include the ability to write queries using the more complete HiveQL parser, access to Hive UDFs, and the ability to read data from Hive tables.
+
+**IMP**: one the key difference is using HiveContext you can use the new window function feature.
+https://databricks.com/blog/2015/07/15/introducing-window-functions-in-spark-sql.html
+
