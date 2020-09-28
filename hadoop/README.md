@@ -244,3 +244,20 @@ HiveContext is a super set of the SQLContext. Additional features include the ab
 **IMP**: one the key difference is using HiveContext you can use the new window function feature.
 https://databricks.com/blog/2015/07/15/introducing-window-functions-in-spark-sql.html
 
+
+
+# How to read a csv into pyspark without a java heap memory error
+
+```
+pyspark --num-executors 5 --driver-memory 2g --executor-memory 2g
+```
+
+If the file is, as you say, 65GB, the above submission tells spark to only use 2GB of available memory.
+
+Try ramping the --driver-memory parameter to be slightly larger than the size of your .csv file.
+
+e.g --driver-memory 70G
+
+To explain why this is necessary:
+
+Without a cluster with a distributed file system, your entire data set sits on your local drive. Spark allows you to split jobs up in an optimised way across a cluster - but without it linked to said cluster of separate machines all of your data will be loaded into your driver's memory. Thus, even though you have higher parallelism here, you need to allow the job to take up as much, or more space than your input file.
