@@ -225,3 +225,15 @@ Hive, as known was designed to run on MapReduce in Hadoopv1 and later it works o
 It needs a execution engine. And Mapreduce, YARN, Spark served the purpose. Query return in Hive is converted to respective framework related code and is executed by that respective engine. Thats what Hive on Spark is. Runnning Hive queries on Spark.
 
 Coming to SparkSQL, It is part of the Spark core framework which also runs on the spark core. Using Sparksql we can create structured data frames that we use in spark and also we can invoke Hive by creating Hivecontext. Once Hivecontext is created, just like a link to the hive metastore, you can access and query tables in Hive.
+
+You can run Spark independently using Spark SQL. Spark SQL uses Hive metadata. So it can be connected to Hive Databases. If none presented then it will create one on the fly.
+
+hive in general is slow, even running with Tez as execution engine. If you already have Spark it might be more interesting to look into using SparkSQL.
+
+Apache spark enables near real time processing while apache hive supports only batch processing.
+
+Apache spark is 100 times faster than map reduce programming which is the backend processing framework for hive.
+
+Spark is more efficient in memory, all intermediate data between tasks is stored in memory. Where as hive uses mapreduce to store intermediate data in disk, which adds lot of overhead in performance.
+
+
