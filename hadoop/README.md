@@ -217,3 +217,11 @@ print("\nThe string values of bytes")
 for val in byteObject:
   print(chr(val),' ', end='')
 ```
+
+# hiveContext in PySpark and Hive
+
+Hive, as known was designed to run on MapReduce in Hadoopv1 and later it works on YARN and now there is spark on which we can run Hive queries. Hive is nothing but a way through which we implement mapreduce like a sql or atleast near to it.
+
+It needs a execution engine. And Mapreduce, YARN, Spark served the purpose. Query return in Hive is converted to respective framework related code and is executed by that respective engine. Thats what Hive on Spark is. Runnning Hive queries on Spark.
+
+Coming to SparkSQL, It is part of the Spark core framework which also runs on the spark core. Using Sparksql we can create structured data frames that we use in spark and also we can invoke Hive by creating Hivecontext. Once Hivecontext is created, just like a link to the hive metastore, you can access and query tables in Hive.
