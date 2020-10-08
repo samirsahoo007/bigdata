@@ -277,6 +277,18 @@ When we are processing Big data, cost required to store such data is more (Hadoo
 
 We cannot load text file directly into parquet table, we should first create an alternate table to store the text file and use insert overwrite command to write the data in parquet format. In order to test performance, we should run the queries in Multi-node cluster, where jobs are parallelized and run simultaneously.
 
+Parquet file format consists of 2 parts –
+
+> Data
+
+> Metadata
+
+Data is written first in the file and the metadata is written at the end for single pass writing. Let’s see the parquet file format first and then lets us have a look at the metadata.
+
+A sample parquet file format is as below –
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/Parque-Body.jpg)
+
 
 ## Advantages of using Parquet
 
