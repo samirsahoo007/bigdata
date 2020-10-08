@@ -300,3 +300,32 @@ Google Dataproc charges are time-based.
 
 Parquet has helped its users reduce storage requirements by at least one-third on large datasets, in addition, it greatly improved scan and deserialization time, hence the overall costs.
 
+```$ spark-shell
+Scala> val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+Scala> val employee = sqlContext.read.json(“emplaoyee”)
+Scala> employee.write.parquet("employee.parquet")
+Scala> CTRL D
+
+$ cd employee.parquet/
+$ ls
+_common_metadata
+Part-r-00001.gz.parquet
+_metadata
+_SUCCESS
+
+$ spark-shell
+scala> val sqlContext = new org.apache.spark.sql.SQLContext(sc)
+scala> val parqfile = sqlContext.read.parquet(“employee.parquet”)
+scala> Parqfile.registerTempTable("employee")
+scala> val allrecords = sqlContext.sql("SELeCT * FROM employee")
+scala> allrecords.show()
++------+--------+----+
+|  id  | name   |age |
++------+--------+----+
+| 1201 | satish | 25 |
+| 1202 | krishna| 28 |
+| 1203 | amith  | 39 |
+| 1204 | javed  | 23 |
+| 1205 | prudvi | 23 |
++------+--------+----+
+```
