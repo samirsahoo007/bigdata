@@ -261,3 +261,17 @@ e.g --driver-memory 70G
 To explain why this is necessary:
 
 Without a cluster with a distributed file system, your entire data set sits on your local drive. Spark allows you to split jobs up in an optimised way across a cluster - but without it linked to said cluster of separate machines all of your data will be loaded into your driver's memory. Thus, even though you have higher parallelism here, you need to allow the job to take up as much, or more space than your input file.
+
+
+# Parquet
+
+Parquet, an open source file format for Hadoop. Parquet stores nested data structures in a flat columnar format. Compared to a traditional approach where data is stored in row-oriented approach, parquet is more efficient in terms of storage and performance.
+
+Parquet can be used in any Hadoop ecosystem like 
+
+Hive , Impala, Pig, Spark
+
+Parquet stores binary data in a column-oriented way, where the values of each column are organized so that they are all adjacent, enabling better compression. It is especially good for queries which read particular columns from a "wide" (with many columns) table since only needed columns are read and IO is minimized. Read this for more details on Parquet.
+
+When we are processing Big data, cost required to store such data is more (Hadoop stores data redundantly i.e. 3 copies of each file to achieve fault tolerance) along with the storage cost processing the data comes with CPU,Network IO, etc costs. As the data increases cost for processing and storage increases. Parquet is the choice of Big data as it serves both needs, efficient and performance in both storage and processing.
+
