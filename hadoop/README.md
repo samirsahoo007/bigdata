@@ -298,6 +298,8 @@ This data is easier to compress when the related types are stored in the same ro
 ken,felicia,mia
 30,36,2
 
+Parquet files are most commonly compressed with the Snappy compression algorithm. Snappy compressed files are splittable and quick to inflate. Big data systems want to reduce file size on disk, but also want to make it quick to inflate the flies and run analytical queries.
+
 Apache Parquet works best with interactive and serverless technologies like AWS Athena, Amazon Redshift Spectrum, Google BigQuery and Google Dataproc.
 
 ## Difference Between Parquet and CSV
