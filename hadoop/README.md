@@ -275,3 +275,15 @@ Parquet stores binary data in a column-oriented way, where the values of each co
 
 When we are processing Big data, cost required to store such data is more (Hadoop stores data redundantly i.e. 3 copies of each file to achieve fault tolerance) along with the storage cost processing the data comes with CPU,Network IO, etc costs. As the data increases cost for processing and storage increases. Parquet is the choice of Big data as it serves both needs, efficient and performance in both storage and processing.
 
+We cannot load text file directly into parquet table, we should first create an alternate table to store the text file and use insert overwrite command to write the data in parquet format. In order to test performance, we should run the queries in Multi-node cluster, where jobs are parallelized and run simultaneously.
+
+
+## Advantages of using Parquet
+
+There are several advantages to columnar formats.
+
+Organizing by column allows for better compression, as data is more homogeneous. The space savings are very noticeable at the scale of a Hadoop cluster.
+I/O will be reduced as we can efficiently scan only a subset of the columns while reading the data. Better compression also reduces the bandwidth required to read the input.
+As we store data of the same type in each column, we can use encoding better suited to the modern processor's pipeline by making instruction branching more predictable.
+
+
