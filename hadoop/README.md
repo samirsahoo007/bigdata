@@ -265,11 +265,11 @@ Without a cluster with a distributed file system, your entire data set sits on y
 
 # Parquet
 
-Parquet, an open source file format for Hadoop. Parquet stores nested data structures in a flat columnar format. Compared to a traditional approach where data is stored in row-oriented approach, parquet is more efficient in terms of storage and performance.
+Parquet, an open source file format for Hadoop. Parquet stores nested data structures in a flat columnar format. Compared to a traditional approach where data is stored in row-oriented approach(e.g. CSV, TSV), parquet is more efficient in terms of storage and performance.
 
-Parquet can be used in any Hadoop ecosystem like 
+Parquet can be used in any Hadoop ecosystem like Hive , Impala, Pig, Spark
 
-Hive , Impala, Pig, Spark
+Parquet uses the record shredding and assembly algorithm which is superior to simple flattening of nested namespaces. Parquet is optimized to work with complex data in bulk and features different ways for efficient data compression and encoding types.  This approach is best especially for those queries that need to read certain columns from a large table. Parquet can only read the needed columns therefore greatly minimizing the IO.
 
 Parquet stores binary data in a column-oriented way, where the values of each column are organized so that they are all adjacent, enabling better compression. It is especially good for queries which read particular columns from a "wide" (with many columns) table since only needed columns are read and IO is minimized. Read this for more details on Parquet.
 
@@ -282,8 +282,21 @@ We cannot load text file directly into parquet table, we should first create an 
 
 There are several advantages to columnar formats.
 
-Organizing by column allows for better compression, as data is more homogeneous. The space savings are very noticeable at the scale of a Hadoop cluster.
-I/O will be reduced as we can efficiently scan only a subset of the columns while reading the data. Better compression also reduces the bandwidth required to read the input.
+Organizing by column allows for better compression, as data is more homogeneous. Columnar storage like Apache Parquet is designed to bring efficiency compared to row-based files like CSV. When querying, columnar storage you can skip over the non-relevant data very quickly. As a result, aggregation queries are less time consuming compared to row-oriented databases. This way of storage has translated into hardware savings and minimized latency for accessing data.
+
 As we store data of the same type in each column, we can use encoding better suited to the modern processor's pipeline by making instruction branching more predictable.
 
+Apache Parquet works best with interactive and serverless technologies like AWS Athena, Amazon Redshift Spectrum, Google BigQuery and Google Dataproc.
+
+## Difference Between Parquet and CSV
+
+CSV is a simple and widely spread format that is used by many tools such as Excel, Google Sheets, and numerous others can generate CSV files. Even though the CSV files are the default format for data processing pipelines it has some disadvantages:
+
+Amazon Athena and Spectrum will charge based on the amount of data scanned per query.
+
+Google and Amazon will charge you according to the amount of data stored on GS/S3.
+
+Google Dataproc charges are time-based.
+
+Parquet has helped its users reduce storage requirements by at least one-third on large datasets, in addition, it greatly improved scan and deserialization time, hence the overall costs.
 
