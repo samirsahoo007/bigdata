@@ -285,6 +285,18 @@ There are several advantages to columnar formats.
 Organizing by column allows for better compression, as data is more homogeneous. Columnar storage like Apache Parquet is designed to bring efficiency compared to row-based files like CSV. When querying, columnar storage you can skip over the non-relevant data very quickly. As a result, aggregation queries are less time consuming compared to row-oriented databases. This way of storage has translated into hardware savings and minimized latency for accessing data.
 
 As we store data of the same type in each column, we can use encoding better suited to the modern processor's pipeline by making instruction branching more predictable.
+e.g.
+Columnar file formats store related types in rows, so they're easier to compress. This CSV file is relatively hard to compress.
+
+first_name,age
+ken,30
+felicia,36
+mia,2
+
+This data is easier to compress when the related types are stored in the same row:
+
+ken,felicia,mia
+30,36,2
 
 Apache Parquet works best with interactive and serverless technologies like AWS Athena, Amazon Redshift Spectrum, Google BigQuery and Google Dataproc.
 
@@ -299,6 +311,8 @@ Google and Amazon will charge you according to the amount of data stored on GS/S
 Google Dataproc charges are time-based.
 
 Parquet has helped its users reduce storage requirements by at least one-third on large datasets, in addition, it greatly improved scan and deserialization time, hence the overall costs.
+
+Parquet files are immutable. CSV files are mutable i.e. adding a row to a CSV file is easy. You can't easily add a row to a Parquet file.
 
 ```$ spark-shell
 Scala> val sqlContext = new org.apache.spark.sql.SQLContext(sc)
