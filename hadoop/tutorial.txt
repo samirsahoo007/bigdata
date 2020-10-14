@@ -5,6 +5,7 @@ Go through: https://axsauze.github.io/hadoop-overview/CHEATSHEET.html and all su
         hdfs dfs -ls /
         hdfs dfs -ls -d /hadoop
         hdfs dfs -ls -R /hadoop
+	hdfs dfs -ls -t /hadoop		# List files/dirs sorted by timestamp i.e. latest first
 
   Read/Write Files
         hdfs dfs -text /hadoop/derby.log
