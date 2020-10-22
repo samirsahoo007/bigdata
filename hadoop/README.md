@@ -364,3 +364,5 @@ Avro is an open source project with row-based storage format that provides data 
 
 
 Avro format is supported for the following connectors: Amazon S3, Azure Blob, Azure Data Lake Storage Gen1, Azure Data Lake Storage Gen2, Azure File Storage, File System, FTP, Google Cloud Storage, HDFS, HTTP, and SFTP.
+
+Avro has a JSON like data model, but can be represented as either JSON or in a compact binary form. ... It has a direct mapping to and from JSON. It has a very compact format. The bulk of JSON, repeating every field name with every single record, is what makes JSON inefficient for high-volume usage.
