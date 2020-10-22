@@ -360,6 +360,7 @@ scala> allrecords.show()
 
 ## Avro
 
-Avro is an open source project that provides data serialization and data exchange services for Apache Hadoop. ... Avro stores the data definition in JSON format making it easy to read and interpret; the data itself is stored in binary format making it compact and efficient.
+Avro is an open source project with row-based storage format that provides data serialization and data exchange services for Apache Hadoop. ... Avro stores the data definition(schema) in JSON format making it easy to read and interpret; the data itself is stored in binary format making it compact and efficient.
+
 
 Avro format is supported for the following connectors: Amazon S3, Azure Blob, Azure Data Lake Storage Gen1, Azure Data Lake Storage Gen2, Azure File Storage, File System, FTP, Google Cloud Storage, HDFS, HTTP, and SFTP.
