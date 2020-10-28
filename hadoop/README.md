@@ -163,7 +163,9 @@ OK
 5       Iris-setosa     [5.0,3.6,1.4,0.2]
 
 ```
-Once you prepared the iris database, you are ready to move on to our multi-class classification tutorial.
+Once you prepared the iris database, you are ready to move on to our multi-class classification tutorial.(https://hivemall.incubator.apache.org/userguide/multiclass/iris_dataset.html)
+
+Ref: https://hivemall.incubator.apache.org/userguide/docker/getting_started.html
 
 ## Accessing Hadoop management GUIs
 
