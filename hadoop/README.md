@@ -163,6 +163,21 @@ OK
 5       Iris-setosa     [5.0,3.6,1.4,0.2]
 
 ```
+
+#### Note:
+If you're getting the following error
+
+```
+Exception in thread "main" java.lang.RuntimeException: java.net.ConnectException: Call From 6b234181b60e/172.17.0.2 to localhost:9000 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused
+```
+then just do the following:
+
+```
+$ /usr/local/hadoop/sbin/stop-all.sh
+$ hadoop namenode -format
+$ /usr/local/hadoop/sbin/start-all.sh
+```
+
 Once you prepared the iris database, you are ready to move on to our multi-class classification tutorial.(https://hivemall.incubator.apache.org/userguide/multiclass/iris_dataset.html)
 
 Ref: https://hivemall.incubator.apache.org/userguide/docker/getting_started.html
