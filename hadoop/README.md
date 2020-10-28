@@ -177,6 +177,10 @@ MR jobhistory server http://localhost:19888/
 
 Note that you need to expose local ports e.g., by -p 8088:8088 -p 50070:50070 -p 19888:19888 on running docker image.
 
+## Build Hivemall (optional)
+
+In the container, Hivemall resource is stored in $HIVEMALL_PATH. You can build Hivemall package by cd $HIVEMALL_PATH && ./bin/build.sh.
+
 
 ## What is a sequence file
 
