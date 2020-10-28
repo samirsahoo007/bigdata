@@ -138,6 +138,43 @@ http://localhost:9870
 
 $ ./stop-all.sh
 
+# How to setup hive?
+
+```
+$ docker pull hivemall/latest:20170517      (Check the latest tag first https://hub.docker.com/r/hivemall/latest/tags/)
+
+$ docker run -v /tmp/:/tmp/ -p 8088:8088 -p 50070:50070 -p 19888:19888 -it hivemall/latest:20170517
+```
+
+## Load data into HDFS (optional) / Run Hivemall on Docker
+
+You can find an example script to load data into HDFS in $HOME/bin/prepare_iris.sh. The script loads iris dataset into iris database:
+
+```
+$ cd $HOME && ./bin/prepare_iris.sh
+> hive                                  Type hive to run (.hiverc automatically loads Hivemall functions)
+hive> use iris;
+hive> select * from iris_raw limit 5;
+OK
+1       Iris-setosa     [5.1,3.5,1.4,0.2]
+2       Iris-setosa     [4.9,3.0,1.4,0.2]
+3       Iris-setosa     [4.7,3.2,1.3,0.2]
+4       Iris-setosa     [4.6,3.1,1.5,0.2]
+5       Iris-setosa     [5.0,3.6,1.4,0.2]
+
+```
+Once you prepared the iris database, you are ready to move on to our multi-class classification tutorial.
+
+## Accessing Hadoop management GUIs
+
+```
+YARN http://localhost:8088/
+HDFS http://localhost:50070/
+MR jobhistory server http://localhost:19888/
+```
+
+Note that you need to expose local ports e.g., by -p 8088:8088 -p 50070:50070 -p 19888:19888 on running docker image.
+
 
 ## What is a sequence file
 
