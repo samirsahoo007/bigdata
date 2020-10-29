@@ -146,6 +146,24 @@ $ docker pull hivemall/latest:20170517      (Check the latest tag first https://
 $ docker run -v /tmp/:/tmp/ -p 8088:8088 -p 50070:50070 -p 19888:19888 -it hivemall/latest:20170517
 ```
 
+#### Note:
+
+If you are seeing the following error and the container is starting up
+```
++ /usr/local/hadoop/sbin/mr-jobhistory-daemon.sh start historyserver
+chown: missing operand after ‘/usr/local/hadoop/logs’
+Try 'chown --help' for more information.
+historyserver running as process 711. Stop it first.
+```
+
+then make sure you've nothing like below in the /tmp (or mounted directory) and if it's there then just delete it and run the "docker run..." command again
+```
+  $ rm -rf /tmp/Jetty_*
+  $ rm -rf /tmp/*_resources
+  $ rm -rf /tmp/hadoop-root*
+  $ rm -rf /tmp/yarn-*
+```
+
 ## Load data into HDFS (optional) / Run Hivemall on Docker
 
 You can find an example script to load data into HDFS in $HOME/bin/prepare_iris.sh. The script loads iris dataset into iris database:
