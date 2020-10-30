@@ -219,6 +219,7 @@ If it hangs at the line "Kill Command..." then just update mapred-site.xml(/usr/
 
 from
 
+```
 <?xml version="1.0"?>
 <configuration>
   <property>
@@ -226,9 +227,11 @@ from
     <value>yarn</value>
   </property>
 </configuration>
+```
 
 to
 
+```
 <?xml version="1.0"?>
 <configuration>
   <property>
@@ -236,6 +239,7 @@ to
     <value>local</value>
   </property>
 </configuration>
+```
 
 Once you prepared the iris database, you are ready to move on to our multi-class classification tutorial.(https://hivemall.incubator.apache.org/userguide/multiclass/iris_dataset.html)
 
