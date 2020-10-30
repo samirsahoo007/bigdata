@@ -215,7 +215,10 @@ Starting Job = job_1603988725836_0001, Tracking URL = http://5c1ac3a4d2f2:8088/p
 Kill Command = /usr/local/hadoop/bin/hadoop job  -kill job_1603988725836_0001
 ```
 
-If it hangs at the line "Kill Command..." then just update mapred-site.xml(/usr/local/hadoop/etc/hadoop/mapred-site.xml)
+It hangs at the line "Kill Command..."
+Count query hangs when there are millions of records. We need to make a simple change to resolve this. As we're working on a single node setup let's replace "yarn" with "local" in marred-site.xml(/usr/local/hadoop/etc/hadoop/mapred-site.xml).
+
+Update /usr/local/hadoop/etc/hadoop/mapred-site.xml
 
 from
 
