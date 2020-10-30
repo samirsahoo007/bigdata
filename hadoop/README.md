@@ -182,6 +182,7 @@ OK
 ```
 
 #### Note:
+1>
 If you're getting the following error
 
 ```
@@ -194,6 +195,47 @@ $ /usr/local/hadoop/sbin/stop-all.sh
 $ hadoop namenode -format
 $ /usr/local/hadoop/sbin/start-all.sh
 ```
+
+2>
+The following command(count query) may hang when there are millions of records
+```
+hive> select count(*) from iris_raw;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. tez, spark) or using Hive 1.X releases.
+Query ID = root_20201030044544_51a590b9-9bf2-419c-85fe-aa6f10794c8e
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks not specified. Estimated from input data size: 3
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1603988725836_0001, Tracking URL = http://5c1ac3a4d2f2:8088/proxy/application_1603988725836_0001/
+Kill Command = /usr/local/hadoop/bin/hadoop job  -kill job_1603988725836_0001
+```
+
+If it hangs at the line "Kill Command..." then just update mapred-site.xml(/usr/local/hadoop/etc/hadoop/mapred-site.xml)
+
+from
+
+<?xml version="1.0"?>
+<configuration>
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>yarn</value>
+  </property>
+</configuration>
+
+to
+
+<?xml version="1.0"?>
+<configuration>
+  <property>
+    <name>mapreduce.framework.name</name>
+    <value>local</value>
+  </property>
+</configuration>
 
 Once you prepared the iris database, you are ready to move on to our multi-class classification tutorial.(https://hivemall.incubator.apache.org/userguide/multiclass/iris_dataset.html)
 
