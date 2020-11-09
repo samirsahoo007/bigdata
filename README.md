@@ -673,20 +673,26 @@ rabbit-source.py
 rabbit-source.rb
 Let's try it…
 
+```
 window1> python3 rabbit-receiver.py
 window2> python3 rabbit-receiver.py
 window3> python3 rabbit-source.py
 window4> ruby rabbit-source.rb
+```
+
 # kill/restart some and see what happens
 Message passing example with Kafka:
 
 kafka-producer.py
 kafka-consumer.py
-Let's try it…
+Let's try it...
 
+```
 window1> python3 kafka-consumer.py
 window2> python3 kafka-consumer.py
 window3> python3 kafka-producer.py
+```
+
 Task Queues
 The goal: get some work on a distributed queue. Maybe wait for results, or maybe don't.
 
