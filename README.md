@@ -642,7 +642,7 @@ Amazon Data Pipeline.
 NiFi
 MapReduce, Spark, programming.
 
-# Message Queues
+### Message Queues
 The goal: pass messages between nodes/​processes and have somebody else worry about reliability, queues, who will send/receive, etc.
 
 Apache Kafka.
@@ -680,7 +680,8 @@ window3> python3 rabbit-source.py
 window4> ruby rabbit-source.rb
 ```
 
-# kill/restart some and see what happens
+kill/restart some and see what happens
+
 Message passing example with Kafka:
 
 kafka-producer.py
@@ -693,14 +694,20 @@ window2> python3 kafka-consumer.py
 window3> python3 kafka-producer.py
 ```
 
-Task Queues
+### Task Queues
+
 The goal: get some work on a distributed queue. Maybe wait for results, or maybe don't.
 
 Celery (Python).
+
 Resque, Sidekiq (Ruby).
+
 Google AppEngine Task Queues (Python, Java, Go, PHP).
+
 Amazon Simple Workflow Service.
+
 Any message queue + some code.
+
 With a task queue, you get to just call a function (maybe with slightly different syntax). You can then retrieve the result (or just move on an let the work happen later).
 
 Where the work happened is transparent.
@@ -709,42 +716,57 @@ A task with Celery: tasks.py.
 
 Let's try it...
 
+```
 window1> celery -A tasks worker --loglevel=info --hostname=worker1@%h
 window2> celery -A tasks worker --loglevel=info --hostname=worker2@%h
 window3> ipython3
 from tasks import add
 result = add.delay(4, 4)
 result.get(timeout=1)
+```
+
 Need a lot of work done without Hadoop? Run task queue workers on many nodes; make all the asynchronous calls you want; let the workers handle it.
 
 Need nightly batch analysis done? Have a scheduled task start a Spark task.
 
 Have a spike in usage? Let tasks queue up and process as possible. Or add more workers.
 
-Text Search
+### Text Search
+
 The goal: index lots of data so you (or your users) can search for records they want.
 
 Apache Solr/Apache Lucene.
+
 Elasticsearch.
+
 Amazon CloudSearch.
+
 All of these are designed to scale out across many nodes.
 
 Indexing and searching with Elasticsearch:
 
 elastic-index.py
-elastic-search.py
-Let's try it… (See also CourSys search when an instructor.)
 
+elastic-search.py
+
+Let's try it... (See also CourSys search when an instructor.)
+
+```
 python3 elastic-index.py
 python3 elastic-search.py
-curl -XGET 'http://localhost:9200/comments/_search?q=comment' \
-  | python3 -m json.tool
-Hadoop Distributions
+curl -XGET 'http://localhost:9200/comments/_search?q=comment' | python3 -m json.tool
+```
+
+### Hadoop Distributions
+
 The goal: Get a Hadoop cluster running without becoming an expert on Hadoop configuration.
 
 Cloudera: what is running our cluster.
+
 Hortonworks HDP.
+
 MapR.
+
 Amazon EMR: EC2 + Hadoop set up automatically.
 
 ### Another Scenario:
