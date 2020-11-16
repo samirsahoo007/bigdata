@@ -1,5 +1,18 @@
 # bigdata
 
+## quickstart
+
+```
+docker pull cloudera/quickstart:latest
+docker run --hostname=quickstart.cloudera --privileged=true -v /tmp/:/tmp/ -it cloudera/quickstart /usr/bin/docker-quickstart
+```
+If any service fails to start make sure to cleanup following files from /tmp
+```
+rm -rf /tmp/Jetty_* /tmp/hadoop* /tmp/hsperfdata_*
+```
+
+Ref: https://docs.cloudera.com/documentation/enterprise/5-6-x/topics/quickstart_docker_container.html
+
 Hadoop Ecosystem is a platform or a suite which provides various services to solve the big data problems.
 
 Following are the components that collectively form a Hadoop ecosystem:
