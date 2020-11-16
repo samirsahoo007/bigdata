@@ -126,7 +126,13 @@ Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kib
 * There was a huge issue of management of coordination and synchronization among the resources or the components of Hadoop which resulted in inconsistency, often. Zookeeper overcame all the problems by performing synchronization, inter-component based communication, grouping, and maintenance.
 
 # Oozie: 
-* Oozie simply performs the task of a scheduler, thus scheduling jobs and binding them together as a single unit. There is two kinds of jobs .i.e Oozie workflow and Oozie coordinator jobs. Oozie workflow is the jobs that need to be executed in a sequentially ordered manner whereas Oozie Coordinator jobs are those that are triggered when some data or external stimulus is given to it.
+* Oozie simply performs the task of a scheduler, thus scheduling jobs and binding them together as a single unit. 
+
+There is two kinds of jobs .i.e Oozie workflow and Oozie coordinator jobs. 
+
+Oozie Workflow jobs are Directed Acyclical Graphs (DAGs) of actions i.e. Oozie workflow is the jobs that need to be executed in a sequentially ordered manner.
+
+Oozie Coordinator jobs are those that are triggered when some data or external stimulus is given to it. Oozie Coordinator jobs are recurrent Oozie Workflow jobs triggered by time (frequency) and data availability.
 
 # Pepperdata (https://www.pepperdata.com/):
 
