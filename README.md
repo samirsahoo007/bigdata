@@ -961,6 +961,137 @@ Flume is meant to pass messages from source to sink (All of which implement Flum
 # Apache Spark vs. MapReduce
 ## How did Spark become so efficient in data processing compared to MapReduce?
 
+Hadoop MapReduce and Apache Spark are both Big Data processing tools.
+
+### Core Definition
+
+<p>
+MapReduce is a programming model that is implemented in processing huge amounts of data.
+MapReduce has been developed using Java
+MapReduce Programs work in two phases:
+The Map Phase
+The Reduce Phase
+The entire MapReduce process goes through the following 4 phases:
+
+Splitting: The input is divided into a fixed size splits called input-splits. An input split is consumed by a single map.
+Mapping: Here, data in each map is passed into a mapping function to produce output values.
+Shuffling: This phase consumes the output of the mapping phase and the relevant records are consolidated.
+Reducing: In this phase the relevant records are aggregated and a single output value is returned. This phase summarizes the complete dataset.
+</p>
+
+<p>
+Apache Spark is an open-source, distributed processing system which is used for Big Data. Spark is an engine for large scale data processing.
+Spark has been developed using Scala.
+The main components of Apache Spark are as follows:
+Apache Spark Core: It is the underlying general execution engine over which all other functionality is built. It provides in-memory computing and dataset references in external storage systems.
+Spark SQL: It is the module which provides information about the data structure and the computation being performed
+Spark Streaming: Allows processing of real-time data. This data is then processed using complex algorithms and pushed out to file systems, databases and live systems.
+MLlib[Machine Learning]: It is a library that contains a wide array of machine learning algorithms and tools for constructing, evaluating and tuning ML pipelines.
+GraphX: It comes with a library to manipulate graph databases and perform computations. It unifies ETL process, exploratory process and iterative graph computation within a single system.
+</p>
+
+### Processing Speed	
+
+MapReduce reads and writes data from the disk. Though it is faster than traditional systems, it is substantially slower than Spark.	
+
+Apache Spark runs on RAM, stores intermediate data in-memory reducing the number of read/write cycles to the disk. Hence it is faster than the classical MapReduce.
+
+
+### Data Processing	
+
+MapReduce was designed to perform Batch Processing for a voluminous amount of data. Hence, for extended data processing, it is dependent on different engines like Storm, Giraph, Impala, etc. Managing many different components adds to the hassle. MapReduce cannot process data interactively
+
+Apache Spark Performs Batch Processing, Real-time processing, Iterative Processing, Graph Processing, Machine Learning and Streaming all in the same cluster. It thus accounts for a complete data analytics engine and is enough to handle all the requirements. Spark has the ability to process live streams efficiently. Spark can process data interactively.
+
+
+### Memory Usage	
+
+MapReduce does not support caching of Data.
+
+Apache Spark Enhances the system performance by caching the data in-memory.
+
+### Coding	
+
+MapReduce requires handling low-level APIs due to which developers need to code each and every operation which makes it very difficult to work with.
+
+Spark is easy to use and its Resilient Distributed Dataset helps to process data with its high-level operators. It provides rich APIs in Java, Scala, Python and R.
+
+### Latency(Latency means Delay. It is the time the CPU has to wait to get a response after it makes a request to the RAM)
+
+MapReduce has a high-latency computing framework.	
+
+Spark provides a low latency computing.
+
+### Recovery From Failure	
+
+MapReduce is highly faulted tolerant and is resilient to system faults and failures. Here there is no need to restart the application from scratch in case of failure.	
+
+Spark is also fault tolerant. Resilient Distributed Dataset [RDDs] allow for recovery of partitions on failed nodes. It also supports recovery by checkpointing to reduce the dependencies of an RDD. Hence, here too there is no need to restart the application from scratch in case of failure.
+
+### Scheduler	
+
+MapReduce is dependant on external job scheduler like Oozie to schedule its complex flows.	
+
+Due to in-memory computation Spark acts like its own flow scheduler.
+
+### Security	
+
+MapReduce is comparatively more secure because of Kerberos. It also supports Access Control Lists (ACLs) which are traditional file permission model.	
+
+Spark supports only one authentication which is the shared secret password authentication.
+
+
+### Cost	
+
+MapReduce is a cheaper option in terms of cost.	
+
+Spark is costlier due to its in-memory processing power and RAM requirement.
+
+### Function	
+
+MapReduce is a Data Processing Engine.	
+
+Spark is a Data Analytics Engine hence a choice for Data Scientist.
+
+
+### Framework	
+
+MapReduce is an open-source framework for writing data into HDFS and processing structured and unstructured data present in HDFS.	
+
+Spark is an independent real-time processing engine that can be installed in any Distributed File System.
+
+
+### Programming Language Supported	
+
+MapReduce supports Java, C, C++, Ruby, Groovy, Perl, Python	
+
+Spark supports Scala, Java, Python, R, SQL
+
+
+### SQL Support
+
+MapReduce Runs SQL queries using Apache Hive	
+
+Spark Runs SQL queries using Spark SQL
+
+
+### Hardware Requirement	
+
+MapReduce can be run on commodity hardware.	
+
+Apache Spark requires mid to high-level hardware configuration to run efficiently.
+
+Hadoop requires a machine learning tool, one of which is Apache Mahout.	Spark has its own set of Machine Learning i.e. MLlib.
+
+### Redundancy Check	
+
+MapReduce does not support this feature.	
+
+Spark processes every record exactly once and hence eliminates duplication.
+
+## Conclusion
+
+From the above comparison, it is quite clear that Apache Spark is a more advanced cluster computing engine than MapReduce. Due to its advanced features, it is now replacing MapReduce very quickly. However, MapReduce is an economical option. Furthermore, the intent of the business is a major factor in deciding the software to be used. There is no one size fits all in today’s market. Hence, it is a combination of technical, non-technical, economic and business factors that ultimately influence the software selection.
 Spark can be deployed on a variety of platforms. It runs on Windows and UNIX (such as Linux and Mac OS) and can be deployed in standalone mode on a single node when it has a supported OS. Spark can also be deployed in a cluster node on Hadoop YARN as well as Apache Mesos. Spark is a Java Virtual Machine (JVM)-based distributed data processing engine that scales, and it is fast compared to many other data processing frameworks. Spark originated at the University of California at Berkeley and later became one of the top projects in Apache. 
 
 Apache Spark includes several libraries to help build applications for machine learning (MLlib), stream processing (Spark Streaming), and graph processing (GraphX). 
