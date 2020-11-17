@@ -191,6 +191,140 @@ Oozie is an orchestration system for Hadoop jobs. Oozie is designed to run multi
 
 Alejandro and the engineers were looking for a name that would convey what the system does—managing Hadoop jobs. Something along the lines of an elephant keeper sounded ideal given that Hadoop was named after a stuffed toy elephant. Alejandro was in India at that time, and it seemed appropriate to use the Hindi name for elephant keeper, mahout. But the name was already taken by the Apache Mahout project. After more searching, oozie (the Burmese word for elephant keeper) popped up and it stuck.
 
+#### A Simple Oozie Job
+
+To get started with writing an Oozie application and running an Oozie job, we’ll create an Oozie workflow application named identity-WF that runs an identity MapReduce job. The identity MapReduce job just echoes its input as output and does nothing else. Hadoop bundles the IdentityMapper class and IdentityReducer class, so we can use those classes for the example.
+
+In this example, after starting the identity-WF workflow, Oozie runs a MapReduce job called identity-MR. If the MapReduce job completes successfully, the workflow job ends normally. If the MapReduce job fails to execute correctly, Oozie kills the workflow. Figure 1-2 captures this workflow.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/oozie/images/apoo_0102.png)
+
+The example Oozie application is built from the examples/chapter-01/identity-wf/ directory using the Maven command:
+
+```
+$ cd examples/chapter-01/identity-wf/
+$ mvn package assembly:single
+...
+[INFO] BUILD SUCCESS
+...
+```
+The identity-WF Oozie workflow application consists of a single file, the workflow.xml file. The Map and Reduce classes are already available in Hadoop’s classpath and we don't need to include them in the Oozie workflow application package.
+
+The workflow.xml file in Example 1-1 contains the workflow definition of the application, an XML representation of Figure 1-2 together with additional information such as the input and output directories for the MapReduce job.
+
+When running the workflow job, Oozie begins with the start node and follows the specified transition to identity-MR. The identity-MR node is a <map-reduce> action. The <map-reduce> action indicates where the MapReduce job should run via the job-tracker and name-node elements (which define the URI of the JobTracker and the NameNode, respectively). The prepare element is used to delete the output directory that will be created by the MapReduce job. If we don’t delete the output directory and try to run the workflow job more than once, the MapReduce job will fail because the output directory already exists. The configuration section defines the Mapper class, the Reducer class, the input directory, and the output directory for the MapReduce job. If the MapReduce job completes successfully, Oozie follows the transition defined in the ok element named success. If the MapReduce job fails, Oozie follows the transition specified in the error element named fail. The success transition takes the job to the end node, completing the Oozie job successfully. The fail transition takes the job to the kill node, killing the Oozie job.
+	
+The example application consists of a single file, workflow.xml. We need to package and deploy the application on HDFS before we can run a job. The Oozie application package is stored in a directory containing all the files for the application.
+
+```
+$ hdfs dfs -put target/example/ch01-identity ch01-identity
+$ hdfs dfs -ls -R ch01-identity
+
+/user/joe/ch01-identity/app
+/user/joe/ch01-identity/app/workflow.xml
+/user/joe/ch01-identity/data
+/user/joe/ch01-identity/data/input
+/user/joe/ch01-identity/data/input/input.txt
+```
+
+The Oozie workflow application is now deployed in the ch01-identity/app/ directory under the user’s HDFS home directory. We have also copied the necessary input data required to run the Oozie job to the ch01-identity/data/input directory.
+
+Before we can run the Oozie job, we need a job.properties file in our local filesystem that specifies the required parameters for the job and the location of the application package in HDFS:
+
+```
+nameNode=hdfs://localhost:8020
+jobTracker=localhost:8032
+exampleDir=${nameNode}/user/${user.name}/ch01-identity
+oozie.wf.application.path=${exampleDir}/app
+```
+
+The parameters needed for this example are jobTracker, nameNode, and exampleDir. The oozie.wf.application.path indicates the location of the application package in HDFS.
+
+Let's submit a OOzie job:
+
+```
+$ export OOZIE_URL=http://localhost:11000/oozie
+$ oozie job -run -config target/example/job.properties
+job: 0000006-130606115200591-oozie-joe-W
+```
+
+We will cover Oozie’s command-line tool and its different parameters in detail later in "Oozie CLI Tool". For now, we just need to know that we can run an Oozie job using the -run option. And using the -config option, we can specify the location of the job.properties file.
+
+We can also monitor the progress of the job using the oozie command-line tool:
+```
+$ oozie job -info 0000006-130606115200591-oozie-joe-W
+Job ID : 0000006-130606115200591-oozie-joe-W
+-----------------------------------------------------------------
+Workflow Name : identity-WF
+App Path      : hdfs://localhost:8020/user/joe/ch01-identity/app
+Status        : RUNNING
+Run           : 0
+User          : joe
+Group         : -
+Created       : 2013-06-06 20:35 GMT
+Started       : 2013-06-06 20:35 GMT
+Last Modified : 2013-06-06 20:35 GMT
+Ended         : -
+CoordAction ID: -
+
+Actions
+-----------------------------------------------------------------
+ID                                                 Status
+-----------------------------------------------------------------
+0000006-130606115200591-oozie-joe-W@:start:       OK   
+-----------------------------------------------------------------
+0000006-130606115200591-oozie-joe-W@identity-MR   RUNNING 
+-----------------------------------------------------------------
+When the job completes, the oozie command-line tool reports the completion state:
+
+$ oozie job -info 0000006-130606115200591-oozie-joe-W
+Job ID : 0000006-130606115200591-oozie-joe-W
+-----------------------------------------------------------------
+Workflow Name : identity-WF
+App Path      : hdfs://localhost:8020/user/joe/ch01-identity/app
+Status        : SUCCEEDED
+Run           : 0
+User          : joe
+Group         : -
+Created       : 2013-06-06 20:35 GMT
+Started       : 2013-06-06 20:35 GMT
+Last Modified : 2013-06-06 20:35 GMT
+Ended         : 2013-06-06 20:35 GMT
+CoordAction ID: -
+
+Actions
+-----------------------------------------------------------------
+ID                                                 Status
+-----------------------------------------------------------------
+0000006-130606115200591-oozie-joe-W@:start:       OK   
+-----------------------------------------------------------------
+0000006-130606115200591-oozie-joe-W@identity-MR   OK 
+-----------------------------------------------------------------
+0000006-130606115200591-oozie-joe-W@success       OK
+-----------------------------------------------------------------
+The output of our first Oozie workflow job can be found in the ch01-identity/data/output directory under the user’s HDFS home directory:
+
+$ hdfs dfs -ls -R ch01-identity/data/output
+
+/user/joe/ch01-identity/data/output/_SUCCESS
+/user/joe/ch01-identity/data/output/part-00000
+```
+
+The output of this Oozie job is the output of the MapReduce job run by the workflow job. We can also see the job status and detailed job information on the Oozie web interface, as shown in Figure 1-3.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/oozie/images/apoo_0103.png)
+
+			Oozie workflow job on the Oozie web interface
+
+
+This section has illustrated the full lifecycle of a simple Oozie workflow application and the typical ways to monitor it.
+
+#### Some Oozie Usage Numbers
+
+Oozie is widely used in several large production clusters across major enterprises to schedule Hadoop jobs. For instance, Yahoo! is a major user of Oozie and it periodically discloses usage statistics. In this section, we present some of these numbers just to give readers an idea about Oozie’s scalability and stability.
+
+Yahoo! has one of the largest deployments of Hadoop, with more than 40,000 nodes across several clusters. Oozie is the primary workflow engine for Hadoop clusters at Yahoo! and is responsible for launching almost 72% of 28.9 million monthly Hadoop jobs as of January 2015. The largest Hadoop cluster processes 60 bundles and 1,600 coordinators, amounting to 80,000 daily workflows with 3 million workflow nodes. About 25% of the coordinators execute at frequencies of either 5, 10, or 15 minutes. The remaining 75% of the coordinator jobs are mostly hourly or daily jobs with some weekly and monthly jobs. Yahoo’s Oozie team runs and supports several complex jobs. Interesting examples include a single bundle with 200 coordinators and a workflow with 85 fork/join pairs.
+
 
 # Pepperdata (https://www.pepperdata.com/):
 
