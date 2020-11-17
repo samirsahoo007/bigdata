@@ -147,6 +147,51 @@ Oozie Workflow jobs are Directed Acyclical Graphs (DAGs) of actions i.e. Oozie w
 
 Oozie Coordinator jobs are those that are triggered when some data or external stimulus is given to it. Oozie Coordinator jobs are recurrent Oozie Workflow jobs triggered by time (frequency) and data availability.
 
+## Use case
+
+### A Recurrent Problem
+
+Hadoop, Pig, Hive, and many other projects provide the foundation for storing and processing large amounts of data in an efficient way. Most of the time, it is not possible to perform all required processing with a single MapReduce, Pig, or Hive job. Multiple MapReduce, Pig, or Hive jobs often need to be chained together, producing and consuming intermediate data and coordinating their flow of execution.
+
+At Yahoo!, as developers started doing more complex processing using Hadoop, multistage Hadoop jobs became common. This led to several ad hoc solutions to manage the execution and interdependency of these multiple Hadoop jobs. Some developers wrote simple shell scripts to start one Hadoop job after the other. Others used Hadoop’s JobControl class, which executes multiple MapReduce jobs using topological sorting. One development team resorted to Ant with a custom Ant task to specify their MapReduce and Pig jobs as dependencies of each other—also a topological sorting mechanism. Another team implemented a server-based solution that ran multiple Hadoop jobs using one thread to execute each job.
+
+As these solutions started to be widely used, several issues emerged. It was hard to track errors and it was difficult to recover from failures. It was not easy to monitor progress. It complicated the life of administrators, who not only had to monitor the health of the cluster but also of different systems running multistage jobs from client machines. Developers moved from one project to another and they had to learn the specifics of the custom framework used by the project they were joining. Different organizations within Yahoo! were using significant resources to develop and support multiple frameworks for accomplishing basically the same task.
+
+### A Common Solution: Oozie
+
+It was clear that there was a need for a general-purpose system to run multistage Hadoop jobs with the following requirements:
+
+It should use an adequate and well-understood programming model to facilitate its adoption and to reduce developer ramp-up time.
+
+It should be easy to troubleshot and recover jobs when something goes wrong.
+
+It should be extensible to support new types of jobs.
+
+It should scale to support several thousand concurrent jobs.
+
+Jobs should run in a server to increase reliability.
+
+It should be a multitenant service to reduce the cost of operation.
+
+Toward the end of 2008, Alejandro Abdelnur and a few engineers from Yahoo! Bangalore took over a conference room with the goal of implementing such a system. Within a month, the first functional version of Oozie was running. It was able to run multistage jobs consisting of MapReduce, Pig, and SSH jobs. This team successfully leveraged the experience gained from developing PacMan, which was one of the ad hoc systems developed for running multistage Hadoop jobs to process large amounts of data feeds.
+
+Yahoo! open sourced Oozie in 2010. In 2011, Oozie was submitted to the Apache Incubator. A year later, Oozie became a top-level project, Apache Oozie.
+
+#### Oozie’s role in the Hadoop Ecosystem
+
+In this section, we briefly discuss where Oozie fits in the larger Hadoop ecosystem. Figure 1-1 captures a high-level view of Oozie’s place in the ecosystem. Oozie can drive the core Hadoop components—namely, MapReduce jobs and Hadoop Distributed File System (HDFS) operations. In addition, Oozie can orchestrate most of the common higher-level tools such as Pig, Hive, Sqoop, and DistCp. More importantly, Oozie can be extended to support any custom Hadoop job written in any language. Although Oozie is primarily designed to handle Hadoop components, Oozie can also manage the execution of any other non-Hadoop job like a Java class, or a shell script.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/oozie/images/apoo_0101.png)
+
+#### What exactly is Oozie?
+
+Oozie is an orchestration system for Hadoop jobs. Oozie is designed to run multistage Hadoop jobs as a single job: an Oozie job. Oozie jobs can be configured to run on demand or periodically. Oozie jobs running on demand are called workflow jobs. Oozie jobs running periodically are called coordinator jobs. There is also a third type of Oozie job called bundle jobs. A bundle job is a collection of coordinator jobs managed as a single job.
+
+#### The name "Oozie"
+
+Alejandro and the engineers were looking for a name that would convey what the system does—managing Hadoop jobs. Something along the lines of an elephant keeper sounded ideal given that Hadoop was named after a stuffed toy elephant. Alejandro was in India at that time, and it seemed appropriate to use the Hindi name for elephant keeper, mahout. But the name was already taken by the Apache Mahout project. After more searching, oozie (the Burmese word for elephant keeper) popped up and it stuck.
+
+
 # Pepperdata (https://www.pepperdata.com/):
 
 - It's an Application Profiler — a platform that developers can use to understand how to optimize the capacity of applications running within their networks.
