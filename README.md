@@ -30,9 +30,9 @@ Following are the components that collectively form a Hadoop ecosystem:
 * HDFS: Hadoop Distributed File System
 * HBase: Column DB Storage (NoSQL Database)
 * Spark: In-Memory data processing
-* Solar, Lucene: Searching and Indexing
-* Kibana - data visualisation tool for Elasticsearch
+* Solr, Lucene: Searching and Indexing
 * Elasticsearch - data store & analytics / search engine
+* Kibana - data visualisation tool for Elasticsearch
 * Beeline - Hive command line interface
 * Datasift - online service that streams tweets matching a given pattern to a nominated datastore (such as MongoDB)
 * Ambari - Provision, Monitor and Maintain cluster
@@ -42,6 +42,7 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Spark Streaming is part of the Apache Spark platform that enables scalable, high throughput, fault tolerant processing of data streams.
 * Cassandra is a distributed and wide-column NoSQL data store.
 * Hue(Hadoop User Experience) is a web-based interactive query editor that enables you to interact with data warehouses. It allows you to browse, analyze query (hive, pig or impala) and visualizie data. 
+* Data Lakes: A data lake is a storage repository that holds a large amount of data in its native, raw format.
 
 #### Notes:
 * Flume is service for efficiently collecting, aggregating, and moving large amounts of log data
@@ -135,8 +136,35 @@ Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kib
 # Solr, Lucene: 
 * These are the two services that perform the task of searching and indexing with the help of some java libraries, especially Lucene is based on Java which allows spell check mechanism, as well. However, Lucene is driven by Solr.
 
+## What is the difference between Solr and Elasticsearch and which one is better?
+
+* Solr is good for static data and Elasticsearch is for realtime/timeseries data
+
+* Solr fits better into enterprise applications that already implement big data ecosystem tools, such as Hadoop and Spark. ... Elasticsearch is focused more on scaling, data analytics, and processing time series data to obtain meaningful insights and patterns. Its large-scale log analytics performance makes it quite popular.
+
+* They are both built around the core underlying search library – Lucene – but they are different in terms of functionalities such as scalability, ease of deployment, as well as community presence and many more. Solr has more advantages when it comes to the static data, because of its caches and the ability to use an uninverted reader for faceting and sorting – for example, e-commerce. On the other hand, Elasticsearch is better suited – and much more frequently used – for timeseries data use cases, like log analysis use cases.  
+
+
 # Zookeeper: 
 * There was a huge issue of management of coordination and synchronization among the resources or the components of Hadoop which resulted in inconsistency, often. Zookeeper overcame all the problems by performing synchronization, inter-component based communication, grouping, and maintenance.
+
+# Data Lakes:
+* A data lake is a storage repository that holds a large amount of data in its native, raw format. ... This approach differs from a traditional data warehouse, which transforms and processes the data at the time of ingestion. Advantages of a data lake: Data is never thrown away, because the data is stored in its raw format.
+
+* A data lake is a centralized repository for hosting raw, unprocessed enterprise data. Data lakes can encompass hundreds of terabytes or even petabytes, storing replicated data from operational sources, including databases and SaaS platforms. They make unedited and unsummarized data available to any authorized stakeholder. Thanks to their potentially large (and growing) size and the need for global accessibility, they are often implemented in cloud-based, distributed storage.
+
+* How does the data get into a data lake? Stakeholders, who may be business managers or data analytics professionals, begin by identifying important or interesting data sources. They then replicate the data from these sources to the data lake with few if any structural, organizational, or formatting transformations. Replicating the raw data allows businesses to simplify the data ingestion process while creating an integrated source of truth for uses such as data analytics or machine learning.
+
+* Data stored in a lake can be anything, from completely unstructured data like text documents or images, to semistructured data such as hierarchical web content, to the rigidly structured rows and columns of relational databases. This flexibility means that enterprises can upload anything from raw data to the fully aggregated analytical results.
+
+* The important point is that a data lake provides a single place to save and access valuable enterprise data. Without a good data lake, businesses increase the threshold of effort needed from stakeholders who would benefit from data.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/data_lakes.png)
+
+## Data lakes vs. data warehouses
+* In data warehouses Data is processed before integration but in data lakes Data is integrated in its raw and unstructured form
+* In case of data warehouses mostly the users are Business users but in case of data lakes it's Data scientists
+* In case of data warehouses Data is curated and adheres to data governance practices but in case of data lakes Data is more agile and does not necessarily comply with governance guidelines
 
 # Oozie: 
 * Oozie simply performs the task of a scheduler, thus scheduling jobs and binding them together as a single unit. 
