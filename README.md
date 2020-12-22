@@ -81,6 +81,27 @@ When comparing Logstash vs Flume, the Slant community recommends Logstash for mo
 Logstash’s main strongpoint is flexibility, due to the number of plugins.
 while Logstash’s biggest con or “Achille’s heel” has always been performance and resource consumption (the default heap size is 1GB).
 
+### Log Analysis And End To End Big Data Analytics With ELK Stack
+**What is the ELK Stack?**
+ELK => Elasticsearch, Logstash, and Kibana
+
+* E stands for ElasticSearch: It's a search server or NoSQL database based on Lucene. It provides a distributed, multitenant-capable full-text search engine with a RESTful web interface and schema-free JSON documents.
+* L stands for LogStash : used for both shipping as well as processing and storing logs
+* K stands for Kibana: is a visutalization tool (a web interface) which is hosted through Nginx or Apache
+
+ELK Stack is designed to allow users to take to data from any source, in any format, and to search, analyze, and visualize that data in real time.
+ELK provides centralized logging that be useful when attempting to identify problems with servers or applications. It allows you to search all your logs in a single place. It also helps to find issues that occur in multiple servers by connecting their logs during a specific time frame.
+
+**Logstash**
+Logstash is the data collection pipeline tool. It the first component of ELK Stack which collects data inputs and feeds it to the Elasticsearch. It collects various types of data from different sources, all at once and makes it available immediately for further use.
+
+**Elasticsearch** is a NoSQL database which is based on Lucene search engine and is built with RESTful APIs. It is a highly flexible and distributed search and analytics engine. Also, it provides simple deployment, maximum reliability, and easy management through horizontal scalability. It provides advanced queries to perform detailed analysis and stores all the data centrally for quick search of the documents.
+
+**Kibana** is a data visualization tool. It is used for visualizing the Elasticsearch documents and helps the developers to have an immediate insight into it. Kibana dashboard provides various interactive diagrams, geospatial data, timelines, and graphs to visualize the complex queries done using Elasticsearch. Using Kibana you can create and save custom graphs according to your specific needs.
+
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elk.png)
+
 An use case:
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/ELK_stack_1.png)
@@ -88,6 +109,9 @@ nginx for reverse proxy
 
 A more advanced...
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elk_stack.svg)
+
+The Logstash can directly consume the logs sent by Filebeat installed on the other systems to collectively parse the logs and files from multiple sources to be analyzed by using Kibana. The data flow involved in the ELK Stack using Filebeat is shown above.
+
 
 A bit more advanced
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elk_stack.jpeg)
@@ -98,6 +122,8 @@ A better pipeline:
 
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elasticsearch_ex2.jpeg)
+
+Ref: https://medium.com/@manoharkush22/log-analysis-and-end-to-end-big-data-analytics-with-elk-stack-3e9d3f4e8b48
 
 ## ES-Hadoop architecture
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elasticsearch_hadoop.jpg)
