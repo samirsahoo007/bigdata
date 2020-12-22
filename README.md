@@ -20,6 +20,7 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Oozie: Job Scheduling, workflow monitoring
 * Chukwa: Monitoring, data collection system for monitoring large distributed systems 
 * Flume, Sqoop - (Monitoring)Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data). More below
+* Logstash - Server-side data processing pipeline that allows you to collect data from a variety of sources, transform it on the fly, and send it to your desired destination.
 * Zookeeper: cluster management(provides a distributed configuration service, a synchronization service and a naming registry for distributed systems)
 * HIVE, PIG: Query based processing of data services(SQL, Dataflow)
 * Mahout, Spark MLLib: Machine Learning algorithm libraries
@@ -66,6 +67,34 @@ All these toolkits or components revolve around one term i.e. Data. That’s the
 ## Analytics with Kibana and Elasticsearch through Hadoop
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elastic_search_example1.png)
 Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kibana-and-elasticsearch-through-hadoop-part-1-introduction/
+
+### Apache Flume vs Logstash: What are the differences?
+Both are "Log Management" tools.
+
+Apache Flume is "A service for collecting, aggregating, and moving large amounts of log data". 
+Logstash is detailed as "Collect, Parse, & Enrich Data". You can use it to collect logs, parse them, and store them for later use (like, for searching). 
+
+If you store them in Elasticsearch, you can view and analyze them with Kibana.
+
+When comparing Logstash vs Flume, the Slant community recommends Logstash for most people. In the question“What are the best log management, aggregation & monitoring tools?” Logstash is ranked 2nd while Flume is ranked 17th. 
+
+Logstash’s main strongpoint is flexibility, due to the number of plugins.
+while Logstash’s biggest con or “Achille’s heel” has always been performance and resource consumption (the default heap size is 1GB).
+
+An use case:
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/ELK_stack_1.png)
+
+A more advanced...
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elk_stack.svg)
+
+A bit more advanced
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elk_stack.jpeg)
+
+A better pipeline:
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elk_stack.png)
+
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elasticsearch_ex2.jpeg)
 
