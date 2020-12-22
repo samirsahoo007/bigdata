@@ -84,6 +84,7 @@ while Logstash’s biggest con or “Achille’s heel” has always been perform
 An use case:
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/ELK_stack_1.png)
+nginx for reverse proxy
 
 A more advanced...
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elk_stack.svg)
