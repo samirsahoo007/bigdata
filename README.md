@@ -110,7 +110,7 @@ nginx for reverse proxy
 A more advanced...
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elk_stack.svg)
 
-The Logstash can directly consume the logs sent by Filebeat installed on the other systems to collectively parse the logs and files from multiple sources to be analyzed by using Kibana. The data flow involved in the ELK Stack using Filebeat is shown above.
+The Logstash can directly consume the logs sent by **Filebeat** installed on the other systems to collectively parse the logs and files from multiple sources to be analyzed by using Kibana. The data flow involved in the ELK Stack using Filebeat is shown above.
 
 
 A bit more advanced
