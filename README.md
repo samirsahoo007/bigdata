@@ -142,6 +142,7 @@ A better/final pipeline:
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elk_stack.png)
 
+Ref: https://www.rittmanmead.com/blog/2015/10/forays-into-kafka-enabling-flexible-data-pipelines/
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elasticsearch_ex2.jpeg)
 
