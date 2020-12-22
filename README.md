@@ -20,7 +20,8 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Oozie: Job Scheduling, workflow monitoring
 * Chukwa: Monitoring, data collection system for monitoring large distributed systems 
 * Flume, Sqoop - (Monitoring)Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data). More below
-* Logstash - Server-side data processing pipeline that allows you to collect data from a variety of sources, transform it on the fly, and send it to your desired destination.
+* Logstash: Server-side data processing pipeline that allows you to collect data from a variety of sources, transform it on the fly, and send it to your desired destination.
+* Filebeat: It collects and sends the log files from tens, hundreds, or even thousands of servers, virtual machines, and containers to Logstash. In this way, all the logs and files can be indexed at a central location for analysis and visualization.
 * Zookeeper: cluster management(provides a distributed configuration service, a synchronization service and a naming registry for distributed systems)
 * HIVE, PIG: Query based processing of data services(SQL, Dataflow)
 * Mahout, Spark MLLib: Machine Learning algorithm libraries
@@ -116,7 +117,28 @@ The Logstash can directly consume the logs sent by **Filebeat** installed on the
 A bit more advanced
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elk_stack.jpeg)
 
-A better pipeline:
+### Flume or Logstash? HDFS or Elasticsearch? … All of them!
+
+Mark Rittman wrote back in April 2014 about using Apache Flume to stream logs from the Rittman Mead web server over to HDFS, from where they could be analysed in Hive and Impala.
+
+Apache Logs -> Flume -> HDFS
+
+Another route for analysing data is through the ELK stack.
+
+Apache Logs -> Logstash -> HDFS
+
+Using a single source is better in terms of load/risk to the source system, but less so for validating a bigger one. If I’m going to go with Elasticsearch as my target, Logstash would be the better fit source. 
+
+The key points here are:
+
+* One hit on the source system. In this case it’s flume, but it could be logstash, or another tool. This streams each line of the log file into Kafka in the exact order that it’s read.
+* Kafka holds a copy of the log data, for a configurable time period. This could be days, or months - up to you and depending on purpose (and disk space!)
+* Kafka is designed to be distributed and fault-tolerant. As with most of the boxes on this logical diagram it would be physically spread over multiple machines for capacity, performance, and resilience.
+* The eventual targets, HDFS and Elasticsearch, are loaded by their respective tools pulling the web server entries exactly as they were on disk. In terms of validating end-to-end design we’re still doing that - we’re just pulling from a different source.
+* The source server logs are streamed into Kafka, with a permanent copy up onto Amazon’s S3 for those real “uh oh” moments. Kafka, in a sandbox environment with a ham-fisted sysadmin, won’t be bullet-proof. Better to recover a copy from S3 than have to bother the Production server again. This is something I've put in for this specific use case, and wouldn't be applicable in others.
+* From Kafka the web server logs are available to stream, as if natively from the web server disk itself, through Flume and Logstash.
+
+A better/final pipeline:
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elk_stack.png)
 
