@@ -248,11 +248,24 @@ Ref: https://medium.com/@manoharkush22/log-analysis-and-end-to-end-big-data-anal
 # Oozie: 
 * Oozie simply performs the task of a scheduler, thus scheduling jobs and binding them together as a single unit. 
 
-There is two kinds of jobs .i.e Oozie workflow and Oozie coordinator jobs. 
+There are two kinds of jobs .i.e Oozie workflow and Oozie coordinator jobs. 
 
 Oozie Workflow jobs are Directed Acyclical Graphs (DAGs) of actions i.e. Oozie workflow is the jobs that need to be executed in a sequentially ordered manner.
 
 Oozie Coordinator jobs are those that are triggered when some data or external stimulus is given to it. Oozie Coordinator jobs are recurrent Oozie Workflow jobs triggered by time (frequency) and data availability.
+
+## Understandin it...
+As a developer or data scientist, you rarely want to run a single serial job on an Apache Spark cluster. More often, to gain insight from your data you need to process it in multiple, possibly tiered steps, and then move the data into another format and process it even further. Perhaps you have a constant stream of data coming in and must kick off a job periodically, with dependent jobs that aggregate or further process the output. Something like this:
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/oozie/images/OozieImage1a.png)
+
+This problem is easy to solve, right? You can write scripts that run jobs in sequence, and use the output of one program as the input to another—no problem. But what if your workflow is complex and requires specific triggers, such as specific data volumes or resource constraints, or must meet strict SLAs(service-level agreements)? What if parts of your workflow don't depend on each other and can be run in parallel?
+
+Building your own infrastructure around this problem can seem like an attractive idea, but doing so can quickly become laborious. If, or rather when, those requirements change, modifying such a tool isn’t easy . And what if you need monitoring around these jobs? Monitoring requires another set of tools and headaches.
+
+Enter Apache Oozie. Oozie is a workflow engine that can execute directed acyclic graphs (DAGs) of specific actions (think Spark job, Apache Hive query, and so on) and action sets. Oozie can also send notifications through email or Java Message Service (JMS) on events such as job state changes, or hit or missed SLAs.
+
+**Amazon EMR** offers **Oozie** 4.2.0, the latest version, with examples completely set up and ready to go right out of the box. We’ve added a number of user experience improvements that make starting and checking up on Oozie jobs simple. Also, our tools allow you to easily install the Oozie examples, which lets you quickly bootstrap your learning. In a few minutes, you can have everything you need to start prototyping (or just playing with) Oozie workflows.
 
 ## Use case
 
