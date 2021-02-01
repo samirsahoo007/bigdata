@@ -307,7 +307,7 @@ Building your own infrastructure around this problem can seem like an attractive
 
 Enter Apache Oozie. Oozie is a workflow engine that can execute directed acyclic graphs (DAGs) of specific actions (think Spark job, Apache Hive query, and so on) and action sets. Oozie can also send notifications through email or Java Message Service (JMS) on events such as job state changes, or hit or missed SLAs.
 
-**Amazon EMR** offers **Oozie** 4.2.0, the latest version, with examples completely set up and ready to go right out of the box. We’ve added a number of user experience improvements that make starting and checking up on Oozie jobs simple. Also, our tools allow you to easily install the Oozie examples, which lets you quickly bootstrap your learning. In a few minutes, you can have everything you need to start prototyping (or just playing with) Oozie workflows.
+**Amazon EMR**(Elastic MapReduce) offers **Oozie** 4.2.0, the latest version, with examples completely set up and ready to go right out of the box. We’ve added a number of user experience improvements that make starting and checking up on Oozie jobs simple. Also, our tools allow you to easily install the Oozie examples, which lets you quickly bootstrap your learning. In a few minutes, you can have everything you need to start prototyping (or just playing with) Oozie workflows.
 
 ## Use case
 
@@ -352,6 +352,12 @@ Oozie is an orchestration system for Hadoop jobs. Oozie is designed to run multi
 #### The name "Oozie"
 
 Alejandro and the engineers were looking for a name that would convey what the system does—managing Hadoop jobs. Something along the lines of an elephant keeper sounded ideal given that Hadoop was named after a stuffed toy elephant. Alejandro was in India at that time, and it seemed appropriate to use the Hindi name for elephant keeper, mahout. But the name was already taken by the Apache Mahout project. After more searching, oozie (the Burmese word for elephant keeper) popped up and it stuck.
+
+#### Amazon EMR role in Amazon data pipeline
+The EMR has a key role in the Amazon data pipeline, its main purpose is to process the inbound data for the Amazon infrastructure so that, after pre-processing and aggregating, the data can flow to the relational databases, S3 or Amazon Redshift.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/oozie/images/MF4.png)
+
 
 #### A Simple Oozie Job
 
