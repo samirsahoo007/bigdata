@@ -248,13 +248,46 @@ Ref: https://medium.com/@manoharkush22/log-analysis-and-end-to-end-big-data-anal
 # Oozie: 
 * Oozie simply performs the task of a scheduler, thus scheduling jobs and binding them together as a single unit. 
 
+## OOZIE ARCHITECTURE AND JOB SCHEDULING
+Hadoop is designed to handle big amounts of data from many sources, and to carry out often complicated work of various types against that data across the cluster. That’s a lot of work, and the best way to get things done is to be organised with a schedule. That’s what Apache Oozie does. It schedules the work (jobs) in Hadoop.
+
+Oozie enables users to enable multiple different tasks Hadoop, such as map/reduce tasks, pig jobs, sqoop jobs for moving SQL to Hadoop, etc, into a logical unit of work. This is managed via an Oozie Workflow which is a Directed Acyclical Graph  (DAG) of these tasks that are to be carried out. The DAG is stored in an XML Process Definition Language called hPDL.
+
+### Oozie Architecture
+
+An Oozie Server is deployed as Java Web Application hosted in a Tomcat server, and all of the stageful information such as workflow definitions, jobs,  etc, are stored in a database. This database can be either Apache Derby, HSQL, Oracle,  MySQL, or PostgreSQL.
+
+There is an Oozie Client,  which is the client that submits work, either via a CLI, and API,  or a web service / REST.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/oozie-architecture-ong1.png)
+
+Note that it is also possible to deploy Oozie in a High Availability configuration. In production environments where the goal of removing single points of failure is important, it is critical that the element that schedules your Hadoop jobs doesn’t fall down. Oozie enables high availability by enabling multiple instance of Oozie Servers to all point to the same database:
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/oozie-ha2.png)
+
+For this to work, the database must be able to handle multiple concurrent connections. So, PostgreSQL, MySQL, or Oracle. To achieve true HA, you should also have a redundant Database, synchronised with the principal database to remove the database as a SPOF.
+
+When workflow execution arrives in an Action node, it executes the specified Action, and then waits until a callback from the executed process returns before continuing the workflow. Actions can be of the following types:
+
+* Hadoop fs
+* map reduce
+* ssh
+* pig
+* hive
+* sqoop
+* distcp
+* email
+* http
+* custom action
+
+
 There are two kinds of jobs .i.e Oozie workflow and Oozie coordinator jobs. 
 
 Oozie Workflow jobs are Directed Acyclical Graphs (DAGs) of actions i.e. Oozie workflow is the jobs that need to be executed in a sequentially ordered manner.
 
 Oozie Coordinator jobs are those that are triggered when some data or external stimulus is given to it. Oozie Coordinator jobs are recurrent Oozie Workflow jobs triggered by time (frequency) and data availability.
 
-## Understandin it...
+## Understanding it...
 As a developer or data scientist, you rarely want to run a single serial job on an Apache Spark cluster. More often, to gain insight from your data you need to process it in multiple, possibly tiered steps, and then move the data into another format and process it even further. Perhaps you have a constant stream of data coming in and must kick off a job periodically, with dependent jobs that aggregate or further process the output. Something like this:
 
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/oozie/images/OozieImage1a.png)
