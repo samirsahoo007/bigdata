@@ -223,10 +223,6 @@ Ref: https://medium.com/@manoharkush22/log-analysis-and-end-to-end-big-data-anal
 
 * They are both built around the core underlying search library – Lucene – but they are different in terms of functionalities such as scalability, ease of deployment, as well as community presence and many more. Solr has more advantages when it comes to the static data, because of its caches and the ability to use an uninverted reader for faceting and sorting – for example, e-commerce. On the other hand, Elasticsearch is better suited – and much more frequently used – for timeseries data use cases, like log analysis use cases.  
 
-
-# Zookeeper: 
-* There was a huge issue of management of coordination and synchronization among the resources or the components of Hadoop which resulted in inconsistency, often. Zookeeper overcame all the problems by performing synchronization, inter-component based communication, grouping, and maintenance.
-
 # Data Lakes:
 * A data lake is a storage repository that holds a large amount of data in its native, raw format. ... This approach differs from a traditional data warehouse, which transforms and processes the data at the time of ingestion. Advantages of a data lake: Data is never thrown away, because the data is stored in its raw format.
 
@@ -244,6 +240,19 @@ Ref: https://medium.com/@manoharkush22/log-analysis-and-end-to-end-big-data-anal
 * In data warehouses Data is processed before integration but in data lakes Data is integrated in its raw and unstructured form
 * In case of data warehouses mostly the users are Business users but in case of data lakes it's Data scientists
 * In case of data warehouses Data is curated and adheres to data governance practices but in case of data lakes Data is more agile and does not necessarily comply with governance guidelines
+
+# Zookeeper and Oozie: Hadoop Workflow and Cluster Managers
+We generate petabytes of data every day, which is processed by farms of servers distributed across the geographical location of the globe. With big data seeping into every facet of our lives, we are trying to build robust systems which can process petabytes of data in a fast and accurate manner. Apache Hadoop, an open source framework is used widely for processing gigantic amounts of unstructured data on commodity hardware. Four core modules form the Hadoop Ecosystem: ?**Hadoop Common**, **HDFS**, **YARN** and **MapReduce**. On top of these modules, other components can also run alongside Hadoop, of which, Zookeeper and Oozie are the widely used Hadoop admin tools. Hadoop requires a workflow and cluster manager, job scheduler and job tracker to keep the jobs running smoothly. Apache Zookeeper and Oozie are the Hadoop admin tools used for this purpose.
+
+We have heard a lot about the Distributed Systems and their processing power in the past. Hadoop’s main advantage is its ability to harness the power of distributed systems. A distributed system, in its simple term is a system comprising of various software components running on multiple physical machines independently and concurrently. But with distributed systems, one has to face many challenges like **message delays**, **processor speed**, **system failure**, **master detection**, **crash detection**, **metadata management** and etc. **All these challenges make the distributed systems faulty**. Having pointed this out, a perfect solution has not yet been achieved but **Zookeeper** provides a very simple, easy and nice framework to deal with these problems.
+
+# Zookeeper: 
+Apache Zookeeper is an application library, which primarily focuses on coordination between the distributed applications. It exposes simple services like naming, synchronization, configuration management and grouping services, in a very simple manner, relieving the developers to program them from start. It provides off the shelf support for queuing, and leader election.
+
+* There was a huge issue of management of coordination and synchronization among the resources or the components of Hadoop which resulted in inconsistency, often. Zookeeper overcame all the problems by performing synchronization, inter-component based communication, grouping, and maintenance.
+
+## What is the Data Model for Apache Zookeeper?
+Apache Zookeeper has a file system-like data model, referred to as “Znode”. Just like a file system has directories, Znodes are also directories, and can have data associated with them. The ZNode can be referenced through absolute path separated with a slash. Each server in the ensemble, stores the Znode hierarchy in the memory, which makes the response quick and scalable as well. Each server maintains a transaction log - which logs each ‘write’ request on the disk. Before sending the response to the client, the transaction has to be synchronized on all the servers making it performance critical. Although it appears to be a file system based architecture, it is advisable that it shouldn’t be used as a general purpose file system. It should be used for storage of small amount of data so that it can be reliable, fast, scalable, available and should be in coordination to distributed application.
 
 # Oozie: 
 * Oozie simply performs the task of a scheduler, thus scheduling jobs and binding them together as a single unit. 
