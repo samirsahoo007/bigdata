@@ -259,11 +259,11 @@ An Oozie Server is deployed as Java Web Application hosted in a Tomcat server, a
 
 There is an Oozie Client,  which is the client that submits work, either via a CLI, and API,  or a web service / REST.
 
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/oozie-architecture-ong1.png)
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/oozie/images/oozie-architecture-ong1.png)
 
 Note that it is also possible to deploy Oozie in a High Availability configuration. In production environments where the goal of removing single points of failure is important, it is critical that the element that schedules your Hadoop jobs doesn’t fall down. Oozie enables high availability by enabling multiple instance of Oozie Servers to all point to the same database:
 
-![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/oozie-ha2.png)
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/oozie/images/oozie-ha2.png)
 
 For this to work, the database must be able to handle multiple concurrent connections. So, PostgreSQL, MySQL, or Oracle. To achieve true HA, you should also have a redundant Database, synchronised with the principal database to remove the database as a SPOF.
 
