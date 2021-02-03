@@ -82,6 +82,13 @@ When comparing Logstash vs Flume, the Slant community recommends Logstash for mo
 Logstash’s main strongpoint is flexibility, due to the number of plugins.
 while Logstash’s biggest con or “Achille’s heel” has always been performance and resource consumption (the default heap size is 1GB).
 
+Logstash is used to gather logging messages, convert them into json documents and store them in an ElasticSearch cluster.
+The minimal Logstash installation has one Logstash instance and one Elasticsearch instance. These instances are directly connected.
+
+Logstash uses an input plugin to ingest data and an Elasticsearch output plugin to index the data in Elasticsearch, following the Logstash processing pipeline.
+
+	Website logs--------------> Logstash --------------> Elastic search
+
 ### Log Analysis And End To End Big Data Analytics With ELK Stack
 **What is the ELK Stack?**
 ELK => Elasticsearch, Logstash, and Kibana
