@@ -69,6 +69,24 @@ All these toolkits or components revolve around one term i.e. Data. That’s the
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/elastic_search_example1.png)
 Refer for more info: https://www.rittmanmead.com/blog/2014/11/analytics-with-kibana-and-elasticsearch-through-hadoop-part-1-introduction/
 
+### Defining the Hive table over Elasticsearch
+```
+CREATE EXTERNAL TABLE all_blog_posts_es (
+ts_epoch bigint ,
+post_title string ,
+post_title_a string ,
+post_author string ,
+url string ,
+post_type string )
+ROW FORMAT SERDE 'org.elasticsearch.hadoop.hive.EsSerDe'
+STORED BY 'org.elasticsearch.hadoop.hive.EsStorageHandler'
+TBLPROPERTIES (
+'es.nodes'='bigdatalite.localdomain',
+'es.resource'='all_blog/posts'
+) ;
+```
+
+
 ### Apache Flume vs Logstash: What are the differences?
 Both are "Log Management" tools.
 
@@ -241,7 +259,65 @@ Ref: https://medium.com/@manoharkush22/log-analysis-and-end-to-end-big-data-anal
 
 * The important point is that a data lake provides a single place to save and access valuable enterprise data. Without a good data lake, businesses increase the threshold of effort needed from stakeholders who would benefit from data.
 
+* The Amazon **S3-based data lake** solution uses Amazon S3 as its primary storage platform. Amazon S3 provides an optimal foundation for a data lake because of its virtually unlimited scalability. You can seamlessly and nondisruptively increase storage from gigabytes to petabytes of content, paying only for what you use. Amazon S3 is designed to provide 99.999999999% durability. It has scalable performance, ease-of-use features, and native encryption and access control capabilities. Amazon S3 integrates with a broad portfolio of AWS and third-party ISV data processing tools.
+
+## Data Ingestion Methods
+One of the core capabilities of a data lake architecture is the ability to quickly and easily ingest multiple types of data, such as real-time streaming data and bulk data assets from on-premises storage platforms, as well as data generated and processed by legacy on-premises platforms, such as mainframes and data warehouses. AWS provides services and capabilities to cover all of these scenarios.
+
+## Amazon Kinesis Firehose
+Amazon Kinesis Firehose is a fully managed service for **delivering real-time streaming data directly to Amazon S3**. Kinesis Firehose automatically scales to match the volume and throughput of streaming data, and requires no ongoing administration. Kinesis Firehose can also be configured to transform streaming data before it’s stored in Amazon S3. Its transformation capabilities include compression, encryption, data batching, and Lambda functions.
+
+Kinesis Firehose can compress data before it's stored in Amazon S3. It currently **supports GZIP, ZIP, and SNAPPY compression formats**. GZIP is the preferred format because it can be used by Amazon Athena, Amazon EMR, and Amazon Redshift. Kinesis Firehose encryption supports Amazon S3 server-side encryption with AWS Key Management Service (AWS KMS) for encrypting delivered data in Amazon S3. You can choose not to encrypt the data or to encrypt with a key from the list of AWS KMS keys that you own (see the section Encryption with AWS KMS). Kinesis Firehose can concatenate multiple incoming records, and then deliver them to Amazon S3 as a single S3 object. This is an important capability because it reduces Amazon S3 transaction costs and transactions per second load.
+
+Finally, Kinesis Firehose can invoke Lambda functions to transform incoming source data and deliver it to Amazon S3. Common transformation functions include transforming Apache Log and Syslog formats to standardized JSON and/or CSV formats. The JSON and CSV formats can then be directly queried using **Amazon Athena**. If using a Lambda data transformation, you can optionally back up raw source data to another S3 bucket, as shown in the following figure.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/kinesis.png)
+**Delivering real-time streaming data with Amazon Kinesis Firehose to Amazon S3 with optional backup**
+
+## AWS Snowball
+
+You can use AWS Snowball to securely and efficiently migrate bulk data from on-premises storage platforms and Hadoop clusters to S3 buckets. After you create a job in the AWS Management Console, a Snowball appliance will be automatically shipped to you. After a Snowball arrives, connect it to your local network, install the Snowball client on your on-premises data source, and then use the Snowball client to select and transfer the file directories to the Snowball device. The Snowball client uses AES-256-bit encryption. Encryption keys are never shipped with the Snowball device, so the data transfer process is highly secure. After the data transfer is complete, the Snowball’s E Ink shipping label will automatically update. Ship the device back to AWS. Upon receipt at AWS, your data is then transferred from the Snowball device to your S3 bucket and stored as S3 objects in their original/native format. Snowball also has an HDFS client, so data may be migrated directly from Hadoop clusters into an S3 bucket in its native format.
+
+## AWS Storage Gateway
+
+AWS Storage Gateway can be used to integrate legacy on-premises data processing platforms with an Amazon S3-based data lake. The File Gateway configuration of Storage Gateway offers on-premises devices and applications a network file share via an NFS connection. Files written to this mount point are converted to objects stored in Amazon S3 in their original format without any proprietary modification. This means that you can easily integrate applications and platforms that don’t have native Amazon S3 capabilities—such as on-premises lab equipment, mainframe computers, databases, and data warehouses—with S3 buckets, and then use tools such as Amazon EMR or Amazon Athena to process this data.
+
+Additionally, Amazon S3 natively supports DistCP, which is a standard Apache Hadoop data transfer mechanism. This allows you to run DistCP jobs to transfer data from an on-premises Hadoop cluster to an S3 bucket. The command to transfer data typically looks like the following:
+
+```
+hadoop distcp hdfs://source-folder s3a://destination-bucket
+```
+
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/data_lakes.png)
+
+## Data Cataloging
+The earliest challenges that inhibited building a data lake were keeping track of all of the raw assets as they were loaded into the data lake, and then tracking all of the new data assets and versions that were created by data transformation, data processing, and analytics. Thus, an essential component of an Amazon S3-based data lake is the data catalog. The data catalog provides a query-able interface of all assets stored in the data lake’s S3 buckets. The data catalog is designed to provide a single source of truth about the contents of the data lake.
+
+There are two general forms of a data catalog: a comprehensive data catalog that contains information about all assets that have been ingested into the S3 data lake, and a Hive Metastore Catalog (HCatalog) that contains information about data assets that have been transformed into formats and table definitions that are usable by analytics tools like Amazon Athena, Amazon Redshift, Amazon Redshift Spectrum, and Amazon EMR. The two catalogs are not mutually exclusive and both may exist. The comprehensive data catalog can be used to search for all assets in the data lake, and the HCatalog can be used to discover and query data assets in the data lake.
+
+## Comprehensive Data Catalog
+
+The comprehensive data catalog can be created by using standard AWS services like AWS Lambda, Amazon DynamoDB, and Amazon Elasticsearch Service (Amazon ES). At a high level, Lambda triggers are used to populate DynamoDB tables with object names and metadata when those objects are put into Amazon S3 then Amazon ES is used to search for specific assets, related metadata, and data classifications. The following figure shows a high-level architectural overview of this solution.
+
+![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/extracting_metadata_with_lambda.png)
+
+          Comprehensive data catalog using AWS Lambda, Amazon DynamoDB, and Amazon Elasticsearch Service
+        
+
+## HCatalog with AWS Glue
+
+AWS Glue can be used to create a Hive-compatible Metastore Catalog of data stored in an Amazon S3-based data lake. To use AWS Glue to build your data catalog, register your data sources with AWS Glue in the AWS Management Console. AWS Glue will then crawl your S3 buckets for data sources and construct a data catalog using pre-built classifiers for many popular source formats and data types, including JSON, CSV, Parquet, and more. You may also add your own classifiers or choose classifiers from the AWS Glue community to add to your crawls to recognize and catalog other data formats. The AWS Glue-generated catalog can be used by Amazon Athena, Amazon Redshift, Amazon Redshift Spectrum, and Amazon EMR, as well as third-party analytics tools that use a standard Hive Metastore Catalog. The following figure shows a sample screenshot of the AWS Glue data catalog interface.
+
+## Amazon Athena
+
+Amazon Athena is an **interactive query service** that makes it easy for you to analyze data directly in **Amazon S3 using standard SQL**. With a few actions in the AWS Management Console, you can use Athena directly against data assets stored in the data lake and begin using standard SQL to run ad hoc queries and get results in a matter of seconds.
+
+**Athena is serverless**, so there is no infrastructure to set up or manage, and you only **pay for the volume of data assets scanned during the queries you run**. Athena scales automatically—executing queries in parallel—so results are fast, even with large datasets and complex queries. You can use Athena to process unstructured, semi-structured, and structured data sets. Supported data asset formats include **CSV, JSON, or columnar data formats such as Apache Parquet** and Apache ORC. **Athena integrates with Amazon QuickSight for easy visualization**. It can also be used with third-party reporting and business intelligence tools by connecting these tools to Athena with a JDBC driver.
+
+## Amazon Redshift Spectrum
+A second way to perform in-place querying of data assets in an Amazon S3-based data lake is to use Amazon Redshift Spectrum. Amazon Redshift is a large-scale, managed data warehouse service that can be used with data assets in Amazon S3. However, data assets must be loaded into Amazon Redshift before queries can be run. By contrast, Amazon Redshift Spectrum enables you to run Amazon Redshift SQL queries directly against massive amounts of data—up to exabytes—stored in an Amazon S3-based data lake. Amazon Redshift Spectrum applies sophisticated query optimization, scaling processing across thousands of nodes so results are fast—even with large data sets and complex queries. Redshift Spectrum can directly query a wide variety of data assets stored in the data lake, including **CSV, TSV, Parquet, Sequence, and RCFile**. Since Redshift Spectrum supports the SQL syntax of Amazon Redshift, you can run sophisticated queries using the same BI tools that you use today. You also have the flexibility to run queries that span both frequently accessed data assets that are stored locally in Amazon Redshift and your full data sets stored in Amazon S3. Because Amazon Athena and Amazon Redshift share a common data catalog and common data formats, you can use both Athena and Redshift Spectrum against the same data assets. 
+
+You would typically use **Athena for adhoc data discovery and SQL querying, and then use Redshift Spectrum for more complex queries** and scenarios where a large number of data lake users want to run concurrent BI and reporting workloads.
 
 ## Data lakes vs. data warehouses
 * In data warehouses Data is processed before integration but in data lakes Data is integrated in its raw and unstructured form
@@ -260,6 +336,9 @@ Apache Zookeeper is an application library, which primarily focuses on coordinat
 
 ## What is the Data Model for Apache Zookeeper?
 Apache Zookeeper has a file system-like data model, referred to as “Znode”. Just like a file system has directories, Znodes are also directories, and can have data associated with them. The ZNode can be referenced through absolute path separated with a slash. Each server in the ensemble, stores the Znode hierarchy in the memory, which makes the response quick and scalable as well. Each server maintains a transaction log - which logs each ‘write’ request on the disk. Before sending the response to the client, the transaction has to be synchronized on all the servers making it performance critical. Although it appears to be a file system based architecture, it is advisable that it shouldn’t be used as a general purpose file system. It should be used for storage of small amount of data so that it can be reliable, fast, scalable, available and should be in coordination to distributed application.
+
+# Amazon EMR
+Amazon EMR is a highly distributed computing framework used to quickly and easily process data in a cost-effective manner. Amazon EMR uses Apache Hadoop, an open source framework, to distribute data and processing across an elastically resizable cluster of EC2 instances and allows you to use all the common Hadoop tools such as Hive, Pig, Spark, and HBase. Amazon EMR does all the heavily lifting involved with provisioning, managing, and maintaining the infrastructure and software of a Hadoop cluster, and is integrated directly with Amazon S3. With Amazon EMR, you can launch a persistent cluster that stays up indefinitely or a temporary cluster that terminates after the analysis is complete. In either scenario, you only pay for the hours the cluster is up. Amazon EMR supports a variety of EC2 instance types encompassing general purpose, compute, memory and storage I/O optimized (e.g., T2, C4, X1, and I3) instances, and all Amazon EC2 pricing options (On-Demand, Reserved, and Spot). When you launch an EMR cluster (also called a job flow), you choose how many and what type of EC2 instances to provision. Companies with many different lines of business and a large number of users can build a single data lake solution, store their data assets in Amazon S3, and then spin up multiple EMR clusters to share data assets in a multi-tenant fashion.
 
 # Oozie: 
 * Oozie simply performs the task of a scheduler, thus scheduling jobs and binding them together as a single unit. 
@@ -1603,4 +1682,6 @@ Failed Job – Red
 ![alt text](https://github.com/samirsahoo007/bigdata/blob/master/hue/images/10.png)
 
 New workflows can also be designed through this interface. An inbuilt Oozie editor is there that can be used to create new workflows just by using drag and drop interface.
+
+More details here: https://docs.aws.amazon.com/whitepapers/latest/building-data-lakes/building-data-lake-aws.html
 
