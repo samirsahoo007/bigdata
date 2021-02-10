@@ -45,6 +45,7 @@ Following are the components that collectively form a Hadoop ecosystem:
 * Cassandra is a distributed and wide-column NoSQL data store.
 * Hue(Hadoop User Experience) is a web-based interactive query editor that enables you to interact with data warehouses. It allows you to browse, analyze query (hive, pig or impala) and visualizie data. 
 * Data Lakes: A data lake is a storage repository that holds a large amount of data in its native, raw format.
+* Zeppelin: Zeppelin is web-based notebook that enables interactive data analytics(data visulisation and exploration). 
 
 #### Notes:
 * Flume is service for efficiently collecting, aggregating, and moving large amounts of log data
@@ -1684,4 +1685,27 @@ Failed Job – Red
 New workflows can also be designed through this interface. An inbuilt Oozie editor is there that can be used to create new workflows just by using drag and drop interface.
 
 More details here: https://docs.aws.amazon.com/whitepapers/latest/building-data-lakes/building-data-lake-aws.html
+
+# Zeppelin
+Zeppelin is web-based notebook that enables interactive data analytics(data visulisation and exploration).
+You can make beautiful data-driven, interactive, collaborative document with SQL, code and even more!
+
+Multi-purpose notebook which supports 20+ language backends.
+
+* Data Ingestion
+* Data Discovery
+* Data Analytics
+* Data Visualization & Collaboration
+
+![http://zeppelin.apache.org/docs/0.8.1/index.html](https://github.com/samirsahoo007/bigdata/blob/master/hadoop/images/zeppeline.png)
+
+## Jupyter Vs Zeppelin: A Comprehensive Comparison Of Notebooks
+
+- Zeppelin allows users to combine multiple paragraphs of code written in Python in one single line. The user can combine different data sources and its outputs in one single notebook for creating broad as well as cross-system reports.
+- Jupyter being the oldest between among these two, the community is quite larger than Zeppelin and it supports much more external systems.
+- Zeppelin has a separate interpreter configuration page
+- Installation part is much easier in Jupyter than in Zeppelin
+- Jupyter more than 85 of supported engines against Zeppelin’s interpreter types which have only around the 20.
+- Both notebooks have markdown support but unlike Jupyter, Zeppelin creates interactive forms and the visualisation results in a faster way. 
+- Right now, Jupyter has no such privacy configuration of the end users. On the other hand, in Zeppelin, you can create flexible security configurations for the end users in case they need any privacy for their codes.
 
