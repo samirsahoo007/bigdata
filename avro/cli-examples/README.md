@@ -33,7 +33,7 @@ Here is a direct link to [avro-tools-1.7.7.jar](http://www.java2s.com/example/ja
 
 # File overview
 
-* [twitter.avro](https://github.com/miguno/avro-cli-examples/blob/master/twitter.avro)
+* [twitter.avro](twitter.avro)
   -- data records in uncompressed binary Avro format
 * [twitter.snappy.avro](https://github.com/miguno/avro-cli-examples/blob/master/twitter.snappy.avro)
   -- data records in Snappy-compressed binary Avro format
