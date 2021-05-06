@@ -35,13 +35,13 @@ Here is a direct link to [avro-tools-1.7.7.jar](http://www.java2s.com/example/ja
 
 * [twitter.avro](twitter.avro)
   -- data records in uncompressed binary Avro format
-* [twitter.snappy.avro](https://github.com/miguno/avro-cli-examples/blob/master/twitter.snappy.avro)
+* [twitter.snappy.avro](twitter.snappy.avro)
   -- data records in Snappy-compressed binary Avro format
-* [twitter.avsc](https://github.com/miguno/avro-cli-examples/blob/master/twitter.avsc)
+* [twitter.avsc](twitter.avsc)
   -- Avro schema of the example data
-* [twitter.json](https://github.com/miguno/avro-cli-examples/blob/master/twitter.json)
+* [twitter.json](twitter.json)
   -- data records in plain-text JSON format
-* [twitter.pretty.json](https://github.com/miguno/avro-cli-examples/blob/master/twitter.pretty.json)
+* [twitter.pretty.json](twitter.pretty.json)
   -- data records in pretty-printed JSON format
 
 
@@ -116,5 +116,3 @@ You can also take a look at the CLI tools
 You must build these tools yourself by following their respective
 [INSTALL](https://github.com/apache/avro/blob/trunk/lang/c/INSTALL) instructions.
 
-
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/d1bb6d38b2ac73e2f46a6fc29a3a249e "githalytics.com")](http://githalytics.com/miguno/avro-cli-examples)
