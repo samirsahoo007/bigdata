@@ -134,6 +134,34 @@ Open a web browser to see your configurations for the current session.
 
 http://localhost:9870
 
+### Issues:
+What if you get the following error?
+```
+(venv363) Samirs-XYZ $ ./start-all.sh 
+WARNING: Attempting to start all Apache Hadoop daemons as samirsahoo in 10 seconds.
+WARNING: This is not a recommended production deployment configuration.
+WARNING: Use CTRL-C to abort.
+Starting namenodes on [localhost]
+localhost: sameer_sahoo@localhost: Permission denied (publickey,password,keyboard-interactive).
+Starting datanodes
+localhost: sameer_sahoo@localhost: Permission denied (publickey,password,keyboard-interactive).
+Starting secondary namenodes [Samirs-XYZ]
+Samirs-XYZ: sameer_sahoo@samirs-mbp: Permission denied (publickey,password,keyboard-interactive).
+2021-05-16 21:20:29,168 WARN util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Starting resourcemanager
+resourcemanager is running as process 81524.  Stop it first.
+Starting nodemanagers
+localhost: sameer_sahoo@localhost: Permission denied (publickey,password,keyboard-interactive).
+```
+**Solution:**
+Here the username sameer_sahoo may not have passwordless access that you've set above. If the passwordless setup is correct, then check the user...
+e.g. in my case if you'd see, the username for which passwordless access was set is **samirsahoo** not **sameer_sahoo**
+$ users
+samirsahoo
+
+So from where this username "sameer_sahoo" is coming from??? Check ~/.ssh/config ...; the username in "User"
+Change **User** line from "User sameer_sahoo" to "User samirsahoo" and run ./start-all.sh again.
+
 ### Close Hadoop
 
 $ ./stop-all.sh
