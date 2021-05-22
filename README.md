@@ -17,35 +17,35 @@ Hadoop Ecosystem is a platform or a suite which provides various services to sol
 
 Following are the components that collectively form a Hadoop ecosystem:
 
-* Oozie: Job Scheduling, workflow monitoring
-* Chukwa: Monitoring, data collection system for monitoring large distributed systems 
-* Flume, Sqoop - (Monitoring)Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data). More below
-* Logstash: Server-side data processing pipeline that allows you to collect data from a variety of sources, transform it on the fly, and send it to your desired destination.
-* Filebeat: It collects and sends the log files from tens, hundreds, or even thousands of servers, virtual machines, and containers to Logstash. In this way, all the logs and files can be indexed at a central location for analysis and visualization.
-* Zookeeper: cluster management(provides a distributed configuration service, a synchronization service and a naming registry for distributed systems)
-* HIVE, PIG: Query based processing of data services(SQL, Dataflow)
-* Mahout, Spark MLLib: Machine Learning algorithm libraries
-* Avro: (RPC)row-oriented remote procedure call and data serialization framework(uses JSON for defining data types and protocols,& serializes data in a compact binary format. Apache Spark SQL can access Avro as a data source)
-* Sqoop: (RDBMS Connector) Data Ingesting Services on structured data
-* MapReduce: Programming based Data Processing
-* YARN: Cluster and resource management(Yet Another Resource Negotiator)
-* HDFS: Hadoop Distributed File System
-* HBase: Column DB Storage (NoSQL Database)
-* Spark: In-Memory data processing
-* Solr, Lucene: Searching and Indexing
-* Elasticsearch - data store & analytics / search engine
-* Kibana - data visualisation tool for Elasticsearch
-* Beeline - Hive command line interface
-* Datasift - online service that streams tweets matching a given pattern to a nominated datastore (such as MongoDB)
-* Ambari - Provision, Monitor and Maintain cluster
-* Apache Drill - SQL on Hadoop
-* Apache Storm - real-time processing of data streams. It consists of higher level of abstraction than simple message passing (which permits describing topologies as a DAG), per-process fault-tolerance and definite at-least-once semantics for each message in the structure.
-* Kafka is a scalable, high performance, low latency platform that allows reading and writing streams of data like a messaging system. 
-* Spark Streaming is part of the Apache Spark platform that enables scalable, high throughput, fault tolerant processing of data streams.
-* Cassandra is a distributed and wide-column NoSQL data store.
-* Hue(Hadoop User Experience) is a web-based interactive query editor that enables you to interact with data warehouses. It allows you to browse, analyze query (hive, pig or impala) and visualizie data. 
-* Data Lakes: A data lake is a storage repository that holds a large amount of data in its native, raw format.
-* Zeppelin: Zeppelin is web-based notebook that enables interactive data analytics(data visulisation and exploration). 
+* **Oozie**: Job Scheduling, workflow monitoring
+* **Chukwa**: Monitoring, data collection system for monitoring large distributed systems 
+* **Flume, Sqoop** - (Monitoring)Data Ingesting Services(Flume plays on Unstructured/Semi-structured data; Sqoop plays on Structured data). More below
+* **Logstash**: Server-side data processing pipeline that allows you to collect data from a variety of sources, transform it on the fly, and send it to your desired destination.
+* **Filebeat**: It collects and sends the log files from tens, hundreds, or even thousands of servers, virtual machines, and containers to Logstash. In this way, all the logs and files can be indexed at a central location for analysis and visualization.
+* **Zookeeper**: cluster management(provides a distributed configuration service, a synchronization service and a naming registry for distributed systems)
+* **HIVE, PIG**: Query based processing of data services(SQL, Dataflow)
+* **Mahout, Spark MLLib**: Machine Learning algorithm libraries
+* **Avro**: (RPC)row-oriented remote procedure call and data serialization framework(uses JSON for defining data types and protocols,& serializes data in a compact binary format. Apache Spark SQL can access Avro as a data source)
+* **Sqoop**: (RDBMS Connector) Data Ingesting Services on structured data
+* **MapReduce**: Programming based Data Processing
+* **YARN**: Cluster and resource management(Yet Another Resource Negotiator)
+* **HDFS**: Hadoop Distributed File System
+* **HBase**: Column DB Storage (NoSQL Database)
+* **Spark**: In-Memory data processing
+* **Solr, Lucene**: Searching and Indexing
+* **Elasticsearch** - data store & analytics / search engine
+* **Kibana** - data visualisation tool for Elasticsearch
+* **Beeline** - Hive command line interface
+* **Datasift** - online service that streams tweets matching a given pattern to a nominated datastore (such as MongoDB)
+* **Ambari** - Provision, Monitor and Maintain cluster
+* **Apache Drill** - SQL on Hadoop
+* **Apache Storm** - real-time processing of data streams. It consists of higher level of abstraction than simple message passing (which permits describing topologies as a DAG), per-process fault-tolerance and definite at-least-once semantics for each message in the structure.
+* **Kafka** is a scalable, high performance, low latency platform that allows reading and writing streams of data like a messaging system. 
+* **Spark Streaming** is part of the Apache Spark platform that enables scalable, high throughput, fault tolerant processing of data streams.
+* **Cassandra** is a distributed and wide-column NoSQL data store.
+* **Hue**(Hadoop User Experience) is a web-based interactive query editor that enables you to interact with data warehouses. It allows you to browse, analyze query (hive, pig or impala) and visualizie data. 
+* **Data Lakes**: A data lake is a storage repository that holds a large amount of data in its native, raw format.
+* **Zeppelin**: Zeppelin is web-based notebook that enables interactive data analytics(data visulisation and exploration). 
 
 #### Notes:
 * Flume is service for efficiently collecting, aggregating, and moving large amounts of log data
@@ -1711,3 +1711,37 @@ Multi-purpose notebook which supports 20+ language backends.
 - Both notebooks have markdown support but unlike Jupyter, Zeppelin creates interactive forms and the visualisation results in a faster way. 
 - Right now, Jupyter has no such privacy configuration of the end users. On the other hand, in Zeppelin, you can create flexible security configurations for the end users in case they need any privacy for their codes.
 
+## What is HDFS?
+HDFS (Hadoop Distributed File System) is a vital component of the Apache Hadoop project. Hadoop is an ecosystem of software that work together to help you manage big data. The two main elements of Hadoop are:
+
+* **MapReduce** – responsible for executing tasks
+* **HDFS** – responsible for maintaining data
+
+### What is HDFS?
+Hadoop Distributed File System is a fault-tolerant data storage file system that runs on commodity hardware. It was designed to overcome challenges traditional databases couldn’t. Therefore, its full potential is only utilized when handling big data.
+
+The main issues the Hadoop file system had to solve were speed, cost, and reliability.
+
+### What are the Benefits of HDFS?
+The benefits of HDFS are, in fact, solutions that the file system provides for the previously mentioned challenges:
+
+* **It is fast**. It can deliver more than 2 GB of data per second thanks to its cluster architecture.
+* **It is free**. HDFS is an open-source software that comes with no licensing or support cost.
+* **It is reliable**. The file system stores multiple copies of data in separate systems to ensure it is always accessible.
+
+These advantages are especially significant when dealing with big data and were made possible with the particular way HDFS handles data.
+**Note**: Hadoop is just one solution to big data processing. Another popular open-source framework is Spark.
+
+### How Does HDFS Store Data?
+HDFS divides files into blocks and stores each block on a DataNode. Multiple DataNodes are linked to the master node in the cluster, the NameNode. The master node distributes replicas of these data blocks across the cluster. It also instructs the user where to locate wanted information.
+
+However, before the NameNode can help you store and manage the data, it first needs to partition the file into smaller, manageable data blocks. This process is called data block splitting.
+
+### Data Block Splitting
+By default, a block can be no more than 128 MB in size. The number of blocks depends on the initial size of the file. All but the last block are the same size (128 MB), while the last one is what remains of the file.
+
+For example, an 800 MB file is broken up into seven data blocks. Six of the seven blocks are 128 MB, while the seventh data block is the remaining 32 MB.
+
+Then, each block is replicated into several copies.
+
+![](hadoop/images/data-block-splitting-in-hdfs.png)
