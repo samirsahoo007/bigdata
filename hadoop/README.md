@@ -156,8 +156,10 @@ localhost: sameer_sahoo@localhost: Permission denied (publickey,password,keyboar
 **Solution:**
 Here the username sameer_sahoo may not have passwordless access that you've set above. If the passwordless setup is correct, then check the user...
 e.g. in my case if you'd see, the username for which passwordless access was set is **samirsahoo** not **sameer_sahoo**
+```
 $ users
 samirsahoo
+```
 
 So from where this username "sameer_sahoo" is coming from??? Check ~/.ssh/config ...; the username in "User"
 Change **User** line from "User sameer_sahoo" to "User samirsahoo" and run ./start-all.sh again.
