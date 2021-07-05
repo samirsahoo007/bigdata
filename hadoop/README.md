@@ -101,7 +101,7 @@ $ open yarn-site.xml
 </configuration>
 ```
 
-Remove password requirement
+**Remove password requirement**
 
 Check if you're able to ssh(ssh localhost) without a password before moving to the next step to prevent unexpected results when formatting the NameNode.
 If this does not return a last login time, use the following commands to remove the need to insert a password.
